@@ -1,0 +1,133 @@
+@media (min-width: 1024px) {
+    body {
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+}
+
+body,
+.panel,
+.info-container {
+    overflow-y: auto;
+    height: 100vh;
+}
+
+/* Izquierda */
+.panel {
+    background-color: var(--primario);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (max-width: 1024px) {
+    .panel {
+        display: none;
+    }
+}
+
+.info-usuario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: .5rem;
+}
+
+.info-usuario p {
+    margin: 0;
+}
+
+.opciones a {
+    border-top: 1px solid var(--blanco);
+    display: block;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.opciones a {
+    text-transform: uppercase;
+}
+
+.info-usuario img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.info-usuario p {
+    font-size: 1.5rem;
+    color: var(--blanco);
+}
+
+/* Derecha */
+.info-container {
+    background-color: var(--blanco);
+    padding: 1rem;
+    overflow-y: visible;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: .5rem;
+}
+
+.info {
+    border: 1px solid var(--gris);
+    background-color: white;
+    padding: 1rem;
+}
+
+.info a {
+    font-size: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .info {
+        margin-top: 6rem;
+    }
+}
+
+tr {
+    cursor: pointer;
+}
+
+th,
+td {
+    text-align: center !important;
+}
+
+td span {
+    display: inline-block;
+    border: 1px solid black;
+    width: 50%;
+    height: 30px;
+    border-radius: 1rem;
+}
+
+table img {
+    width: 50px;
+    height: 50px;
+    margin: auto !important;
+}
+
+.eliminar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s border-radius;
+}
+
+.eliminar:hover {
+    background-color: salmon;
+    border: none;
+    margin: auto 0;
+    border-radius: 50%;
+}
+
+.btn-crear {
+    background-color: var(--verde);
+    width: 100%;
+    padding: .6rem;
+}

@@ -1,0 +1,32 @@
+.dark-mode {
+    background-color: var(--primario-dark);
+}
+
+.dark-mode input {
+    background-color: #999999;
+}
+
+.dark-mode-button {
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background-color: var(--primario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding: .5rem;
+}
+
+@media (max-width: 1024px) {
+    .dark-mode-button {
+        right: 50%;
+        transform: translateX(50%)
+    }
+}
+
+.dark-mode-button img {
+    cursor: pointer;
+}
