@@ -15,8 +15,7 @@ function login($tableName, $correo, $contrasenia, $mantenerSesion) {
     if (count($rows) == 0) {
         return http_response_code(NOT_FOUND);
     }
-    $row = $rows[0];
-    if (!password_verify($contrasenia, $row['contrasenia'])) {
+    if (!password_verify($contrasenia, $rows[0]['contrasenia'])) {
         return http_response_code(INCORRECT_DATA);
     }
     // Si el login fue extioso, crear la sesión

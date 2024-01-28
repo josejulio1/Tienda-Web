@@ -9,6 +9,6 @@ export class UserRow extends Row {
         perfilUsuarioImg.src = imagenPerfil;
         perfilUsuarioImg.alt = 'Imagen de Perfil';
 
-        super(puedeBorrar, usuarioId, usuario, correo, rol, colorRolSpan.outerHTML, perfilUsuarioImg.outerHTML);
+        super(puedeBorrar, 'eliminar-usuario', usuarioId, usuario, correo, rol, colorRolSpan.outerHTML, perfilUsuarioImg.outerHTML);
     }
 }

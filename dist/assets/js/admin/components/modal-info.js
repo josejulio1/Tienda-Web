@@ -1,7 +1,7 @@
 export const $modalInfo = $('#modal-info');
-export const $modalInfoCorrecto = $('#modal-info-correcto');
-export const $modalInfoIncorrecto = $('#modal-info-incorrecto');
-export const $modalInfoMensaje = $('#modal-info-mensaje');
+const $modalInfoCorrecto = $('#modal-info-correcto');
+const $modalInfoIncorrecto = $('#modal-info-incorrecto');
+const $modalInfoMensaje = $('#modal-info-mensaje');
 
 function hideAll() {
     $modalInfoCorrecto.addClass('hide');

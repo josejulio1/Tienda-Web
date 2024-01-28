@@ -14,7 +14,7 @@ body,
 
 /* Izquierda */
 .panel {
-    background-color: var(--primario);
+    background-color: var(--secundario);
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -40,7 +40,7 @@ body,
 }
 
 .opciones a {
-    border-top: 1px solid var(--blanco);
+    border-top: 1px solid var(--primario);
     display: block;
     text-align: center;
     padding: 1.5rem;
@@ -58,12 +58,12 @@ body,
 
 .info-usuario p {
     font-size: 1.5rem;
-    color: var(--blanco);
+    color: var(--primario);
 }
 
 /* Derecha */
 .info-container {
-    background-color: var(--blanco);
+    background-color: var(--primario);
     padding: 1rem;
     overflow-y: visible;
     display: flex;
@@ -73,9 +73,11 @@ body,
 }
 
 .info {
-    border: 1px solid var(--gris);
+    border: 1px solid var(--primario);
     background-color: white;
     padding: 1rem;
+    height: 90vh;
+    overflow: auto;
 }
 
 .info a {
@@ -87,6 +89,31 @@ body,
         margin-top: 6rem;
     }
 }
+
+/* table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: scroll;
+}
+
+thead {
+    flex: 0 0 auto;
+}
+
+tbody {
+    height: 70vh;
+    flex: 1 1 100px;
+    display: block;
+    overflow: auto;
+}
+
+tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    cursor: pointer;
+} */
 
 tr {
     cursor: pointer;

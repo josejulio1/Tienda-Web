@@ -1,41 +1,37 @@
 import { HTTP_STATUS_CODES } from "../api/http-status-codes.js";
+import { END_POINTS } from "../api/end-points.js";
+import { LoadingButton } from "../components/LoadingButton.js";
+import { USUARIO } from "./models.js";
 /* import { error } from "./utils.js"; */
 
-// Button Register-Login Form
-const $buttonP = document.getElementById('button-p');
-const $buttonLoading = document.getElementById('button-loading');
+const $correo = $('#correo');
+const $contrasenia = $('#contrasenia');
+const $mantenerSesion = $('#mantener-sesion');
 
-const $loginForm = document.getElementById('login-form');
-const $correo = document.getElementById('correo');
-const $contrasenia = document.getElementById('contrasenia');
-const $mantenerSesion = document.getElementById('mantener-sesion');
-
-$loginForm.addEventListener('submit', e => {
-    e.preventDefault();
-    
-    if (!$correo.value) {
+new LoadingButton('.btn-info', 'Iniciar Sesión', ($buttonP, $buttonLoading) => {
+    if (!$correo.val()) {
         /* error('Introduzca una dirección de correo'); */
         return;
     }
 
-    if (!$contrasenia.value) {
+    if (!$contrasenia.val()) {
         /* error('Introduzca una contraseña'); */
         return;
     }
 
-    $buttonP.classList.add('hide');
-    $buttonLoading.classList.remove('hide');
+    $buttonP.addClass('hide');
+    $buttonLoading.removeClass('hide');
     const fd = new FormData();
-    fd.append('correo', $correo.value);
-    fd.append('contrasenia', $contrasenia.value);
-    fd.append('mantener-sesion', $mantenerSesion.checked);
-    fetch('/api/controllers/user/login/index.php', {
+    fd.append(USUARIO.CORREO, $correo.val());
+    fd.append(USUARIO.CONTRASENIA, $contrasenia.val());
+    fd.append('mantener-sesion', $mantenerSesion.prop('checked'));
+    fetch(END_POINTS.USER.LOGIN, {
         method: 'POST',
         body: fd
     })
     .then(response => {
-        $buttonP.classList.remove('hide');
-        $buttonLoading.classList.add('hide');
+        $buttonP.removeClass('hide');
+        $buttonLoading.addClass('hide');
         const { status } = response;
         if (status == HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
             // TODO: Agregar mensajes de error
@@ -48,4 +44,4 @@ $loginForm.addEventListener('submit', e => {
         }
         window.location.href = '/admin';
     })
-})
+});

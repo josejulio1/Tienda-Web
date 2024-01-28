@@ -7,7 +7,7 @@
     <section class="opciones">
         <?php
         if ($permisos[v_usuario_rol::PERMISO_USUARIO] != PERMISSIONS::NO_PERMISSIONS) {
-            echo '<a href="#">Usuarios</a>';
+            echo '<a href="user.php">Usuarios</a>';
         }
         if ($permisos[v_usuario_rol::PERMISO_PRODUCTO] != PERMISSIONS::NO_PERMISSIONS) {
             echo '<a href="#">Productos</a>';

@@ -4,19 +4,19 @@ import { ERROR_MESSAGES } from "../api/error-messages.js";
 import { END_POINTS } from "../api/end-points.js";
 import { HTTP_STATUS_CODES } from "../api/http-status-codes.js";
 
-export function insert(endPoint, fields, postOperationCb) {
-    const fd = new FormData();
-    for (const field of fields) {
+export function insert(endPoint, formData, postOperationCb) {
+    /* const fd = new FormData();
+    for (const field of formData) {
         // Si el campo es un tipo file
         if (field.prop('files')) {
             fd.append(field.attr('id'), field.prop('files')[0]);
         } else {
             fd.append(field.attr('id'), field.val());
         }
-    }
+    } */
     fetch(endPoint, {
         method: 'POST',
-        body: fd,
+        body: formData,
         headers: {
             'Accept': 'application/json'
         }
@@ -32,7 +32,7 @@ export function insert(endPoint, fields, postOperationCb) {
         }
         postOperationCb(data);
         $('.modal.show').modal('hide');
-        correctModal('Usuario creado correctamente');
+        correctModal('Registro creado correctamente');
     })
 }
 
@@ -63,7 +63,7 @@ export function updateRow(tableName, fields, filters, postOperationCb) {
         fields: fields,
         filters: filters
     }
-    fetch('/api/controllers/update-row.php', {
+    fetch(END_POINTS.UPDATE_ROW, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -90,7 +90,7 @@ export async function deleteRow(e, $table) {
     if (!modalChoiceResultOk) {
         return;
     }
-    fetch(`${END_POINTS.DELETE_ROW}?tableName=${$table.tableName}&id=${selectedId}`, {
+    fetch(`${END_POINTS.DELETE_ROW}?table-name=${$table.tableName}&id=${selectedId}`, {
         method: 'DELETE'
     })
     .then(response => {

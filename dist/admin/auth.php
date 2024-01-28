@@ -13,6 +13,7 @@ if ($_SESSION) {
     <link rel="stylesheet" href="/assets/css/globals.css">
     <link rel="stylesheet" href="/assets/css/auth.css">
     <link rel="stylesheet" href="/assets/css/utils.css">
+    <script src="/assets/js/lib/jquery-3.7.1.min.js" defer></script>
     <script src="/assets/js/admin/auth.js" type="module" defer></script>
 </head>
 <body>
@@ -39,10 +40,8 @@ if ($_SESSION) {
                     <label for="mantener-sesion">Mantener sesión iniciada</label>
                 </article>
             </section>
-            <button class="btn-info" type="submit">
-                <p id="button-p">Iniciar Sesión</p>
-                <img id="button-loading" class="hide" src="/assets/img/web/svg/loading.svg" alt="Loading">
-            </button>
+            <!-- COMPONENTE: LoadingButton -->
+            <button class="btn-info" type="submit"></button>
         </form>
     </main>
 </body>

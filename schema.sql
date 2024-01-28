@@ -42,7 +42,7 @@ CREATE TABLE Cliente (
     apellidos VARCHAR(100) NOT NULL,
     telefono VARCHAR(15) NOT NULL,
     direccion VARCHAR(100) NOT NULL,
-    correo VARCHAR(255) NOT NULL,
+    correo VARCHAR(255) UNIQUE NOT NULL,
     contrasenia CHAR(60) NOT NULL,
     ruta_imagen_perfil VARCHAR(100) NOT NULL
 );
@@ -73,7 +73,7 @@ CREATE TABLE Imagen_Producto (
 
 CREATE TABLE Categoria (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE Usuario (

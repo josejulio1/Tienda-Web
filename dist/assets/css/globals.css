@@ -1,13 +1,11 @@
 :root {
-    --primario: #113946;
-    --primario-secundario: #306273;
-    --secundario: #FFE6D2;
+    --primario: #F3F3F3;
+    --secundario: #083D77;
     --seleccionable: #349F90;
     --azul: #007BFF;
     --verde: #28A745;
     --rojo: #DC3545;
     --gris: #707070;
-    --blanco: #DBDBDB;
 
     /* Dark Mode */
     --primario-dark: #292a2d;
@@ -23,7 +21,7 @@
 a,
 label,
 button {
-    color: black;
+    color: var(--primario);
 }
 
 a {
@@ -41,7 +39,7 @@ label {
 input {
     padding: .8rem;
     border-radius: 2rem;
-    border: 1px solid black;
+    border: 1px solid var(--secundario);
 }
 
 button,

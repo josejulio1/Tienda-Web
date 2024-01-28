@@ -6,11 +6,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 }
 
 require_once '../../../../db/crud.php';
-require_once '../../../../db/models/usuario.php';
-
+require_once '../../../../db/models/categoria.php';
+$statusCode = insert(categoria::class, $_POST);
+$categoryId = select(categoria::class, [categoria::ID], [
+    categoria::NOMBRE => $_POST[categoria::NOMBRE]
+])[0][categoria::ID];
 echo json_encode([
     'status' => $statusCode,
-    'usuario_id' => $userId,
-    'ruta_imagen_perfil' => $data[usuario::RUTA_IMAGEN_PERFIL]
+    'categoria_id' => $categoryId
 ]);
 ?>

@@ -18,14 +18,12 @@ insert into categoria (id, nombre) values (4, 'Ornamental Railings');
 insert into categoria (id, nombre) values (5, 'Rebar & Wire Mesh Install');
 insert into categoria (id, nombre) values (6, 'Painting & Vinyl Wall Covering');
 insert into categoria (id, nombre) values (7, 'Sitework & Site Utilities');
-insert into categoria (id, nombre) values (8, 'Rebar & Wire Mesh Install');
-insert into categoria (id, nombre) values (9, 'Drilled Shafts');
-insert into categoria (id, nombre) values (10, 'Masonry');
+insert into categoria (id, nombre) values (8, 'Masonry');
 
 -- Producto
 insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (1, 'Maureen', 'Other synovitis and tenosynovitis, left forearm', 28.86, 'Clarithromycin', 8, 2);
 insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (2, 'Cherice', 'String or thread causing external constriction', 587.94, 'sunmark anti diarrheal', 87, 8);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (3, 'Jacinda', 'Nondisplaced comminuted fracture of shaft of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with nonunion', 413.35, 'Privigen', 12, 9);
+insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (3, 'Jacinda', 'Nondisplaced comminuted fracture of shaft of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with nonunion', 413.35, 'Privigen', 12, 8);
 insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (4, 'Brennan', 'Toxic effect of chlorine gas, intentional self-harm, initial encounter', 718.24, 'Fruit Punch Scented Hand Sanitizer', 91, 3);
 insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (5, 'Alvira', 'Unspecified physeal fracture of lower end of radius, unspecified arm, subsequent encounter for fracture with routine healing', 610.46, 'No7 Dual Action Tinted Moisturiser Fair', 11, 1);
 insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (6, 'Missy', 'Osteonecrosis in diseases classified elsewhere, right shoulder', 573.15, 'LBEL HYDRATESS', 88, 3);

@@ -18,7 +18,7 @@ $permisos = select(v_usuario_rol::class, [
   v_usuario_rol::PERMISO_ROL
 ], [
   TypesFilters::EQUALS => [
-      v_usuario_rol::CORREO => $_SESSION['correo']
+      v_usuario_rol::CORREO => $_SESSION[v_usuario_rol::CORREO]
   ]
 ])[0];
 ?>
@@ -40,9 +40,14 @@ $permisos = select(v_usuario_rol::class, [
 	  <script src="/assets/js/lib/jquery.dataTables.js"></script>
     <!-- <script src="/assets/js/components/preview-image.js" defer></script> -->
     <script src="/assets/js/admin/panel.js" type="module" defer></script>
+    <!-- USER -->
     <script src="/assets/js/admin/user/user.js" type="module" defer></script>
     <script src="/assets/js/admin/user/modals/modal-user-create.js" type="module" defer></script>
     <script src="/assets/js/admin/user/modals/modal-user-update.js" type="module" defer></script>
+    <!-- CATEGORY -->
+    <script src="/assets/js/admin/category/category.js" type="module" defer></script>
+    <script src="/assets/js/admin/category/modals/modal-category-create.js" type="module" defer></script>
+    <script src="/assets/js/admin/category/modals/modal-category-update.js" type="module" defer></script>
 </head>
 <body>
     <?php
@@ -50,7 +55,8 @@ $permisos = select(v_usuario_rol::class, [
     ?>
     <main class="info-container">
         <?php
-        require_once __DIR__ . '/../views/admin/user.php';
+        /* require_once __DIR__ . '/../views/admin/user.php'; */
+        require_once __DIR__ . '/../views/admin/product.php';
         /* require_once __DIR__ . '/../views/admin/category.php'; */
         ?>
     </main>

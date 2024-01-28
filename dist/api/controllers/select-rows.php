@@ -10,17 +10,18 @@ require_once __DIR__ . '/../../db/utils/utils.php';
 require_once __DIR__ . '/../../db/models/v_usuario_rol.php';
 require_once __DIR__ . '/../utils/permissions.php';
 session_start();
-
 $tableName = $_POST['table-name'];
 $permisoBuscado = '';
 if ($tableName == v_usuario_rol::class) {
     $permisoBuscado = v_usuario_rol::PERMISO_USUARIO;
+} else if ($tableName == categoria::class) {
+    $permisoBuscado = v_usuario_rol::PERMISO_CATEGORIA;
 }
-$permiso = select($tableName, [$permisoBuscado], [
+$permiso = select(v_usuario_rol::class, [$permisoBuscado], [
     TypesFilters::EQUALS => [
         'correo' => $_SESSION['correo']
     ]
-])[0][v_usuario_rol::PERMISO_USUARIO];
+])[0][$permisoBuscado];
 echo json_encode([
     'data' => select($tableName),
     'has-update-permission' => $permiso & PERMISSIONS::UPDATE,

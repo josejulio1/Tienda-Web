@@ -2,6 +2,7 @@ import { $tablaUsuarios, hasDeletePermission, hasUpdatePermission, openUpdateUse
 import { insert } from "../../crud.js";
 import { END_POINTS } from "../../../api/end-points.js";
 import { UserRow } from "../../models/row/UserRow.js";
+import { USUARIO } from "../../models.js";
 
 const $campoNombreCrear = $('#nombre-usuario-crear');
 const $campoCorreoCrear = $('#correo-usuario-crear');
@@ -38,20 +39,26 @@ $buttonCrear.on('click', e => {
         return;
     }
 
-    const fields = [$campoNombreCrear, $campoCorreoCrear, $campoContraseniaCrear, $campoRolCrear];
+    const fd = new FormData();
+    fd.append(USUARIO.USUARIO, $campoNombreCrear.val());
+    fd.append(USUARIO.CORREO, $campoCorreoCrear.val());
+    fd.append(USUARIO.CORREO, $campoCorreoCrear.val());
+    fd.append(USUARIO.CONTRASENIA, $campoContraseniaCrear.val());
+    fd.append(USUARIO.ROL_ID, $campoRolCrear.val());
+
     // Si se ha adjuntado una imagen, no usar la imagen por defecto
     if ($campoImagenCrear.prop('files')) {
-        fields.push($campoImagenCrear);
+        fd.append(USUARIO.RUTA_IMAGEN_PERFIL, $campoImagenCrear.prop('files')[0]);
     }
 
-    insert(END_POINTS.USER.INSERT, fields, data => {
+    insert(END_POINTS.USER.INSERT, fd, data => {
         // Coger color del rol
         const roleSelectedOption = $(`#rol-usuario-crear option[value=${$campoRolCrear.val()}]`);
 
         $tablaUsuarios.row.add(new UserRow(data.usuario_id, $campoNombreCrear.val(), $campoCorreoCrear.val(),
             roleSelectedOption.text(), roleSelectedOption.attr('color'), data.ruta_imagen_perfil, hasDeletePermission).getRow()).draw();
         if (hasUpdatePermission) {
-            $('#tabla-usuarios tbody tr:last').on('click', openUpdateUser);
+            $tablaUsuarios.on('click', 'tbody tr:last', openUpdateUser);
         }
         clearFields();
     });
