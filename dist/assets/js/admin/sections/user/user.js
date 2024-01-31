@@ -1,8 +1,9 @@
 import { $campoCorreoActualizar, $campoRolUsuarioActualizarOptions, $campoUsuarioActualizar, $modalUsuarioActualizar } from "./modals/modal-user-update.js";
-import { USUARIO, V_USUARIO_ROL } from "../models.js";
-import { deleteRow, select } from "../crud.js";
-import { UserRow } from "../models/row/UserRow.js";
-import { PERMISSIONS } from "../permissions.js";
+import { USUARIO, V_USUARIO_ROL } from "../../models/models.js";
+import { deleteRow, select } from "../../crud.js";
+import { UserRow } from "../../models/row/UserRow.js";
+import { PERMISSIONS } from "../../../api/permissions.js";
+import { PreviewImage } from "../../../components/PreviewImage.js";
 
 export let hasUpdatePermission, hasDeletePermission;
 export let $tablaUsuarios;
@@ -26,7 +27,10 @@ window.addEventListener('load', async () => {
     }
     // Eliminar fila
     $tablaUsuarios.on('click', '.eliminar-usuario', e => deleteRow(e, $tablaUsuarios));
+    // Componente de previsualización de imagen
+    new PreviewImage('.img-container', 'imagen-usuario-crear');
 })
+
 
 /**
  * Al abrir una fila para actualizarla, coloca los campos de la fila en el modal de actualizar

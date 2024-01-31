@@ -1,14 +1,13 @@
 import { $tablaUsuarios, hasDeletePermission, hasUpdatePermission, openUpdateUser } from "../user.js";
-import { insert } from "../../crud.js";
-import { END_POINTS } from "../../../api/end-points.js";
-import { UserRow } from "../../models/row/UserRow.js";
-import { USUARIO } from "../../models.js";
+import { insert } from "../../../crud.js";
+import { END_POINTS } from "../../../../api/end-points.js";
+import { UserRow } from "../../../models/row/UserRow.js";
+import { USUARIO } from "../../../models/models.js";
 
 const $campoNombreCrear = $('#nombre-usuario-crear');
 const $campoCorreoCrear = $('#correo-usuario-crear');
 const $campoContraseniaCrear = $('#contrasenia-usuario-crear');
 const $campoRolCrear = $('#rol-usuario-crear');
-const $campoImagenCrear = $('#imagen-usuario-crear');
 const $buttonCrear = $('#crear-usuario');
 
 $buttonCrear.on('click', e => {
@@ -47,8 +46,8 @@ $buttonCrear.on('click', e => {
     fd.append(USUARIO.ROL_ID, $campoRolCrear.val());
 
     // Si se ha adjuntado una imagen, no usar la imagen por defecto
-    if ($campoImagenCrear.prop('files')) {
-        fd.append(USUARIO.RUTA_IMAGEN_PERFIL, $campoImagenCrear.prop('files')[0]);
+    if ($('#imagen-usuario-crear').prop('files')) {
+        fd.append(USUARIO.RUTA_IMAGEN_PERFIL, $('#imagen-usuario-crear').prop('files')[0]);
     }
 
     insert(END_POINTS.USER.INSERT, fd, data => {
@@ -69,5 +68,5 @@ function clearFields() {
     $campoNombreCrear.val('');
     $campoCorreoCrear.val('');
     $campoContraseniaCrear.val('');
-    $campoImagenCrear.val('');
+    $('#imagen-usuario-crear').val('');
 }

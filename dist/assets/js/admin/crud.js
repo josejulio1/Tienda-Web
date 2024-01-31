@@ -5,15 +5,6 @@ import { END_POINTS } from "../api/end-points.js";
 import { HTTP_STATUS_CODES } from "../api/http-status-codes.js";
 
 export function insert(endPoint, formData, postOperationCb) {
-    /* const fd = new FormData();
-    for (const field of formData) {
-        // Si el campo es un tipo file
-        if (field.prop('files')) {
-            fd.append(field.attr('id'), field.prop('files')[0]);
-        } else {
-            fd.append(field.attr('id'), field.val());
-        }
-    } */
     fetch(endPoint, {
         method: 'POST',
         body: formData,
@@ -72,14 +63,14 @@ export function updateRow(tableName, fields, filters, postOperationCb) {
     })
     .then(response => {
         $modalInfo.modal('show');
-        if (response.status != 200) {
+        if (response.status != HTTP_STATUS_CODES.OK) {
             $('.modal.show').modal('hide');
             incorrectModal(ERROR_MESSAGES[response.status]);
             return;
         }
         postOperationCb();
         $('.modal.show').modal('hide');
-        correctModal('El usuario se actualizó correctamente');
+        correctModal('El registro se actualizó correctamente');
     })
 }
 
@@ -95,7 +86,7 @@ export async function deleteRow(e, $table) {
     })
     .then(response => {
         $modalInfo.modal('show');
-        if (response.status != 200) {
+        if (response.status != HTTP_STATUS_CODES.OK) {
             incorrectModal('No se pudo eliminar el registro');
             return;
         }

@@ -32,7 +32,7 @@
 .modal-content input {
     border-radius: 0;
     border: none;
-    border-bottom: 1px solid var(--primario);
+    border-bottom: 1px solid var(--secundario);
 }
 
 .modal-content input:disabled {

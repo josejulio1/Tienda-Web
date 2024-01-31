@@ -26,12 +26,14 @@ if ($_SESSION) {
                 <article class="form-column">
                     <label for="correo">Correo</label>
                     <input type="email" id="correo">
+                    <div class="is-invalid hide">Introduzca un correo válido</div>
                 </article>
             </section>
             <section class="form-row">
                 <article class="form-column">
                     <label for="contrasenia">Contraseña</label>
                     <input type="password" id="contrasenia">
+                    <div class="is-invalid hide">Introduzca una contraseña válida</div>
                 </article>
             </section>
             <section class="form-row">

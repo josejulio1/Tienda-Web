@@ -1,5 +1,5 @@
-import { END_POINTS } from "../api/end-points.js";
-import { HTTP_STATUS_CODES } from "../api/http-status-codes.js";
+import { END_POINTS } from "../../api/end-points.js";
+import { HTTP_STATUS_CODES } from "../../api/http-status-codes.js";
 /* import { error } from "../utils.js"; */
 
 const $cerrarSesion = $('#cerrar-sesion');

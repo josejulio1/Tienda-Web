@@ -72,6 +72,10 @@ body,
     row-gap: .5rem;
 }
 
+.info-container label {
+    color: black;
+}
+
 .info {
     border: 1px solid var(--primario);
     background-color: white;

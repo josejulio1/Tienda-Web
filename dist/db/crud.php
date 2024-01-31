@@ -51,10 +51,10 @@ function insert(string $tableName, array $fields) {
  */
 function select(string $tableName, array $fields = null, array $filters = null, int $limit = null, int $offset = null, bool $count = false) {
     $dbConnector = Database::connect();
-    $db = $dbConnector -> getDatabase();
-    if (!$db) {
-        return http_response_code(SERVICE_UNAVAILABLE);
+    if (!$dbConnector) {
+        return SERVICE_UNAVAILABLE;
     }
+    $db = $dbConnector -> getDatabase();
     $sentence = 'SELECT ';
     if ($count) {
         $sentence .= 'COUNT(*)';

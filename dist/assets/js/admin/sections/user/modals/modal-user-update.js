@@ -1,7 +1,6 @@
-import { updateRow } from "../../crud.js";
-import { USUARIO } from "../../models.js";
+import { updateRow } from "../../../crud.js";
+import { USUARIO } from "../../../models/models.js";
 import { $tablaUsuarios } from "../user.js";
-import { removeErrors } from "../../utils.js";
 
 export const $modalUsuarioActualizar = $('#modal-usuario-actualizar');
 
@@ -19,7 +18,7 @@ $modalUsuarioActualizar.on('hide.bs.modal', () => {
 /* const emailRegex = new RegExp(/^[a-zA-Z]{1,127}@[a-zA-Z]{1,124}\.[a-zA-Z]{3,}$/); */
 
 // Events
-$campoUsuarioActualizar.on('focusout', removeErrors);
+/* $campoUsuarioActualizar.on('focusout', removeErrors); */
 /* $campoCorreoActualizar.on('focusout', e => {
     if (emailRegex.test($campoCorreoActualizar.val())) {
         removeErrors(e);

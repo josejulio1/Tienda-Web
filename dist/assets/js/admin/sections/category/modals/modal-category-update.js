@@ -1,7 +1,6 @@
-import { updateRow } from "../../crud.js";
-import { CATEGORIA, USUARIO } from "../../models.js";
+import { updateRow } from "../../../crud.js";
+import { CATEGORIA } from "../../../models/models.js";
 import { $tablaCategorias } from "../category.js";
-import { removeErrors } from "../../utils.js";
 
 export const $modalCategoriaActualizar = $('#modal-categoria-actualizar');
 
@@ -13,7 +12,7 @@ $modalCategoriaActualizar.on('hide.bs.modal', () => {
 })
 
 // Events
-$campoCategoriaActualizar.on('focusout', removeErrors);
+/* $campoCategoriaActualizar.on('focusout', removeErrors); */
 
 $buttonActualizar.on('click', e => {
     e.preventDefault();

@@ -1,8 +1,8 @@
 import { $campoCategoriaActualizar, $modalCategoriaActualizar } from "./modals/modal-category-update.js";
-import { CATEGORIA } from "../models.js";
-import { deleteRow, select } from "../crud.js";
-import { CategoryRow } from "../models/row/CategoryRow.js";
-import { PERMISSIONS } from "../permissions.js";
+import { CATEGORIA } from "../../models/models.js";
+import { deleteRow, select } from "../../crud.js";
+import { CategoryRow } from "../../models/row/CategoryRow.js";
+import { PERMISSIONS } from "../../../api/permissions.js";
 
 export let hasUpdatePermission, hasDeletePermission;
 export let $tablaCategorias;

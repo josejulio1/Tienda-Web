@@ -1,9 +1,9 @@
 import { $tablaCategorias, hasDeletePermission } from "../category.js";
-import { insert } from "../../crud.js";
-import { END_POINTS } from "../../../api/end-points.js";
-import { CategoryRow } from "../../models/row/CategoryRow.js";
+import { insert } from "../../../crud.js";
+import { END_POINTS } from "../../../../api/end-points.js";
+import { CategoryRow } from "../../../models/row/CategoryRow.js";
 import { openUpdateCategory } from "../category.js";
-import { CATEGORIA } from "../../models.js";
+import { CATEGORIA } from "../../../models/models.js";
 
 const $campoCategoriaCrear = $('#nombre-categoria-crear');
 const $buttonCrear = $('#crear-categoria');

@@ -5,8 +5,8 @@ export const END_POINTS = {
     UPDATE_ROW: `${PATH}/update-row.php`,
     DELETE_ROW: `${PATH}/delete-row.php`,
     CLOSE_SESSION: `${PATH}/close-session.php`,
+    LOGIN: `${PATH}/login.php`,
     USER: {
-        LOGIN: `${PATH}/user/login/index.php`,
         INSERT: `${PATH}/user/insert/index.php`,
         UPDATE: `${PATH}/user/update/index.php`
     },
