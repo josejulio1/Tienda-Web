@@ -27,10 +27,10 @@ if (!password_verify($_POST['contrasenia'], $rows[0]['contrasenia'])) {
     return http_response_code(INCORRECT_DATA);
 }
 // Si el login fue extioso, crear la sesión
-if ($mantenerSesion == 'true') {
+/* if ($mantenerSesion == 'true') {
     // Mantener sesión iniciada por 2 semanas
     session_set_cookie_params(60 * 60 * 24 * 14);
-}
+} */
 session_start();
 $_SESSION['correo'] = $correo;
 return http_response_code(OK);

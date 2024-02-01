@@ -1,5 +1,5 @@
-import { updateRow } from "../../../crud.js";
-import { USUARIO } from "../../../models/models.js";
+import { select, updateRow } from "../../../crud.js";
+import { USUARIO, V_USUARIO_ROL } from "../../../models/models.js";
 import { $tablaUsuarios } from "../user.js";
 
 export const $modalUsuarioActualizar = $('#modal-usuario-actualizar');
@@ -46,14 +46,15 @@ $buttonActualizar.on('click', e => {
     const fields = {
         [USUARIO.USUARIO]: $campoUsuarioActualizar.val(),
         [USUARIO.ROL_ID]: $campoRolUsuarioActualizar.val()
-    };
+    }
     const filters = {
         [USUARIO.CORREO]: $campoCorreoActualizar.val()
     }
 
-    updateRow(USUARIO.TABLE_NAME, fields, filters, () => {
+    updateRow(USUARIO.TABLE_NAME, fields, filters, async () => {
         const id = $tablaUsuarios.row($('tr[selected]')).index();
         $tablaUsuarios.cell({row: id, column: 1}).data($campoUsuarioActualizar.val()).draw();
+        console.log(await select(V_USUARIO_ROL.TABLE_NAME, false))
         $tablaUsuarios.cell({row: id, column: 3}).data($('#rol-usuario-actualizar option:selected').text()).draw();
     });
 })

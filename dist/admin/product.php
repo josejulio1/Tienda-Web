@@ -17,9 +17,9 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
 </head>
 <body>
   <?php
-  require_once __DIR__ . '/../views/admin/panel.php';
+  require_once __DIR__ . '/../templates/admin/panel.php';
   ?>
-  <main class="info container">
+  <main class="info-container">
   <div class="info" id="producto">
      <table class="row-border hover" id="tabla-productos">
      	<thead>
@@ -74,7 +74,9 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
             </form>
           </div>
         </div>
-        <div class="modal fade" id="modal-producto-crear" tabindex="-1" aria-labelledby="modal-producto-crear" aria-hidden="true">
+        <?php
+        if ($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::CREATE) { ?>
+          <div class="modal fade" id="modal-producto-crear" tabindex="-1" aria-labelledby="modal-producto-crear" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-xl">
             <form class="modal-content">
               <div class="modal__header">
@@ -128,6 +130,9 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
             </form>
           </div>
         </div>
+          <?php
+        }
+        ?>
     </div>
     <?php
     if ($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) {

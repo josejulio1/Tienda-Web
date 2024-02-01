@@ -1,7 +1,13 @@
 @media (min-width: 1024px) {
     body {
+        display: flex;
+    }
+}
+
+@media (max-width: 1023px) {
+    body {
         display: grid;
-        grid-template-columns: 30% 70%;
+        grid-template-columns: 10% 90%;
     }
 }
 
@@ -9,22 +15,123 @@ body,
 .panel,
 .info-container {
     overflow-y: auto;
-    height: 100vh;
+    height: 100svh;
 }
 
 /* Izquierda */
 .panel {
     background-color: var(--secundario);
+    flex-basis: 30%;
+    display: flex;
+}
+
+.panel--info {
     padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex: 0 0 90%;
+    border-right: 1px solid var(--primario);
+}
+
+@keyframes open-panel {
+    from {
+        flex-basis: 5%;
+    }
+
+    to {
+        flex-basis: 30%;
+    }
+}
+
+@keyframes close-panel {
+    from {
+        flex-basis: 30%;
+    }
+
+    to {
+        flex-basis: 5%;
+    }
+}
+
+@keyframes open-panel-mobile {
+    from {
+        flex-basis: 10%;
+    }
+
+    to {
+        flex-basis: 100%;
+    }
+}
+
+@keyframes close-panel-mobile {
+    from {
+        flex-basis: 100%;
+    }
+
+    to {
+        flex-basis: 10%;
+    }
+}
+
+.open-panel .panel {
+    animation: open-panel .5s ease-in-out;
+}
+
+.close-panel .panel {
+    animation: close-panel .5s ease-in-out;
+    flex-basis: 5%;
+}
+
+.open-panel-mobile {
+    display: flex;
+}
+
+.open-panel-mobile .info-container {
+    display: none;
+}
+
+.open-panel-mobile .panel {
+    animation: open-panel-mobile .5s ease-in-out;
+    flex-basis: 100%;
+}
+
+.close-panel-mobile .panel {
+    animation: close-panel-mobile .5s ease-in-out;
+    flex-basis: 5%;
+}
+
+.close-panel .open-close-panel img,
+.close-panel-mobile .open-close-panel img {
+    width: 50px;
+    height: 50px;
+    transform: rotate(180deg);
 }
 
 @media (max-width: 1024px) {
-    .panel {
-        display: none;
+    .close-panel .open-close-panel img,
+    .close-panel-mobile .open-close-panel img {
+        width: 100%;
     }
+}
+
+.open-close-panel {
+    background-color: var(--secundario);
+    cursor: pointer;
+    transition: .5s background-color;
+    flex: 1 0 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.open-close-panel img {
+    pointer-events: none;
+    user-select: none;
+}
+
+.open-close-panel:hover {
+    background-color: #06315f;
 }
 
 .info-usuario {
@@ -65,11 +172,11 @@ body,
 .info-container {
     background-color: var(--primario);
     padding: 1rem;
-    overflow-y: visible;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     row-gap: .5rem;
+    flex: 1 0 70%;
 }
 
 .info-container label {
@@ -80,18 +187,12 @@ body,
     border: 1px solid var(--primario);
     background-color: white;
     padding: 1rem;
-    height: 90vh;
+    height: 90svh;
     overflow: auto;
 }
 
 .info a {
     font-size: 1rem;
-}
-
-@media (max-width: 1024px) {
-    .info {
-        margin-top: 6rem;
-    }
 }
 
 /* table {

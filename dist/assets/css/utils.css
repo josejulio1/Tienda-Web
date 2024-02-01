@@ -110,3 +110,7 @@
     color: var(--rojo);
     font-weight: bold;
 }
+
+.rotate-180deg {
+    transform: rotate(180deg);
+}

@@ -27,10 +27,25 @@ export function insert(endPoint, formData, postOperationCb) {
     })
 }
 
-export async function select(tableName) {
+/**
+ * 
+ * @param {string} tableName Nombre de la tabla a la que consultar datos (usar constantes de /assets/js/admin/models)
+ * @param {boolean} selectPermissions Si se desea consultar también los permisos de actualizar y eliminar
+ * @returns 
+ */
+export async function select(tableName, selectPermissions) {
     return new Promise((resolve, reject) => {
+        const data = {
+            'table-name': tableName,
+            fields: fields,
+            filters: filters,
+            'select-permissions': selectPermissions
+        }
         const formData = new FormData();
         formData.append('table-name', tableName);
+        /* formData.append('fields', fields);
+        formData.append('filters', fields); */
+        formData.append('select-permissions', selectPermissions);
         fetch(END_POINTS.SELECT_ROWS, {
             method: 'POST',
             body: formData,

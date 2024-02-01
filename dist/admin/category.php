@@ -20,10 +20,9 @@ if (($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) == PERMISS
 </head>
 <body>
   <?php
-  require_once __DIR__ . '/../views/admin/panel.php';
+  require_once __DIR__ . '/../templates/admin/panel.php';
   ?>
   <main class="info-container">
-
     <div class="info" id="categoria">
      <table class="row-border hover" id="tabla-categorias">
        <thead>
@@ -36,7 +35,9 @@ if (($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) == PERMISS
         ?>
        </thead>
      </table>
-        <div class="modal fade" id="modal-categoria-actualizar" tabindex="-1" aria-labelledby="modal-categoria-actualizar" aria-hidden="true">
+     <?php
+     if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::CREATE) { ?>
+      <div class="modal fade" id="modal-categoria-actualizar" tabindex="-1" aria-labelledby="modal-categoria-actualizar" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-xl">
             <form class="modal-content">
               <div class="modal__header">
@@ -58,7 +59,12 @@ if (($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) == PERMISS
             </form>
           </div>
         </div>
-        <div class="modal fade" id="modal-categoria-crear" tabindex="-1" aria-labelledby="modal-categoria-crear" aria-hidden="true">
+      <?php
+     }
+     ?>
+        <?php
+        if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::CREATE) { ?>
+          <div class="modal fade" id="modal-categoria-crear" tabindex="-1" aria-labelledby="modal-categoria-crear" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-xl">
             <form class="modal-content">
               <div class="modal__header">
@@ -80,6 +86,9 @@ if (($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) == PERMISS
             </form>
           </div>
         </div>
+          <?php
+        }
+        ?>
     </div>
   <?php
   if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) {
