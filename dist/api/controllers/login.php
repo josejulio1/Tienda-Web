@@ -10,7 +10,7 @@ require_once __DIR__ . '/../../db/crud.php';
 $correo = $_POST['correo'];
 $mantenerSesion = $_POST['mantener-sesion'];
 
-$rows = select($_GET['table-name'], ['contrasenia'], [
+$rows = select($_GET['table-name'], ['id', 'contrasenia'], [
     TypesFilters::EQUALS => [
         'correo' => $correo
     ]
@@ -32,6 +32,7 @@ if (!password_verify($_POST['contrasenia'], $rows[0]['contrasenia'])) {
     session_set_cookie_params(60 * 60 * 24 * 14);
 } */
 session_start();
+$_SESSION['id'] = $rows[0]['id'];
 $_SESSION['correo'] = $correo;
 return http_response_code(OK);
 ?>

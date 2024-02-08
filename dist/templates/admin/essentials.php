@@ -7,7 +7,6 @@ if (!$_SESSION) {
 require_once __DIR__ . '/../../db/crud.php';
 require_once __DIR__ . '/../../db/utils/utils.php';
 require_once __DIR__ . '/../../db/models/v_usuario_rol.php';
-require_once __DIR__ . '/../../db/models/rol.php';
 require_once __DIR__ . '/../../api/utils/permissions.php';
 
 $userInfo = select(v_usuario_rol::class, [

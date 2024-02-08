@@ -66,6 +66,7 @@ if (($userInfo[v_usuario_rol::PERMISO_USUARIO] & PERMISSIONS::READ) == PERMISSIO
                            <label for="rol-usuario-actualizar">Rol</label>
                            <select id="rol-usuario-actualizar" required>
                                <?php
+                               require_once __DIR__ . '/../db/models/rol.php';
                                $rows = select(rol::class, [rol::ID, rol::NOMBRE, rol::COLOR]);
                                $propertiesName = array_keys($rows[0]);
                                foreach ($rows as $colorRow) { ?>
@@ -99,7 +100,7 @@ if (($userInfo[v_usuario_rol::PERMISO_USUARIO] & PERMISSIONS::READ) == PERMISSIO
               <div class="modal-body">
                 <div class="modal-row">
                       <div class="modal-column">
-                          <label for="nombre-usuario-crear">Usuario</label>
+                          <label for="nombre-usuario-crear">Nombre</label>
                           <input type="text" id="nombre-usuario-crear" class="form-control" required>
                           <div class="invalid-feedback">Introduzca un nombre de usuario</div>
                       </div>
@@ -149,7 +150,7 @@ if (($userInfo[v_usuario_rol::PERMISO_USUARIO] & PERMISSIONS::READ) == PERMISSIO
         ?>
         </div>
       <?php
-      if ($userInfo[v_usuario_rol::PERMISO_USUARIO] & PERMISSIONS::READ) {
+      if ($userInfo[v_usuario_rol::PERMISO_USUARIO] & PERMISSIONS::CREATE) {
           echo '<button data-bs-toggle="modal" data-bs-target="#modal-usuario-crear" class="btn-crear">Crear</button>';
       }
       ?>

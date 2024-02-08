@@ -57,18 +57,13 @@ CREATE TABLE Comentario (
 
 CREATE TABLE Producto (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) UNIQUE NOT NULL,
     descripcion VARCHAR(5000) NOT NULL,
     precio FLOAT(5,2) NOT NULL,
     marca VARCHAR(100) NOT NULL,
     stock INT NOT NULL,
+    ruta_imagen VARCHAR(100) NOT NULL,
     categoria_id INT NOT NULL
-);
-
-CREATE TABLE Imagen_Producto (
-    id INT NOT NULL,
-    ruta_imagen VARCHAR(200) NOT NULL,
-    producto_id INT NOT NULL
 );
 
 CREATE TABLE Categoria (
@@ -99,17 +94,17 @@ CREATE TABLE Rol (
 -- ALTER
 ALTER TABLE Carrito
 ADD CONSTRAINT fk_carrito_clienteId FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
-ADD CONSTRAINT fk_carrito_productoId FOREIGN KEY (producto_id) REFERENCES Producto(id)
+ADD CONSTRAINT fk_carrito_productoId FOREIGN KEY (producto_id) REFERENCES Producto(id) ON DELETE CASCADE
 ;
 
 ALTER TABLE CarritoItem
-ADD CONSTRAINT fk_carritoItem_carritoId FOREIGN KEY (carrito_id) REFERENCES Carrito(id),
-ADD CONSTRAINT fk_carritoItem_productoId FOREIGN KEY (producto_id) REFERENCES Producto(id)
+ADD CONSTRAINT fk_carritoItem_carritoId FOREIGN KEY (carrito_id) REFERENCES Carrito(id) ON DELETE CASCADE,
+ADD CONSTRAINT fk_carritoItem_productoId FOREIGN KEY (producto_id) REFERENCES Producto(id) ON DELETE CASCADE
 ;
 
 ALTER TABLE Pedido
 ADD CONSTRAINT fk_pedido_clienteId FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
-ADD CONSTRAINT fk_pedido_carritoId FOREIGN KEY (carrito_id) REFERENCES Carrito(id),
+ADD CONSTRAINT fk_pedido_carritoId FOREIGN KEY (carrito_id) REFERENCES Carrito(id) ON DELETE CASCADE,
 ADD CONSTRAINT fk_pedido_metodoPagoId FOREIGN KEY (metodo_pago_id) REFERENCES Metodo_Pago(id),
 ADD CONSTRAINT fk_pedido_estadoPagoId FOREIGN KEY (estado_pago_id) REFERENCES Estado_Pago(id)
 ;
@@ -120,20 +115,19 @@ ADD CONSTRAINT fk_comentario_productoId FOREIGN KEY (producto_id) REFERENCES Pro
 ;
 
 ALTER TABLE Producto
-ADD CONSTRAINT fk_producto_clienteId FOREIGN KEY (categoria_id) REFERENCES Categoria(id)
-;
-
-ALTER TABLE Imagen_Producto
-ADD CONSTRAINT pk_imagenProducto PRIMARY KEY(id, producto_id),
-ADD CONSTRAINT fk_imagenProducto_clienteId FOREIGN KEY (producto_id) REFERENCES Producto(id),
-MODIFY COLUMN id INT NOT NULL AUTO_INCREMENT
+ADD CONSTRAINT fk_producto_clienteId FOREIGN KEY (categoria_id) REFERENCES Categoria(id) ON DELETE CASCADE
 ;
 
 ALTER TABLE Usuario
-ADD CONSTRAINT fk_usuario_rolId FOREIGN KEY (rol_id) REFERENCES Rol(id)
+ADD CONSTRAINT fk_usuario_rolId FOREIGN KEY (rol_id) REFERENCES Rol(id) ON DELETE CASCADE ON UPDATE CASCADE
 ;
 
 -- Vistas
-CREATE VIEW V_Usuario_Rol AS
+CREATE VIEW v_usuario_rol AS
 SELECT u.id AS "usuario_id", u.usuario, u.correo, u.contrasenia, r.nombre AS "nombre_rol", r.color AS "color_rol", u.ruta_imagen_perfil, r.permiso_categoria, r.permiso_producto, r.permiso_cliente, r.permiso_usuario, r.permiso_rol FROM usuario u JOIN rol r ON u.rol_id = r.id
+;
+
+CREATE VIEW v_producto_categoria AS
+SELECT p.id AS "producto_id", p.nombre, p.descripcion, p.precio, p.marca, p.stock, p.ruta_imagen, c.nombre AS "nombre_categoria"
+FROM producto p JOIN categoria c ON p.categoria_id = c.id
 ;

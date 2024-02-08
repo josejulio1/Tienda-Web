@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../utils/http-status-codes.php';
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+session_start();
+if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$_SESSION) {
     echo 'Acceso no autorizado';
     return http_response_code(METHOD_NOT_ALLOWED);
 }
@@ -19,7 +20,7 @@ if ($_FILES) {
 } else {
     $_POST[usuario::RUTA_IMAGEN_PERFIL] = '/assets/img/users/default/default-avatar.jpg';
 }
-$statusCode = insert('usuario', $_POST);
+$statusCode = insert(usuario::class, $_POST);
 if ($statusCode == OK && $_FILES) {
     mkdir($_SERVER['DOCUMENT_ROOT'] . $path);
     move_uploaded_file($_FILES[usuario::RUTA_IMAGEN_PERFIL]['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $path . $fileNameFormatted);

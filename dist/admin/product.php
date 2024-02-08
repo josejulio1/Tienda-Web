@@ -14,6 +14,9 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
   <?php
   require_once __DIR__ . '/../templates/admin/html-imports.php';
   ?>
+  <script src="/assets/js/admin/sections/product/product.js" type="module" defer></script>
+  <script src="/assets/js/admin/sections/product/modals/modal-product-create.js" type="module" defer></script>
+  <script src="/assets/js/admin/sections/product/modals/modal-product-update.js" type="module" defer></script>
 </head>
 <body>
   <?php
@@ -25,10 +28,10 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
      	<thead>
         <th>ID</th>
         <th>Nombre</th>
-     		<th>Descripción</th>
      		<th>Precio</th>
      		<th>Marca</th>
      		<th>Stock</th>
+     		<th>Imagen</th>
      		<th>Categoría</th>
         <?php
         if ($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::DELETE) {
@@ -57,15 +60,17 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
                           <div class="invalid-feedback">Introduzca el precio del producto</div>
                       </div>
                   </div>
+                  <div class="modal-row">
+                    <div class="modal-column">
+                        <label for="marca-producto-actualizar">Marca</label>
+                        <input type="text" id="marca-producto-actualizar" class="form-control" required>
+                        <div class="invalid-feedback">Debe escribir una marca</div>
+                    </div>
+                  </div>
                   <div class="modal-column">
                     <label for="descripcion-producto-actualizar">Descripción</label>
                     <textarea id="descripcion-producto-actualizar" class="form-control" cols="30" rows="10" required></textarea>
                     <div class="invalid-feedback">Introduzca una descripción</div>
-                  </div>
-                  <div class="modal-column">
-                      <label for="marca-producto-actualizar">Marca</label>
-                      <input type="text" id="marca-producto-actualizar" class="form-control" required>
-                      <div class="invalid-feedback">Debe escribir una marca</div>
                   </div>
                 </div>
               <div class="modal-footer">
@@ -86,7 +91,7 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
               <div class="modal-body">
                 <div class="modal-row">
                       <div class="modal-column">
-                          <label for="nombre-producto-crear">Producto</label>
+                          <label for="nombre-producto-crear">Nombre</label>
                           <input type="text" id="nombre-producto-crear" class="form-control" required>
                           <div class="invalid-feedback">Introduzca un nombre de producto</div>
                       </div>
@@ -95,11 +100,6 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
                           <input type="number" id="precio-producto-crear" class="form-control" required>
                           <div class="invalid-feedback">Introduzca el precio del producto</div>
                       </div>
-                  </div>
-                  <div class="modal-column">
-                      <label for="descripcion-producto-crear">Descripción</label>
-                      <textarea id="descripcion-producto-crear" class="form-control" cols="30" rows="10" required></textarea>
-                      <div class="invalid-feedback">Introduzca una descripción</div>
                   </div>
                   <div class="modal-row">
                     <div class="modal-column">
@@ -113,14 +113,34 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
                         <div class="invalid-feedback">Introduzca una cantidad de stock</div>
                     </div>
                   </div>
+                  <div class="modal-column">
+                      <label for="descripcion-producto-crear">Descripción</label>
+                      <textarea id="descripcion-producto-crear" class="form-control" cols="30" rows="10" required></textarea>
+                      <div class="invalid-feedback">Introduzca una descripción</div>
+                  </div>
+                  <div class="modal-row">
+                    <div class="modal-column">
+                        <label for="categoria-producto-crear">Categoría</label>
+                        <select id="categoria-producto-crear" required>
+                            <?php
+                            require_once __DIR__ . '/../db/models/categoria.php';
+                            $rows = select(categoria::class, [categoria::ID, categoria::NOMBRE]);
+                            $propertiesName = array_keys($rows[0]);
+                            foreach ($rows as $categoriaRow) { ?>
+                                <option value="<?php echo $categoriaRow[$propertiesName[0]]; ?>"><?php echo $categoriaRow[$propertiesName[1]]; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">Debe seleccionar una categoría</div>
+                    </div>
+                  </div>
                   <div class="form-row">
                     <div class="form-column">
                         <label>Foto de producto</label>
-                        <label class="img-container" for="imagen-producto-crear">
-                            <input type="file" class="image" id="imagen-producto-crear" hidden>
-                            <img src="/assets/img/web/svg/add.svg" alt="Plus">
-                            <img class="profile-photo hide" alt="Profile Photo">
-                        </label>
+                        <!-- COMPONENTE: PreviewImage -->
+                        <label class="img-container" for="imagen-producto-crear"></label>
+                        <div class="invalid-feedback">Debe introducir una imagen de producto</div>
                     </div>
                 </div>
                 </div>
@@ -135,7 +155,7 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
         ?>
     </div>
     <?php
-    if ($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) {
+    if ($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::CREATE) {
         echo '<button data-bs-toggle="modal" data-bs-target="#modal-producto-crear" class="btn-crear">Crear</button>';
     }
     ?>

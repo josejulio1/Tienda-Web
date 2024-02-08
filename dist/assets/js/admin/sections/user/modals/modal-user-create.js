@@ -3,6 +3,8 @@ import { insert } from "../../../crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { UserRow } from "../../../models/row/UserRow.js";
 import { USUARIO } from "../../../models/models.js";
+import { PreviewImage } from "../../../../components/PreviewImage.js";
+import { EMAIL_REGEX } from "../../../../helpers/regex.js";
 
 const $campoNombreCrear = $('#nombre-usuario-crear');
 const $campoCorreoCrear = $('#correo-usuario-crear');
@@ -19,7 +21,7 @@ $buttonCrear.on('click', e => {
         hayErrores = true;
     }
 
-    if (!$campoCorreoCrear.val()) {
+    if (!$campoCorreoCrear.val() || !EMAIL_REGEX.test($campoCorreoCrear.val())) {
         $campoCorreoCrear.addClass('is-invalid');
         hayErrores = true;
     }
@@ -40,7 +42,6 @@ $buttonCrear.on('click', e => {
 
     const fd = new FormData();
     fd.append(USUARIO.USUARIO, $campoNombreCrear.val());
-    fd.append(USUARIO.CORREO, $campoCorreoCrear.val());
     fd.append(USUARIO.CORREO, $campoCorreoCrear.val());
     fd.append(USUARIO.CONTRASENIA, $campoContraseniaCrear.val());
     fd.append(USUARIO.ROL_ID, $campoRolCrear.val());
@@ -68,5 +69,5 @@ function clearFields() {
     $campoNombreCrear.val('');
     $campoCorreoCrear.val('');
     $campoContraseniaCrear.val('');
-    $('#imagen-usuario-crear').val('');
+    new PreviewImage('.img-container', 'imagen-usuario-crear');
 }

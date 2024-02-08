@@ -1,0 +1,1 @@
+export const EMAIL_REGEX = new RegExp(/^[a-zA-Z]{1,127}@[a-zA-Z]{1,124}\.[a-zA-Z]{2,}$/);

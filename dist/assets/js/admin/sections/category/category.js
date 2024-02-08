@@ -9,7 +9,7 @@ export let $tablaCategorias;
 
 window.addEventListener('load', async () => {
     $tablaCategorias = $('#tabla-categorias').DataTable();
-    const json = await select(CATEGORIA.TABLE_NAME, true);
+    const json = await select(CATEGORIA.TABLE_NAME, null, null, true);
     const { data: categories } = json;
     hasUpdatePermission = json['has-update-permission'] != PERMISSIONS.NO_PERMISSIONS;
     hasDeletePermission = json['has-delete-permission'] != PERMISSIONS.NO_PERMISSIONS;

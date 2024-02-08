@@ -3,6 +3,7 @@ import { END_POINTS } from "../api/end-points.js";
 import { LoadingButton } from "../components/LoadingButton.js";
 import { USUARIO } from "./models/models.js";
 import { ErrorWindow } from "../components/ErrorWindow.js";
+import { ERROR_MESSAGES } from "../api/error-messages.js";
 /* import { error } from "./utils.js"; */
 
 const $correo = $('#correo');
@@ -42,7 +43,7 @@ new LoadingButton('.btn-info', 'Iniciar Sesión', ($buttonP, $buttonLoading) => 
         $buttonLoading.addClass('hide');
         const { status } = response;
         if (status == HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
-            ErrorWindow.make('No se pudo conectar con la base de datos. Inténtelo más tarde');
+            ErrorWindow.make(ERROR_MESSAGES[status]);
             return;
         }
         if (status != HTTP_STATUS_CODES.OK) {

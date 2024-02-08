@@ -11,7 +11,7 @@ export let $tablaUsuarios;
 // Cargar la página
 window.addEventListener('load', async () => {
     $tablaUsuarios = $('#tabla-usuarios').DataTable();
-    const json = await select(V_USUARIO_ROL.TABLE_NAME, true);
+    const json = await select(V_USUARIO_ROL.TABLE_NAME, null, null, true);
     const { data: users } = json;
     hasUpdatePermission = json['has-update-permission'] != PERMISSIONS.NO_PERMISSIONS;
     hasDeletePermission = json['has-delete-permission'] != PERMISSIONS.NO_PERMISSIONS;

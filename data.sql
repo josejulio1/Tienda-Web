@@ -21,16 +21,16 @@ insert into categoria (id, nombre) values (7, 'Sitework & Site Utilities');
 insert into categoria (id, nombre) values (8, 'Masonry');
 
 -- Producto
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (1, 'Maureen', 'Other synovitis and tenosynovitis, left forearm', 28.86, 'Clarithromycin', 8, 2);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (2, 'Cherice', 'String or thread causing external constriction', 587.94, 'sunmark anti diarrheal', 87, 8);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (3, 'Jacinda', 'Nondisplaced comminuted fracture of shaft of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with nonunion', 413.35, 'Privigen', 12, 8);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (4, 'Brennan', 'Toxic effect of chlorine gas, intentional self-harm, initial encounter', 718.24, 'Fruit Punch Scented Hand Sanitizer', 91, 3);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (5, 'Alvira', 'Unspecified physeal fracture of lower end of radius, unspecified arm, subsequent encounter for fracture with routine healing', 610.46, 'No7 Dual Action Tinted Moisturiser Fair', 11, 1);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (6, 'Missy', 'Osteonecrosis in diseases classified elsewhere, right shoulder', 573.15, 'LBEL HYDRATESS', 88, 3);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (7, 'Abraham', 'Exposure of graft of urinary organ, initial encounter', 711.84, 'HYDROCORTISONE', 4, 5);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (8, 'Raina', 'Open bite of right great toe without damage to nail', 532.64, 'Ciprofloxacin', 32, 4);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (9, 'Elliot', 'Crushing injury of unspecified hand', 789.89, 'Leader Extra Strength Medicated Pain Relief Patch', 84, 3);
-insert into producto (id, nombre, descripcion, precio, marca, stock, categoria_id) values (10, 'Nertie', 'Other sprain of left foot, initial encounter', 95.29, 'Periodontium Quartz', 12, 4);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (1, 'Maureen', 'Other synovitis and tenosynovitis, left forearm', 28.86, 'Clarithromycin', 8, '/assets/img/users/default/default-avatar.jpg', 2);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (2, 'Cherice', 'String or thread causing external constriction', 587.94, 'sunmark anti', 87, '/assets/img/users/default/default-avatar.jpg', 8);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (3, 'Jacinda', 'Nondisplaced comminuted fracture of shaft of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with nonunion', 413.35, 'Privigen', 12, '/assets/img/users/default/default-avatar.jpg', 8);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (4, 'Brennan', 'Toxic effect of chlorine gas, intentional self-harm, initial encounter', 718.24, 'Fruit Punch Scented Hand Sanitizer', 91, '/assets/img/users/default/default-avatar.jpg', 3);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (5, 'Alvira', 'Unspecified physeal fracture of lower end of radius, unspecified arm, subsequent encounter for fracture with routine healing', 610.46, 'No7 Dual Action Tinted Moisturiser Fair', 11, '/assets/img/users/default/default-avatar.jpg', 1);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (6, 'Missy', 'Osteonecrosis in diseases classified elsewhere, right shoulder', 573.15, 'LBEL HYDRATESS', 88, '/assets/img/users/default/default-avatar.jpg', 3);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (7, 'Abraham', 'Exposure of graft of urinary organ, initial encounter', 711.84, 'HYDROCORTISONE', 4, '/assets/img/users/default/default-avatar.jpg', 5);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (8, 'Raina', 'Open bite of right great toe without damage to nail', 532.64, 'Ciprofloxacin', 32, '/assets/img/users/default/default-avatar.jpg', 4);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (9, 'Elliot', 'Crushing injury of unspecified hand', 789.89, 'Leader Extra Strength Medicated Pain Relief Patch', 84, '/assets/img/users/default/default-avatar.jpg', 3);
+insert into producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (10, 'Nertie', 'Other sprain of left foot, initial encounter', 95.29, 'Periodontium Quartz', 12, '/assets/img/users/default/default-avatar.jpg', 4);
 
 -- Carrito
 insert into carrito (id, cliente_id, producto_id) values (1, 9, 6);
@@ -92,8 +92,9 @@ insert into pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, 
 insert into pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (9, 9, 9, 8, 7, 'Suite 7');
 insert into pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (10, 10, 7, 1, 9, 'Apt 219');
 
+-- Rol
 INSERT INTO rol (nombre, color, permiso_categoria, permiso_producto, permiso_cliente, permiso_usuario, permiso_rol) VALUES ('Administrador', '000000', 15, 15, 15, 15, 15);
-INSERT INTO rol (nombre, color, permiso_categoria, permiso_producto, permiso_cliente, permiso_usuario, permiso_rol) VALUES ('Moderador', '333333', 0, 3, 0, 2, 4);
+INSERT INTO rol (nombre, color, permiso_categoria, permiso_producto, permiso_cliente, permiso_usuario, permiso_rol) VALUES ('Moderador', '777777', 0, 3, 0, 2, 4);
 INSERT INTO usuario (usuario, correo, contrasenia, rol_id, ruta_imagen_perfil) VALUES ('jose', 'jose@gmail.com', '$2y$10$G3lxPK6tte2Jvh7qneHUHOxf3PCmHPxq8Njj5.x1l88Cre1gpdfGO', 1, '/assets/img/users/default/default-avatar.jpg');
 INSERT INTO usuario (usuario, correo, contrasenia, rol_id, ruta_imagen_perfil) VALUES ('pepe', 'pepe@gmail.com', '$2y$10$G3lxPK6tte2Jvh7qneHUHOxf3PCmHPxq8Njj5.x1l88Cre1gpdfGO', 1, '/assets/img/users/default/default-avatar.jpg');
 INSERT INTO usuario (usuario, correo, contrasenia, rol_id, ruta_imagen_perfil) VALUES ('antonio', 'antonio@gmail.com', '$2y$10$G3lxPK6tte2Jvh7qneHUHOxf3PCmHPxq8Njj5.x1l88Cre1gpdfGO', 2, '/assets/img/users/default/default-avatar.jpg');

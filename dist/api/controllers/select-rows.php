@@ -7,25 +7,30 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 require_once __DIR__ . '/../../db/crud.php';
 session_start();
-// TODO: Pasar a JSON
-/* $json = json_decode(file_get_contents('php://input'), true); */
-
-$tableName = $_POST['table-name'];
-$selectPermissions = $_POST['select-permissions'];
+$json = json_decode(file_get_contents('php://input'), true);
+$tableName = $json['table-name'];
+$fields = $json['fields'];
+$filters = $json['filters'];
+$selectPermissions = $json['select-permissions'];
 $permiso = '';
 // Si se quieren consultar los permisos de actualización y eliminación
 if ($selectPermissions == 'true') {
     require_once __DIR__ . '/../../db/utils/utils.php';
     require_once __DIR__ . '/../../db/models/v_usuario_rol.php';
+    require_once __DIR__ . '/../../db/models/v_producto_categoria.php';
+    require_once __DIR__ . '/../../db/models/categoria.php';
+    require_once __DIR__ . '/../../db/models/rol.php';
     $permisoBuscado = '';
     if ($tableName == v_usuario_rol::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_USUARIO;
-    } else if ($tableName == producto::class) {
-        $permisoBuscado == v_usuario_rol::PERMISO_PRODUCTO;
+    } else if ($tableName == v_producto_categoria::class) {
+        $permisoBuscado = v_usuario_rol::PERMISO_PRODUCTO;
     } else if ($tableName == categoria::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_CATEGORIA;
+    } else if ($tableName == rol::class) {
+        $permisoBuscado = v_usuario_rol::PERMISO_ROL;
     }
-
+    
     $permiso = intval(select(v_usuario_rol::class, [$permisoBuscado], [
         TypesFilters::EQUALS => [
             'correo' => $_SESSION['correo']
@@ -36,11 +41,11 @@ if ($selectPermissions == 'true') {
 if ($selectPermissions == 'true') {
     require_once __DIR__ . '/../utils/permissions.php';
     echo json_encode([
-        'data' => select($tableName),
+        'data' => select($tableName, $fields, $filters),
         'has-update-permission' => $permiso & PERMISSIONS::UPDATE,
         'has-delete-permission' => $permiso & PERMISSIONS::DELETE
     ]);
 } else {
-    echo json_encode(select($tableName));
+    echo json_encode(select($tableName, $fields, $filters));
 }
 ?>

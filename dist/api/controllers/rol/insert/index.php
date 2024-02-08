@@ -7,13 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$_SESSION) {
 }
 
 require_once '../../../../db/crud.php';
-require_once '../../../../db/models/categoria.php';
-$statusCode = insert(categoria::class, $_POST);
-$categoryId = select(categoria::class, [categoria::ID], [
-    categoria::NOMBRE => $_POST[categoria::NOMBRE]
-])[0][categoria::ID];
+require_once '../../../../db/models/rol.php';
+$statusCode = insert(rol::class, $_POST);
+$rolId = select(rol::class, [rol::ID], [
+    rol::NOMBRE => $_POST[rol::NOMBRE]
+])[0][rol::ID];
 echo json_encode([
     'status' => $statusCode,
-    'categoria_id' => $categoryId
+    'rol_id' => $rolId
 ]);
 ?>

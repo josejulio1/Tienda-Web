@@ -9,5 +9,5 @@
 <script src="/assets/js/lib/jquery.dataTables.js"></script>
 <!-- Panel -->
 <script src="/assets/js/admin/open-close-panel.js" defer></script>
-<script src="/assets/js/admin/remove-form-errors.js" defer></script>
+<script src="/assets/js/admin/general-settings.js" defer></script>
 <script src="/assets/js/admin/sections/panel.js" type="module" defer></script>

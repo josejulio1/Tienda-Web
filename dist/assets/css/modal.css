@@ -69,6 +69,14 @@
     width: 100%;
 }
 
+.modal-column textarea {
+    border: 1px solid var(--secundario);
+}
+
+input[type=color] {
+    margin-top: 1.4rem;
+}
+
 .invalid-feedback {
     font-size: 1.2rem;
 }
@@ -124,4 +132,61 @@
 
 .modal-body__info--important {
     font-weight: bold;
+}
+
+/* Permissions */
+nav {
+    border: 1px solid var(--secundario);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+nav button {
+    padding: .5rem;
+    flex: 1 0 15%;
+    color: var(--secundario);
+    width: 100%;
+    border-radius: 0;
+    border: 1px solid var(--secundario);
+    transition: .4s background-color, .4s color;
+}
+
+nav button:hover,
+.selected-button {
+    color: var(--primario);
+    background-color: var(--azul);
+}
+
+.contenedor-permisos {
+    padding: 1rem;
+    width: 100%;
+    border: 2px solid var(--secundario);
+}
+
+.permiso--header {
+    display: flex;
+    justify-content: space-around;
+    text-transform: uppercase;
+    text-align: center;
+    align-items: center;
+    gap: .6rem;
+}
+
+.permiso--header label {
+    border-bottom: 1px solid var(--secundario);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+@media (max-width: 1024px) {
+    .permiso--header {
+        flex-direction: column;
+    }
+
+    .permiso--header label {
+        margin-bottom: .4rem;
+    }
 }

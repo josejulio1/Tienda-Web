@@ -91,7 +91,7 @@ if (($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) == PERMISS
         ?>
     </div>
   <?php
-  if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) {
+  if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::CREATE) {
       echo '<button data-bs-toggle="modal" data-bs-target="#modal-categoria-crear" class="btn-crear">Crear</button>';
   }
   ?>

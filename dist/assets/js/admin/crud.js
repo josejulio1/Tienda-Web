@@ -33,7 +33,7 @@ export function insert(endPoint, formData, postOperationCb) {
  * @param {boolean} selectPermissions Si se desea consultar también los permisos de actualizar y eliminar
  * @returns 
  */
-export async function select(tableName, selectPermissions) {
+export async function select(tableName, fields = null, filters = null, selectPermissions = false) {
     return new Promise((resolve, reject) => {
         const data = {
             'table-name': tableName,
@@ -41,15 +41,11 @@ export async function select(tableName, selectPermissions) {
             filters: filters,
             'select-permissions': selectPermissions
         }
-        const formData = new FormData();
-        formData.append('table-name', tableName);
-        /* formData.append('fields', fields);
-        formData.append('filters', fields); */
-        formData.append('select-permissions', selectPermissions);
         fetch(END_POINTS.SELECT_ROWS, {
             method: 'POST',
-            body: formData,
+            body: JSON.stringify(data),
             headers: {
+                'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
         })
@@ -101,8 +97,9 @@ export async function deleteRow(e, $table) {
     })
     .then(response => {
         $modalInfo.modal('show');
-        if (response.status != HTTP_STATUS_CODES.OK) {
-            incorrectModal('No se pudo eliminar el registro');
+        const { status } = response;
+        if (status != HTTP_STATUS_CODES.OK) {
+            incorrectModal(ERROR_MESSAGES[status]);
             return;
         }
         $table.row(e.target.closest('tr')).remove().draw();

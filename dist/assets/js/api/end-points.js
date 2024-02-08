@@ -10,6 +10,12 @@ export const END_POINTS = {
         INSERT: `${PATH}/user/insert/index.php`,
         UPDATE: `${PATH}/user/update/index.php`
     },
+    PRODUCT: {
+        INSERT: `${PATH}/product/insert/index.php`
+    },
+    ROL: {
+        INSERT: `${PATH}/rol/insert/index.php`
+    },
     CATEGORY: {
         INSERT: `${PATH}/category/insert/index.php`
     }
