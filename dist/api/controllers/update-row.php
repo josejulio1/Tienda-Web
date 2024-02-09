@@ -8,10 +8,17 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 $json = json_decode(file_get_contents('php://input'), true);
 $fields = $json['fields'];
 foreach ($fields as $field) {
-    if (!$field) {
+    if ($field == '') {
         return http_response_code(INCORRECT_DATA);
     }
 }
-require_once '../../db/crud.php';
-return update($json['tableName'], $json['fields'], $json['filters']);
+require_once __DIR__ . '/../../db/crud.php';
+require_once __DIR__ . '/../../db/models/cliente.php';
+$tableName = $json['tableName'];
+$fields = $json['fields'];
+// Si se va a actualizar un cliente y va a cambiar la contraseña, hashearla
+if ($tableName == cliente::class && isset($fields[cliente::CONTRASENIA])) {
+    $fields[cliente::CONTRASENIA] = password_hash($fields[cliente::CONTRASENIA], PASSWORD_DEFAULT);
+}
+return update($tableName, $fields, $json['filters']);
 ?>

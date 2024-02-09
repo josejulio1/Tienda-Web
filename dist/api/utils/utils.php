@@ -1,3 +1,3 @@
 <?php
-define('USER_DEFAULT_IMAGE_PATH', '/assets/img/users/default/default-avatar.jpg');
+define('USER_DEFAULT_IMAGE_PATH', '/assets/img/internal/default/default-avatar.jpg');
 ?>

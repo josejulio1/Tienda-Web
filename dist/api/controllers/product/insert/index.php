@@ -10,7 +10,7 @@ require_once '../../../../db/models/producto.php';
 $nombre = $_POST[producto::NOMBRE];
 $fileName = $_FILES[producto::RUTA_IMAGEN]['name'];
 $fileNameFormatted = uniqid() . substr($fileName, strrpos($fileName, '.'));
-$path = '/assets/img/products/' . $nombre . '/';
+$path = '/assets/img/internal/products/' . $nombre . '/';
 $_POST[producto::RUTA_IMAGEN] = $path . $fileNameFormatted;
 
 $statusCode = insert(producto::class, $_POST);

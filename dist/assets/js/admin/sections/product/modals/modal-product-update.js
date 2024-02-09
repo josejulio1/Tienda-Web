@@ -50,9 +50,8 @@ $buttonActualizar.on('click', e => {
 
     updateRow(PRODUCTO.TABLE_NAME, fields, filters, async () => {
         const id = $tablaProductos.row($('tr[selected]')).index();
-        $tablaProductos.cell({row: id, column: 1}).data($campoNombreActualizar.val()).draw();
-        $tablaProductos.cell({row: id, column: 2}).data($campoDescripcionActualizar.val()).draw();
-        $tablaProductos.cell({row: id, column: 3}).data($campoPrecioActualizar.val()).draw();
-        $tablaProductos.cell({row: id, column: 4}).data($campoMarcaActualizar.val()).draw();
+        $tablaProductos.cell({row: id, column: 1}).data($campoNombreActualizar.val());
+        $tablaProductos.cell({row: id, column: 2}).data($campoPrecioActualizar.val());
+        $tablaProductos.cell({row: id, column: 3}).data($campoMarcaActualizar.val()).draw();
     });
 })

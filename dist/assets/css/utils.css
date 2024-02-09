@@ -93,6 +93,10 @@
     font-weight: bold;
 }
 
+.error p {
+    margin: 0;
+}
+
 .hide {
     display: none !important;
 }

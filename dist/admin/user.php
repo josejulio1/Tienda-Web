@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../templates/admin/essentials.php';
 require_once __DIR__ . '/../api/utils/permissions.php';
 if (($userInfo[v_usuario_rol::PERMISO_USUARIO] & PERMISSIONS::READ) == PERMISSIONS::NO_PERMISSIONS) {
-  return http_response_code(NOT_FOUND);
+  return http_response_code(UNAUTHORIZED);
 }
 ?>
 <!DOCTYPE html>
@@ -122,6 +122,9 @@ if (($userInfo[v_usuario_rol::PERMISO_USUARIO] & PERMISSIONS::READ) == PERMISSIO
                         <label for="rol-usuario-crear">Rol</label>
                         <select id="rol-usuario-crear" required>
                             <?php
+                            require_once __DIR__ . '/../db/models/rol.php';
+                            $rows = select(rol::class, [rol::ID, rol::NOMBRE, rol::COLOR]);
+                            $propertiesName = array_keys($rows[0]);
                             foreach ($rows as $colorRow) { ?>
                                 <option value="<?php echo $colorRow[$propertiesName[0]]; ?>" color="<?php echo $colorRow[$propertiesName[2]]; ?>"><?php echo $colorRow[$propertiesName[1]]; ?></option>
                                 <?php

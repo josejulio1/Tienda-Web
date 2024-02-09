@@ -5,10 +5,3 @@ export const PERMISSIONS = {
     UPDATE: 4,
     DELETE: 8
 }
-
-export const PERMISSIONS_TEXT = {
-    'crear': PERMISSIONS.CREATE,
-    'ver': PERMISSIONS.READ,
-    'actualizar': PERMISSIONS.UPDATE,
-    'eliminar': PERMISSIONS.DELETE
-}

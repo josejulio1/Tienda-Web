@@ -60,3 +60,15 @@ export const ROL = {
     PERMISO_USUARIO: 'permiso_usuario',
     PERMISO_ROL: 'permiso_rol'
 }
+
+export const CLIENTE = {
+    TABLE_NAME: 'cliente',
+    ID: 'id',
+    NOMBRE: 'nombre',
+    APELLIDOS: 'apellidos',
+    TELEFONO: 'telefono',
+    DIRECCION: 'direccion',
+    CORREO: 'correo',
+    CONTRASENIA: 'contrasenia',
+    RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil'
+}

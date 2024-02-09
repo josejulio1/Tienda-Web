@@ -1,5 +1,6 @@
 <?php
 class cliente {
+    const ID = 'id';
     const NOMBRE = 'nombre';
     const APELLIDOS = 'apellidos';
     const TELEFONO = 'telefono';

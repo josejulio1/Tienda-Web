@@ -20,6 +20,7 @@ if ($selectPermissions == 'true') {
     require_once __DIR__ . '/../../db/models/v_producto_categoria.php';
     require_once __DIR__ . '/../../db/models/categoria.php';
     require_once __DIR__ . '/../../db/models/rol.php';
+    require_once __DIR__ . '/../../db/models/cliente.php';
     $permisoBuscado = '';
     if ($tableName == v_usuario_rol::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_USUARIO;
@@ -29,6 +30,8 @@ if ($selectPermissions == 'true') {
         $permisoBuscado = v_usuario_rol::PERMISO_CATEGORIA;
     } else if ($tableName == rol::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_ROL;
+    } else if ($tableName == cliente::class) {
+        $permisoBuscado = v_usuario_rol::PERMISO_CLIENTE;
     }
     
     $permiso = intval(select(v_usuario_rol::class, [$permisoBuscado], [

@@ -2,37 +2,42 @@ import { $tablaRoles, hasDeletePermission, hasUpdatePermission, openUpdateRol } 
 import { insert } from "../../../crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { ROL } from "../../../models/models.js";
-import { PERMISSIONS, PERMISSIONS_TEXT } from "../../../../api/permissions.js";
 import { RolRow } from "../../../models/row/RolRow.js";
+import { clearCheckboxes, getPermissions } from "../rol-system.js";
 
 const $campoNombreRolCrear = $('#nombre-rol-crear');
 const $campoColorCrear = $('#color-rol-crear');
 // CheckBoxes Rol
 // Usuario
+const $marcarTodoUsuario = $('marcar-todo-usuario');
 const $permisoVerUsuario = $('#ver-permiso-usuario');
 const $permisoCrearUsuario = $('#crear-permiso-usuario');
 const $permisoActualizarUsuario = $('#actualizar-permiso-usuario');
 const $permisoEliminarUsuario = $('#eliminar-permiso-usuario');
 
 // Producto
+const $marcarTodoProducto = $('marcar-todo-producto');
 const $permisoVerProducto = $('#ver-permiso-producto');
 const $permisoCrearProducto = $('#crear-permiso-producto');
 const $permisoActualizarProducto = $('#actualizar-permiso-producto');
 const $permisoEliminarProducto = $('#eliminar-permiso-producto');
 
 // Categoría
+const $marcarTodoCategoria = $('marcar-todo-categoria');
 const $permisoVerCategoria = $('#ver-permiso-categoria');
 const $permisoCrearCategoria = $('#crear-permiso-categoria');
 const $permisoActualizarCategoria = $('#actualizar-permiso-categoria');
 const $permisoEliminarCategoria = $('#eliminar-permiso-categoria');
 
 // Cliente
+const $marcarTodoCliente = $('marcar-todo-cliente');
 const $permisoVerCliente = $('#ver-permiso-cliente');
 const $permisoCrearCliente = $('#crear-permiso-cliente');
 const $permisoActualizarCliente = $('#actualizar-permiso-cliente');
 const $permisoEliminarCliente = $('#eliminar-permiso-cliente');
 
 // Rol
+const $marcarTodoRol = $('marcar-todo-rol');
 const $permisoVerRol = $('#ver-permiso-rol');
 const $permisoCrearRol = $('#crear-permiso-rol');
 const $permisoActualizarRol = $('#actualizar-permiso-rol');
@@ -78,21 +83,38 @@ $buttonCrear.on('click', e => {
 })
 
 // Functions
-function getPermissions(...$checkBoxes) {
-    let permissionNumber = 0;
-    let idValue;
-    const permissionsText = Object.entries(PERMISSIONS_TEXT);
-    for (const $checkBox of $checkBoxes) {
-        idValue = $checkBox.attr('id');
-        for (const permissionText of permissionsText) {
-            if (idValue.includes(permissionText[0]) && $checkBox.prop('checked')) {
-                permissionNumber += permissionText[1];
-            }
-        }
-    }
-    return permissionNumber;
-}
-
 function clearFields() {
     $campoNombreRolCrear.val('');
+    $campoColorCrear.val('#000000');
+    clearCheckboxes(
+        $marcarTodoUsuario,
+        $permisoVerUsuario,
+        $permisoCrearUsuario,
+        $permisoActualizarUsuario,
+        $permisoEliminarUsuario,
+
+        $marcarTodoProducto,
+        $permisoVerProducto,
+        $permisoCrearProducto,
+        $permisoActualizarProducto,
+        $permisoEliminarProducto,
+
+        $marcarTodoCategoria,
+        $permisoVerCategoria,
+        $permisoCrearCategoria,
+        $permisoActualizarCategoria,
+        $permisoEliminarCategoria,
+
+        $marcarTodoCliente,
+        $permisoVerCliente,
+        $permisoCrearCliente,
+        $permisoActualizarCliente,
+        $permisoEliminarCliente,
+
+        $marcarTodoRol,
+        $permisoVerRol,
+        $permisoCrearRol,
+        $permisoActualizarRol,
+        $permisoEliminarRol
+    );
 }

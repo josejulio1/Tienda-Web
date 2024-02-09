@@ -1,9 +1,11 @@
-import { $campoColorActualizar, $campoNombreRolActualizar, $modalRolActualizar } from "./modals/modal-rol-update.js";
+import { $campoColorActualizar, $campoNombreRolActualizar, $modalRolActualizar, $permisoActualizarActualizarCategoria, $permisoActualizarActualizarCliente, $permisoActualizarActualizarProducto, $permisoActualizarActualizarRol, $permisoActualizarActualizarUsuario, $permisoCrearActualizarCategoria, $permisoCrearActualizarCliente, $permisoCrearActualizarProducto, $permisoCrearActualizarRol, $permisoCrearActualizarUsuario, $permisoEliminarActualizarCategoria, $permisoEliminarActualizarCliente, $permisoEliminarActualizarProducto, $permisoEliminarActualizarRol, $permisoEliminarActualizarUsuario, $permisoVerActualizarCategoria, $permisoVerActualizarCliente, $permisoVerActualizarProducto, $permisoVerActualizarRol, $permisoVerActualizarUsuario, allUpdateCheckBoxes } from "./modals/modal-rol-update.js";
 import { ROL } from "../../models/models.js";
 import { deleteRow, select } from "../../crud.js";
 import { RolRow } from "../../models/row/RolRow.js";
 import { PERMISSIONS } from "../../../api/permissions.js";
 import { rgbToHex } from "../../../helpers/rgb-to-hex-converter.js";
+import { TYPE_FILTERS } from "../../models/utils.js";
+import { clearCheckboxes, permissionNumberToCheckBox } from "./rol-system.js";
 
 export let hasUpdatePermission, hasDeletePermission;
 export let $tablaRoles;
@@ -32,10 +34,51 @@ window.addEventListener('load', async () => {
 /**
  * Al abrir una fila para actualizarla, coloca los campos de la fila en el modal de actualizar
  */
-export function openUpdateRol() {
+export async function openUpdateRol() {
     $modalRolActualizar.modal('show');
     $(this).attr('selected', '');
     const children = $(this).children();
     $campoNombreRolActualizar.val(children[1].textContent);
     $campoColorActualizar.val(`#${rgbToHex(children[2].children[0].style.backgroundColor)}`);
+    const permissions = await select(ROL.TABLE_NAME, [ROL.PERMISO_USUARIO, ROL.PERMISO_PRODUCTO, ROL.PERMISO_CATEGORIA, ROL.PERMISO_CLIENTE, ROL.PERMISO_ROL], {
+        [TYPE_FILTERS.EQUALS]: {
+            [ROL.ID]: $('tr[selected]').children()[0].textContent
+        }
+    });
+    clearCheckboxes(...allUpdateCheckBoxes);
+    permissionNumberToCheckBox(
+        permissions[0].permiso_usuario,
+        $permisoVerActualizarUsuario,
+        $permisoCrearActualizarUsuario,
+        $permisoActualizarActualizarUsuario,
+        $permisoEliminarActualizarUsuario
+    );
+    permissionNumberToCheckBox(
+        permissions[0].permiso_producto,
+        $permisoVerActualizarProducto,
+        $permisoCrearActualizarProducto,
+        $permisoActualizarActualizarProducto,
+        $permisoEliminarActualizarProducto
+    );
+    permissionNumberToCheckBox(
+        permissions[0].permiso_categoria,
+        $permisoVerActualizarCategoria,
+        $permisoCrearActualizarCategoria,
+        $permisoActualizarActualizarCategoria,
+        $permisoEliminarActualizarCategoria
+    );
+    permissionNumberToCheckBox(
+        permissions[0].permiso_cliente,
+        $permisoVerActualizarCliente,
+        $permisoCrearActualizarCliente,
+        $permisoActualizarActualizarCliente,
+        $permisoEliminarActualizarCliente
+    );
+    permissionNumberToCheckBox(
+        permissions[0].permiso_rol,
+        $permisoVerActualizarRol,
+        $permisoCrearActualizarRol,
+        $permisoActualizarActualizarRol,
+        $permisoEliminarActualizarRol
+    );
 }

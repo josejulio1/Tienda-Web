@@ -4,6 +4,7 @@ class v_usuario_rol {
     const USUARIO = 'usuario';
     const CORREO = 'correo';
     const CONTRASENIA = 'contrasenia';
+    const ID_ROL = 'id_rol';
     const NOMBRE_ROL = 'nombre_rol';
     const COLOR_ROL = 'color_rol';
     const RUTA_IMAGEN_PERFIL = 'ruta_imagen_perfil';

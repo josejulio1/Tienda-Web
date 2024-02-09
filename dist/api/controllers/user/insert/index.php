@@ -15,10 +15,10 @@ $fileNameFormatted = '';
 if ($_FILES) {
     $fileName = $_FILES[usuario::RUTA_IMAGEN_PERFIL]['name'];
     $fileNameFormatted = uniqid() . substr($fileName, strrpos($fileName, '.'));
-    $path = '/assets/img/users/customers/' . $email . '/';
+    $path = '/assets/img/internal/users/' . $email . '/';
     $_POST[usuario::RUTA_IMAGEN_PERFIL] = $path . $fileNameFormatted;
 } else {
-    $_POST[usuario::RUTA_IMAGEN_PERFIL] = '/assets/img/users/default/default-avatar.jpg';
+    $_POST[usuario::RUTA_IMAGEN_PERFIL] = '/assets/img/internal/default/default-avatar.jpg';
 }
 $statusCode = insert(usuario::class, $_POST);
 if ($statusCode == OK && $_FILES) {

@@ -124,7 +124,7 @@ ADD CONSTRAINT fk_usuario_rolId FOREIGN KEY (rol_id) REFERENCES Rol(id) ON DELET
 
 -- Vistas
 CREATE VIEW v_usuario_rol AS
-SELECT u.id AS "usuario_id", u.usuario, u.correo, u.contrasenia, r.nombre AS "nombre_rol", r.color AS "color_rol", u.ruta_imagen_perfil, r.permiso_categoria, r.permiso_producto, r.permiso_cliente, r.permiso_usuario, r.permiso_rol FROM usuario u JOIN rol r ON u.rol_id = r.id
+SELECT u.id AS "usuario_id", u.usuario, u.correo, u.contrasenia, r.id AS "id_rol", r.nombre AS "nombre_rol", r.color AS "color_rol", u.ruta_imagen_perfil, r.permiso_categoria, r.permiso_producto, r.permiso_cliente, r.permiso_usuario, r.permiso_rol FROM usuario u JOIN rol r ON u.rol_id = r.id
 ;
 
 CREATE VIEW v_producto_categoria AS

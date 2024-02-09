@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../templates/admin/essentials.php';
 require_once __DIR__ . '/../api/utils/permissions.php';
 if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSIONS::NO_PERMISSIONS) {
-  return http_response_code(NOT_FOUND);
+  return http_response_code(UNAUTHORIZED);
 }
 ?>
 <!DOCTYPE html>
