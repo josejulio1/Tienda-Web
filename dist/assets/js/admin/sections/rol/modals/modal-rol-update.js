@@ -1,8 +1,9 @@
 import { updateRow } from "../../../crud.js";
-import { ROL } from "../../../models/models.js";
+import { ROL } from "../../../../crud/models.js";
 import { $tablaRoles } from "../rol.js";
 import { clearCheckboxes, getPermissions, validatePermissions } from "../rol-system.js";
 import { ErrorWindow } from "../../../../components/ErrorWindow.js";
+import { XSS_REGEX } from "../../../../helpers/regex.js";
 
 export const $modalRolActualizar = $('#modal-rol-actualizar');
 export const $campoNombreRolActualizar = $('#nombre-rol-actualizar');
@@ -80,7 +81,7 @@ const $buttonActualizar = $('#actualizar-rol');
 $buttonActualizar.on('click', e => {
     e.preventDefault();
 
-    if (!$campoNombreRolActualizar.val()) {
+    if (!$campoNombreRolActualizar.val() || XSS_REGEX.test($campoNombreRolActualizar.val())) {
         $campoNombreRolActualizar.addClass('is-invalid');
         return;
     }

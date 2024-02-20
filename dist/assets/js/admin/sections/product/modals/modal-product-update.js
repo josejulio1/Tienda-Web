@@ -1,5 +1,6 @@
+import { XSS_REGEX } from "../../../../helpers/regex.js";
 import { updateRow } from "../../../crud.js";
-import { PRODUCTO } from "../../../models/models.js";
+import { PRODUCTO } from "../../../../crud/models.js";
 import { $tablaProductos } from "../product.js";
 
 export const $modalProductoActualizar = $('#modal-producto-actualizar');
@@ -14,22 +15,22 @@ $buttonActualizar.on('click', e => {
     e.preventDefault();
 
     let hayErrores = false;
-    if (!$campoNombreActualizar.val()) {
+    if (!$campoNombreActualizar.val() || XSS_REGEX.test($campoNombreActualizar.val())) {
         $campoNombreActualizar.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoPrecioActualizar.val()) {
+    if (!$campoPrecioActualizar.val() || XSS_REGEX.test($campoPrecioActualizar.val())) {
         $campoPrecioActualizar.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoDescripcionActualizar.val()) {
+    if (!$campoDescripcionActualizar.val() || XSS_REGEX.test($campoDescripcionActualizar.val())) {
         $campoDescripcionActualizar.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoMarcaActualizar.val()) {
+    if (!$campoMarcaActualizar.val() || XSS_REGEX.test($campoMarcaActualizar.val())) {
         $campoMarcaActualizar.addClass('is-invalid');
         hayErrores = true;
     }

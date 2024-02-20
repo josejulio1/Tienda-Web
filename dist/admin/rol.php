@@ -39,7 +39,7 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
         </table>
         <?php
         if ($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::UPDATE) { ?>
-         <div class="modal fade" id="modal-rol-actualizar" tabindex="-1" aria-labelledby="modal-rol-actualizar" aria-hidden="true">
+         <div class="modal modal-unique fade" id="modal-rol-actualizar" tabindex="-1" aria-labelledby="modal-rol-actualizar" aria-hidden="true">
              <div class="modal-dialog modal-dialog-centered modal-xl">
                <form class="modal-content">
                  <div class="modal__header">
@@ -204,7 +204,7 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
         ?>
         <?php
         if ($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::CREATE) { ?>
-          <div class="modal fade" id="modal-rol-crear" tabindex="-1" aria-labelledby="modal-rol-crear" aria-hidden="true">
+          <div class="modal modal-unique fade" id="modal-rol-crear" tabindex="-1" aria-labelledby="modal-rol-crear" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-xl">
             <form class="modal-content">
               <div class="modal__header">
@@ -374,7 +374,7 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
       }
       ?>
   </main>
-  <div class="modal fade" id="modal-info" tabindex="-1" aria-labelledby="modal-info" aria-hidden="true">
+  <div class="modal modal-unique fade" id="modal-info" tabindex="-1" aria-labelledby="modal-info" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
@@ -388,7 +388,7 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
         </div>
       </div>
     </div>
-    <div class="modal fade" id="modal-choice" tabindex="-1" aria-labelledby="modal-choice" aria-hidden="true">
+    <div class="modal modal-unique fade" id="modal-choice" tabindex="-1" aria-labelledby="modal-choice" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">

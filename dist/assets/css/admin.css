@@ -263,3 +263,17 @@ table img {
     width: 100%;
     padding: .6rem;
 }
+
+/* Clientes */
+#mostrar-pedidos-cliente {
+    width: 60%;
+    margin: auto;
+    background-color: #e9c6b2;
+    color: black;
+    padding: .6rem;
+    border: 1px solid var(--secundario);
+}
+
+#modal-cliente-pedidos {
+    background-color: rgba(0, 0, 0, .6);
+}

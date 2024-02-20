@@ -52,7 +52,7 @@ CREATE TABLE Comentario (
     cliente_id INT NOT NULL,
     producto_id INT NOT NULL,
     comentario VARCHAR(1000) NOT NULL,
-    num_estrellas INT NOT NULL
+    num_estrellas INT(1) NOT NULL
 );
 
 CREATE TABLE Producto (
@@ -124,10 +124,19 @@ ADD CONSTRAINT fk_usuario_rolId FOREIGN KEY (rol_id) REFERENCES Rol(id) ON DELET
 
 -- Vistas
 CREATE VIEW v_usuario_rol AS
-SELECT u.id AS "usuario_id", u.usuario, u.correo, u.contrasenia, r.id AS "id_rol", r.nombre AS "nombre_rol", r.color AS "color_rol", u.ruta_imagen_perfil, r.permiso_categoria, r.permiso_producto, r.permiso_cliente, r.permiso_usuario, r.permiso_rol FROM usuario u JOIN rol r ON u.rol_id = r.id
+SELECT u.id AS "usuario_id", u.usuario, u.correo, u.contrasenia, r.id AS "id_rol", r.nombre AS "nombre_rol", r.color AS "color_rol", u.ruta_imagen_perfil, r.permiso_categoria, r.permiso_producto, r.permiso_cliente, r.permiso_usuario, r.permiso_rol FROM Usuario u JOIN Rol r ON u.rol_id = r.id
 ;
 
 CREATE VIEW v_producto_categoria AS
 SELECT p.id AS "producto_id", p.nombre, p.descripcion, p.precio, p.marca, p.stock, p.ruta_imagen, c.nombre AS "nombre_categoria"
-FROM producto p JOIN categoria c ON p.categoria_id = c.id
+FROM Producto p JOIN Categoria c ON p.categoria_id = c.id
+;
+
+CREATE VIEW v_pedido AS
+SELECT pe.id, pe.cliente_id, cl.nombre AS "nombre_cliente", cl.apellidos AS "apellidos_cliente", pr.nombre AS "nombre_producto", m.nombre AS "metodo_pago", e.nombre AS "estado_pago", pe.direccion_envio
+FROM Pedido pe JOIN Cliente cl ON pe.cliente_id = cl.id JOIN Carrito ca ON pe.carrito_id = ca.id JOIN Producto pr ON ca.producto_id = pr.id JOIN Metodo_Pago m ON pe.metodo_pago_id = m.id JOIN Estado_Pago e ON pe.estado_pago_id = e.id
+;
+
+CREATE VIEW v_producto_valoracion_promedio AS
+SELECT p.id, p.nombre, p.ruta_imagen, p.precio, ROUND(AVG(c.num_estrellas), 0) AS "valoracion_promedio" FROM Producto p JOIN Comentario c ON p.id = c.producto_id
 ;

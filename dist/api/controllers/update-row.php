@@ -13,12 +13,12 @@ foreach ($fields as $field) {
     }
 }
 require_once __DIR__ . '/../../db/crud.php';
-require_once __DIR__ . '/../../db/models/cliente.php';
+require_once __DIR__ . '/../../db/models/Cliente.php';
 $tableName = $json['tableName'];
 $fields = $json['fields'];
 // Si se va a actualizar un cliente y va a cambiar la contraseña, hashearla
-if ($tableName == cliente::class && isset($fields[cliente::CONTRASENIA])) {
-    $fields[cliente::CONTRASENIA] = password_hash($fields[cliente::CONTRASENIA], PASSWORD_DEFAULT);
+if ($tableName == Cliente::class && isset($fields[Cliente::CONTRASENIA])) {
+    $fields[Cliente::CONTRASENIA] = password_hash($fields[Cliente::CONTRASENIA], PASSWORD_DEFAULT);
 }
 return update($tableName, $fields, $json['filters']);
 ?>

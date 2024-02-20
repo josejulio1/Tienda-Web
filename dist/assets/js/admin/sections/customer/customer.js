@@ -1,5 +1,5 @@
 import { $campoNombreActualizar, $modalClienteActualizar, $campoApellidosActualizar, $campoTelefonoActualizar, $campoDireccionActualizar } from "./modals/modal-customer-update.js";
-import { CLIENTE } from "../../models/models.js";
+import { CLIENTE } from "../../../crud/models.js";
 import { deleteRow, select } from "../../crud.js";
 import { PERMISSIONS } from "../../../api/permissions.js";
 import { PreviewImage } from "../../../components/PreviewImage.js";

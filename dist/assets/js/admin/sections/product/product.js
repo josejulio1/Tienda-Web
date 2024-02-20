@@ -1,10 +1,10 @@
 import { $campoPrecioActualizar, $campoMarcaActualizar, $campoNombreActualizar, $modalProductoActualizar, $campoDescripcionActualizar } from "./modals/modal-product-update.js";
-import { PRODUCTO, V_PRODUCTO_CATEGORIA } from "../../models/models.js";
+import { PRODUCTO, V_PRODUCTO_CATEGORIA } from "../../../crud/models.js";
 import { deleteRow, select } from "../../crud.js";
 import { ProductRow } from "../../models/row/ProductRow.js";
 import { PERMISSIONS } from "../../../api/permissions.js";
 import { PreviewImage } from "../../../components/PreviewImage.js";
-import { TYPE_FILTERS } from "../../models/utils.js";
+import { TYPE_FILTERS } from "../../../crud/utils.js";
 
 export let hasUpdatePermission, hasDeletePermission;
 export let $tablaProductos;

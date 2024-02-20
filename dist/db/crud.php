@@ -49,24 +49,20 @@ function insert(string $tableName, array $fields) {
  * @return array|int Devuelve un array asociativo (FETCH_ASSOC) con las consultas en caso de que se realice correctamente.
  * En caso de que la base de datos no funcione, realizará una respuesta HTTP con código 503
  */
-function select(string $tableName, array $fields = null, array $filters = null, int $limit = null, int $offset = null, bool $count = false) {
+function select(string $tableName, array $fields = null, array $filters = null, int $limit = null) {
     $dbConnector = Database::connect();
     if (!$dbConnector) {
         return SERVICE_UNAVAILABLE;
     }
     $db = $dbConnector -> getDatabase();
     $sentence = 'SELECT ';
-    if ($count) {
-        $sentence .= 'COUNT(*)';
-    } else {
-        if ($fields) {
-            foreach ($fields as $field) {
-                $sentence .= "$field,";
-            }
-            $sentence = substr($sentence, 0, strlen($sentence) - 1);
-        } else {
-            $sentence .= '*';
+    if ($fields) {
+        foreach ($fields as $field) {
+            $sentence .= "$field,";
         }
+        $sentence = substr($sentence, 0, strlen($sentence) - 1);
+    } else {
+        $sentence .= '*';
     }
     $sentence .= ' FROM ' . $tableName;
     if ($filters) {
@@ -84,7 +80,12 @@ function select(string $tableName, array $fields = null, array $filters = null, 
         if ($containsTypeFilter) {
             foreach ($filters as $filter) {
                 foreach ($filter as $column => $value) {
-                    $sentence .= "$column " . $typeFilters[$i++] . " '$value'";
+                    $sentence .= "$column " . $typeFilters[$i];
+                    if ($typeFilters[$i++] != TypesFilters::BEGIN) {
+                        $sentence .= " '$value'";
+                    } else {
+                        $sentence .= " '$value%'";
+                    }
                 }
             }
         } else {
@@ -95,9 +96,6 @@ function select(string $tableName, array $fields = null, array $filters = null, 
     }
     if ($limit) {
         $sentence .= " LIMIT $limit";
-    }
-    if ($offset) {
-        $sentence .= " OFFSET $offset";
     }
     $statement = $db -> query($sentence);
     return $statement -> fetchAll(PDO::FETCH_ASSOC);

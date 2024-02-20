@@ -1,10 +1,9 @@
 import { HTTP_STATUS_CODES } from "../api/http-status-codes.js";
 import { END_POINTS } from "../api/end-points.js";
 import { LoadingButton } from "../components/LoadingButton.js";
-import { USUARIO } from "./models/models.js";
+import { USUARIO } from "../crud/models.js";
 import { ErrorWindow } from "../components/ErrorWindow.js";
 import { ERROR_MESSAGES } from "../api/error-messages.js";
-/* import { error } from "./utils.js"; */
 
 const $correo = $('#correo');
 const $contrasenia = $('#contrasenia');
@@ -14,13 +13,11 @@ new LoadingButton('.btn-info', 'Iniciar Sesión', ($buttonP, $buttonLoading) => 
     let hayErrores;
     if (!$correo.val()) {
         $correo.next().removeClass('hide');
-        /* error('Introduzca una dirección de correo'); */
         hayErrores = true;
     }
     
     if (!$contrasenia.val()) {
         $contrasenia.next().removeClass('hide');
-        /* error('Introduzca una contraseña'); */
         hayErrores = true;
     }
 

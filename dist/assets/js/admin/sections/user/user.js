@@ -1,5 +1,5 @@
 import { $campoCorreoActualizar, $campoRolUsuarioActualizarOptions, $campoUsuarioActualizar, $modalUsuarioActualizar } from "./modals/modal-user-update.js";
-import { USUARIO, V_USUARIO_ROL } from "../../models/models.js";
+import { USUARIO, V_USUARIO_ROL } from "../../../crud/models.js";
 import { deleteRow, select } from "../../crud.js";
 import { UserRow } from "../../models/row/UserRow.js";
 import { PERMISSIONS } from "../../../api/permissions.js";

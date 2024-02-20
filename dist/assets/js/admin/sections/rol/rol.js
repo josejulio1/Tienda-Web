@@ -1,10 +1,10 @@
 import { $campoColorActualizar, $campoNombreRolActualizar, $modalRolActualizar, $permisoActualizarActualizarCategoria, $permisoActualizarActualizarCliente, $permisoActualizarActualizarProducto, $permisoActualizarActualizarRol, $permisoActualizarActualizarUsuario, $permisoCrearActualizarCategoria, $permisoCrearActualizarCliente, $permisoCrearActualizarProducto, $permisoCrearActualizarRol, $permisoCrearActualizarUsuario, $permisoEliminarActualizarCategoria, $permisoEliminarActualizarCliente, $permisoEliminarActualizarProducto, $permisoEliminarActualizarRol, $permisoEliminarActualizarUsuario, $permisoVerActualizarCategoria, $permisoVerActualizarCliente, $permisoVerActualizarProducto, $permisoVerActualizarRol, $permisoVerActualizarUsuario, allUpdateCheckBoxes } from "./modals/modal-rol-update.js";
-import { ROL } from "../../models/models.js";
+import { ROL } from "../../../crud/models.js";
 import { deleteRow, select } from "../../crud.js";
 import { RolRow } from "../../models/row/RolRow.js";
 import { PERMISSIONS } from "../../../api/permissions.js";
 import { rgbToHex } from "../../../helpers/rgb-to-hex-converter.js";
-import { TYPE_FILTERS } from "../../models/utils.js";
+import { TYPE_FILTERS } from "../../../crud/utils.js";
 import { clearCheckboxes, permissionNumberToCheckBox } from "./rol-system.js";
 
 export let hasUpdatePermission, hasDeletePermission;

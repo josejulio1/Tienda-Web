@@ -1,9 +1,10 @@
 import { $tablaRoles, hasDeletePermission, hasUpdatePermission, openUpdateRol } from "../rol.js";
 import { insert } from "../../../crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
-import { ROL } from "../../../models/models.js";
+import { ROL } from "../../../../crud/models.js";
 import { RolRow } from "../../../models/row/RolRow.js";
 import { clearCheckboxes, getPermissions } from "../rol-system.js";
+import { XSS_REGEX } from "../../../../helpers/regex.js";
 
 const $campoNombreRolCrear = $('#nombre-rol-crear');
 const $campoColorCrear = $('#color-rol-crear');
@@ -49,7 +50,7 @@ $buttonCrear.on('click', e => {
     e.preventDefault();
 
     let hayErrores = false;
-    if (!$campoNombreRolCrear.val()) {
+    if (!$campoNombreRolCrear.val() || XSS_REGEX.test($campoNombreRolCrear.val())) {
         $campoNombreRolCrear.addClass('is-invalid');
         hayErrores = true;
     }

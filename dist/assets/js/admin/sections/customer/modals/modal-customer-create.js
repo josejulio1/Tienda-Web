@@ -2,9 +2,9 @@ import { $tablaClientes, hasDeletePermission, hasUpdatePermission, openUpdateCus
 import { insert } from "../../../crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { CustomerRow } from "../../../models/row/CustomerRow.js";
-import { CLIENTE } from "../../../models/models.js";
+import { CLIENTE } from "../../../../crud/models.js";
 import { PreviewImage } from "../../../../components/PreviewImage.js";
-import { EMAIL_REGEX, PHONE_REGEX } from "../../../../helpers/regex.js";
+import { EMAIL_REGEX, PHONE_REGEX, XSS_REGEX } from "../../../../helpers/regex.js";
 
 const $campoNombreCrear = $('#nombre-cliente-crear');
 const $campoApellidosCrear = $('#apellidos-cliente-crear');
@@ -18,32 +18,32 @@ $buttonCrear.on('click', e => {
     e.preventDefault();
 
     let hayErrores = false;
-    if (!$campoNombreCrear.val()) {
+    if (!$campoNombreCrear.val() || XSS_REGEX.test($campoNombreCrear.val())) {
         $campoNombreCrear.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoApellidosCrear.val()) {
+    if (!$campoApellidosCrear.val() || XSS_REGEX.test($campoApellidosCrear.val())) {
         $campoApellidosCrear.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoTelefonoCrear.val() || !PHONE_REGEX.test($campoTelefonoCrear.val())) {
+    if (!$campoTelefonoCrear.val() || !PHONE_REGEX.test($campoTelefonoCrear.val()) || XSS_REGEX.test($campoTelefonoCrear.val())) {
         $campoTelefonoCrear.addClass('is-invalid');
         hayErrores = true;
     }
     
-    if (!$campoDireccionCrear.val()) {
+    if (!$campoDireccionCrear.val() || XSS_REGEX.test($campoDireccionCrear.val())) {
         $campoDireccionCrear.addClass('is-invalid');
         hayErrores = true;
     }
     
-    if (!$campoCorreoCrear.val() || !EMAIL_REGEX.test($campoCorreoCrear.val())) {
+    if (!$campoCorreoCrear.val() || !EMAIL_REGEX.test($campoCorreoCrear.val()) || XSS_REGEX.test($campoCorreoCrear.val())) {
         $campoCorreoCrear.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoContraseniaCrear.val()) {
+    if (!$campoContraseniaCrear.val() || XSS_REGEX.test($campoContraseniaCrear.val())) {
         $campoContraseniaCrear.addClass('is-invalid');
         hayErrores = true;
     }

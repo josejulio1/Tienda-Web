@@ -1,7 +1,7 @@
-import { select, updateRow } from "../../../crud.js";
-import { USUARIO, V_USUARIO_ROL } from "../../../models/models.js";
+import { XSS_REGEX } from "../../../../helpers/regex.js";
+import { updateRow } from "../../../crud.js";
+import { USUARIO } from "../../../../crud/models.js";
 import { $tablaUsuarios } from "../user.js";
-import { TYPE_FILTERS } from "../../../models/utils.js";
 
 export const $modalUsuarioActualizar = $('#modal-usuario-actualizar');
 
@@ -15,12 +15,12 @@ $buttonActualizar.on('click', e => {
     e.preventDefault();
 
     let hayErrores = false;
-    if (!$campoUsuarioActualizar.val()) {
+    if (!$campoUsuarioActualizar.val() || XSS_REGEX.test($campoUsuarioActualizar.val())) {
         $campoUsuarioActualizar.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoRolUsuarioActualizar.val()) {
+    if (!$campoRolUsuarioActualizar.val() || XSS_REGEX.test($campoRolUsuarioActualizar.val())) {
         $campoRolUsuarioActualizar.addClass('is-invalid');
         hayErrores = true;
     }

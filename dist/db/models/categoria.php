@@ -1,5 +1,5 @@
 <?php
-class categoria {
+class Categoria {
     const ID = 'id';
     const NOMBRE = 'nombre';
 }

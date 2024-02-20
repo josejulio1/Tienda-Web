@@ -1,5 +1,5 @@
 export const USUARIO = {
-    TABLE_NAME: 'usuario',
+    TABLE_NAME: 'Usuario',
     ID: 'id',
     USUARIO: 'usuario',
     CORREO: 'correo',
@@ -20,13 +20,13 @@ export const V_USUARIO_ROL = {
 }
 
 export const CATEGORIA = {
-    TABLE_NAME: 'categoria',
+    TABLE_NAME: 'Categoria',
     ID: 'id',
     NOMBRE: 'nombre'
 }
 
 export const PRODUCTO = {
-    TABLE_NAME: 'producto',
+    TABLE_NAME: 'Producto',
     ID: 'id',
     NOMBRE: 'nombre',
     DESCRIPCION: 'descripcion',
@@ -50,7 +50,7 @@ export const V_PRODUCTO_CATEGORIA = {
 }
 
 export const ROL = {
-    TABLE_NAME: 'rol',
+    TABLE_NAME: 'Rol',
     ID: 'id',
     NOMBRE: 'nombre',
     COLOR: 'color',
@@ -62,7 +62,7 @@ export const ROL = {
 }
 
 export const CLIENTE = {
-    TABLE_NAME: 'cliente',
+    TABLE_NAME: 'Cliente',
     ID: 'id',
     NOMBRE: 'nombre',
     APELLIDOS: 'apellidos',
@@ -71,4 +71,25 @@ export const CLIENTE = {
     CORREO: 'correo',
     CONTRASENIA: 'contrasenia',
     RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil'
+}
+
+export const V_PEDIDO = {
+    TABLE_NAME: 'v_pedido',
+    ID: 'id',
+    CLIENTE_ID: 'cliente_id',
+    NOMBRE_CLIENTE: 'nombre_cliente',
+    APELLIDOS_CLIENTE: 'apellidos_cliente',
+    NOMBRE_PRODUCTO: 'nombre_producto',
+    METODO_PAGO: 'metodo_pago',
+    ESTADO_PAGO: 'estado_pago',
+    DIRECCION_ENVIO: 'direccion_envio'
+}
+
+export const V_PRODUCTO_VALORACION_PROMEDIO = {
+    TABLE_NAME: 'v_producto_valoracion_promedio',
+    ID: 'id',
+    NOMBRE: 'nombre',
+    RUTA_IMAGEN: 'ruta_imagen',
+    PRECIO: 'precio',
+    VALORACION_PROMEDIO: 'valoracion_promedio'
 }

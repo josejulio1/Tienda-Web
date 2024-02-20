@@ -8,10 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'DELETE') {
 require_once __DIR__ . '/../../api/utils/utils.php';
 require_once __DIR__ . '/../../db/crud.php';
 require_once __DIR__ . '/../../db/utils/utils.php';
-require_once __DIR__ . '/../../db/models/usuario.php';
-require_once __DIR__ . '/../../db/models/producto.php';
-require_once __DIR__ . '/../../db/models/rol.php';
-require_once __DIR__ . '/../../db/models/cliente.php';
+require_once __DIR__ . '/../../db/models/Usuario.php';
+require_once __DIR__ . '/../../db/models/Producto.php';
+require_once __DIR__ . '/../../db/models/Rol.php';
+require_once __DIR__ . '/../../db/models/Cliente.php';
 $tableName = $_GET['table-name'];
 // Coger ruta de la imagen antes de borrar los datos, por si se va a borrar un usuario,
 // si se borra correctamente, borrar su foto de perfil del servidor
@@ -19,7 +19,7 @@ $imgPath = USER_DEFAULT_IMAGE_PATH;
 $id = $_GET['id'];
 session_start();
 // Evitar que un usuario se pueda eliminar así mismo o el asociado que tiene el usuario logueado
-if ($tableName == usuario::class && $_SESSION['id'] == $id) {
+if ($tableName == Usuario::class && $_SESSION['id'] == $id) {
     return http_response_code(UNAUTHORIZED);
 } else if ($tableName == rol::class) {
     require_once __DIR__ . '/../../db/models/v_usuario_rol.php';
@@ -33,24 +33,24 @@ if ($tableName == usuario::class && $_SESSION['id'] == $id) {
     }
 }
 
-if ($tableName == usuario::class) {
-    $imgPath = select(usuario::class, [usuario::RUTA_IMAGEN_PERFIL], [
+if ($tableName == Usuario::class) {
+    $imgPath = select(Usuario::class, [Usuario::RUTA_IMAGEN_PERFIL], [
         TypesFilters::EQUALS => [
-            usuario::ID => $id
+            Usuario::ID => $id
         ]
-    ])[0][usuario::RUTA_IMAGEN_PERFIL];
-} else if ($tableName == producto::class) {
-    $imgPath = select(producto::class, [producto::RUTA_IMAGEN], [
+    ])[0][Usuario::RUTA_IMAGEN_PERFIL];
+} else if ($tableName == Producto::class) {
+    $imgPath = select(Producto::class, [Producto::RUTA_IMAGEN], [
         TypesFilters::EQUALS => [
-            producto::ID => $id
+            Producto::ID => $id
         ]
-    ])[0][producto::RUTA_IMAGEN];
-} else if ($tableName == cliente::class) {
-    $imgPath = select(cliente::class, [cliente::RUTA_IMAGEN_PERFIL], [
+    ])[0][Producto::RUTA_IMAGEN];
+} else if ($tableName == Cliente::class) {
+    $imgPath = select(Cliente::class, [Cliente::RUTA_IMAGEN_PERFIL], [
         TypesFilters::EQUALS => [
-            cliente::ID => $id
+            Cliente::ID => $id
         ]
-    ])[0][cliente::RUTA_IMAGEN_PERFIL];
+    ])[0][Cliente::RUTA_IMAGEN_PERFIL];
 }
 $statusCode = deleteRow($_GET['table-name'], [
     'id' => $id

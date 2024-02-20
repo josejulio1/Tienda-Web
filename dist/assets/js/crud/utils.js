@@ -1,4 +1,5 @@
 export const TYPE_FILTERS = {
     EQUALS: '=',
-    DISTINCT: '<>'
+    DISTINCT: '<>',
+    BEGIN: 'LIKE'
 }

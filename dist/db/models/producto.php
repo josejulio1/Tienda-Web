@@ -1,5 +1,5 @@
 <?php
-class producto {
+class Producto {
     const ID = 'id';
     const NOMBRE = 'nombre';
     const DESCRIPCION = 'descripcion';

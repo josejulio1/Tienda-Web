@@ -1,5 +1,5 @@
 <?php
-class cliente {
+class Cliente {
     const ID = 'id';
     const NOMBRE = 'nombre';
     const APELLIDOS = 'apellidos';

@@ -3,7 +3,8 @@ import { insert } from "../../../crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { CategoryRow } from "../../../models/row/CategoryRow.js";
 import { openUpdateCategory } from "../category.js";
-import { CATEGORIA } from "../../../models/models.js";
+import { CATEGORIA } from "../../../../crud/models.js";
+import { XSS_REGEX } from "../../../../helpers/regex.js";
 
 const $campoCategoriaCrear = $('#nombre-categoria-crear');
 const $buttonCrear = $('#crear-categoria');
@@ -11,7 +12,7 @@ const $buttonCrear = $('#crear-categoria');
 $buttonCrear.on('click', e => {
     e.preventDefault();
 
-    if (!$campoCategoriaCrear.val()) {
+    if (!$campoCategoriaCrear.val() || XSS_REGEX.test($campoCategoriaCrear.val())) {
         $campoCategoriaCrear.addClass('is-invalid');
         return;
     }

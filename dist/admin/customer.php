@@ -42,7 +42,7 @@ if (($userInfo[v_usuario_rol::PERMISO_CLIENTE] & PERMISSIONS::READ) == PERMISSIO
         </table>
         <?php
         if ($userInfo[v_usuario_rol::PERMISO_CLIENTE] & PERMISSIONS::UPDATE) { ?>
-         <div class="modal fade" id="modal-cliente-actualizar" tabindex="-1" aria-labelledby="modal-cliente-actualizar" aria-hidden="true">
+         <div class="modal modal-unique fade" id="modal-cliente-actualizar" tabindex="-1" aria-labelledby="modal-cliente-actualizar" aria-hidden="true">
              <div class="modal-dialog modal-dialog-centered modal-xl">
                <form class="modal-content">
                  <div class="modal__header">
@@ -82,9 +82,38 @@ if (($userInfo[v_usuario_rol::PERMISO_CLIENTE] & PERMISSIONS::READ) == PERMISSIO
                          </div>
                      </div>
                    </div>
+                   <div class="modal-row">
+                    <div class="modal-column">
+                      <button id="mostrar-pedidos-cliente">Ver Pedidos</button>
+                    </div>
+                   </div>
                  <div class="modal-footer">
                    <button type="submit" class="btn btn-primary" id="actualizar-cliente">Actualizar</button>
                  </div>
+               </form>
+             </div>
+           </div>
+           <!-- Modal Pedidos -->
+           <div class="modal fade" id="modal-cliente-pedidos" tabindex="-1" aria-labelledby="modal-cliente-pedidos" aria-hidden="true">
+             <div class="modal-dialog modal-dialog-centered modal-xl">
+               <form class="modal-content">
+                 <div class="modal__header">
+                   <h2 class="modal-title">Ver Pedidos</h2>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                  <div class="modal-body">
+                    <table id="tabla-pedidos">
+                      <thead>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Nombre Producto</th>
+                        <th>Método de pago</th>
+                        <th>Estado del pago</th>
+                        <th>Dirección de envío</th>
+                      </thead>
+                    </table>
+                  </div>
                </form>
              </div>
            </div>
@@ -93,7 +122,7 @@ if (($userInfo[v_usuario_rol::PERMISO_CLIENTE] & PERMISSIONS::READ) == PERMISSIO
         ?>
         <?php
         if ($userInfo[v_usuario_rol::PERMISO_CLIENTE] & PERMISSIONS::CREATE) { ?>
-          <div class="modal fade" id="modal-cliente-crear" tabindex="-1" aria-labelledby="modal-cliente-crear" aria-hidden="true">
+          <div class="modal modal-unique fade" id="modal-cliente-crear" tabindex="-1" aria-labelledby="modal-cliente-crear" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-xl">
             <form class="modal-content">
               <div class="modal__header">
@@ -161,7 +190,7 @@ if (($userInfo[v_usuario_rol::PERMISO_CLIENTE] & PERMISSIONS::READ) == PERMISSIO
       }
       ?>
   </main>
-  <div class="modal fade" id="modal-info" tabindex="-1" aria-labelledby="modal-info" aria-hidden="true">
+  <div class="modal modal-unique fade" id="modal-info" tabindex="-1" aria-labelledby="modal-info" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
@@ -175,7 +204,7 @@ if (($userInfo[v_usuario_rol::PERMISO_CLIENTE] & PERMISSIONS::READ) == PERMISSIO
         </div>
       </div>
     </div>
-    <div class="modal fade" id="modal-choice" tabindex="-1" aria-labelledby="modal-choice" aria-hidden="true">
+    <div class="modal modal-unique fade" id="modal-choice" tabindex="-1" aria-labelledby="modal-choice" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">

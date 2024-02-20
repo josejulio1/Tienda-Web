@@ -1,5 +1,5 @@
 import { $campoCategoriaActualizar, $modalCategoriaActualizar } from "./modals/modal-category-update.js";
-import { CATEGORIA } from "../../models/models.js";
+import { CATEGORIA } from "../../../crud/models.js";
 import { deleteRow, select } from "../../crud.js";
 import { CategoryRow } from "../../models/row/CategoryRow.js";
 import { PERMISSIONS } from "../../../api/permissions.js";

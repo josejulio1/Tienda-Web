@@ -18,19 +18,19 @@ if ($selectPermissions == 'true') {
     require_once __DIR__ . '/../../db/utils/utils.php';
     require_once __DIR__ . '/../../db/models/v_usuario_rol.php';
     require_once __DIR__ . '/../../db/models/v_producto_categoria.php';
-    require_once __DIR__ . '/../../db/models/categoria.php';
-    require_once __DIR__ . '/../../db/models/rol.php';
-    require_once __DIR__ . '/../../db/models/cliente.php';
+    require_once __DIR__ . '/../../db/models/Categoria.php';
+    require_once __DIR__ . '/../../db/models/Rol.php';
+    require_once __DIR__ . '/../../db/models/Cliente.php';
     $permisoBuscado = '';
     if ($tableName == v_usuario_rol::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_USUARIO;
     } else if ($tableName == v_producto_categoria::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_PRODUCTO;
-    } else if ($tableName == categoria::class) {
+    } else if ($tableName == Categoria::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_CATEGORIA;
-    } else if ($tableName == rol::class) {
+    } else if ($tableName == Rol::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_ROL;
-    } else if ($tableName == cliente::class) {
+    } else if ($tableName == Cliente::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_CLIENTE;
     }
     

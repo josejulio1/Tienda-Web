@@ -2,9 +2,9 @@ import { $tablaUsuarios, hasDeletePermission, hasUpdatePermission, openUpdateUse
 import { insert } from "../../../crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { UserRow } from "../../../models/row/UserRow.js";
-import { USUARIO } from "../../../models/models.js";
+import { USUARIO } from "../../../../crud/models.js";
 import { PreviewImage } from "../../../../components/PreviewImage.js";
-import { EMAIL_REGEX } from "../../../../helpers/regex.js";
+import { EMAIL_REGEX, XSS_REGEX } from "../../../../helpers/regex.js";
 
 const $campoNombreCrear = $('#nombre-usuario-crear');
 const $campoCorreoCrear = $('#correo-usuario-crear');
@@ -16,22 +16,22 @@ $buttonCrear.on('click', e => {
     e.preventDefault();
 
     let hayErrores = false;
-    if (!$campoNombreCrear.val()) {
+    if (!$campoNombreCrear.val() || XSS_REGEX.test($ca.val())) {
         $campoNombreCrear.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoCorreoCrear.val() || !EMAIL_REGEX.test($campoCorreoCrear.val())) {
+    if (!$campoCorreoCrear.val() || !EMAIL_REGEX.test($campoCorreoCrear.val()) || XSS_REGEX.test($campoCorreoCrear.val())) {
         $campoCorreoCrear.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoContraseniaCrear.val()) {
+    if (!$campoContraseniaCrear.val() || XSS_REGEX.test($campoContraseniaCrear.val())) {
         $campoContraseniaCrear.addClass('is-invalid');
         hayErrores = true;
     }
     
-    if (!$campoRolCrear.val()) {
+    if (!$campoRolCrear.val() || XSS_REGEX.test($campoRolCrear.val())) {
         $campoRolCrear.addClass('is-invalid');
         hayErrores = true;
     }

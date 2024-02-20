@@ -1,5 +1,5 @@
 <?php
-class usuario {
+class Usuario {
     const ID = 'id';
     const USUARIO = 'usuario';
     const CORREO = 'correo';

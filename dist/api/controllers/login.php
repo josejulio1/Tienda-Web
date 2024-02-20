@@ -9,8 +9,9 @@ require_once __DIR__ . '/../../db/crud.php';
 
 $correo = $_POST['correo'];
 $mantenerSesion = $_POST['mantener-sesion'];
+$tableName = $_GET['table-name'];
 
-$rows = select($_GET['table-name'], ['id', 'contrasenia'], [
+$rows = select($tableName, ['id', 'contrasenia'], [
     TypesFilters::EQUALS => [
         'correo' => $correo
     ]
@@ -31,8 +32,16 @@ if (!password_verify($_POST['contrasenia'], $rows[0]['contrasenia'])) {
     // Mantener sesión iniciada por 2 semanas
     session_set_cookie_params(60 * 60 * 24 * 14);
 } */
+require_once __DIR__ . '/../utils/Rol.php';
+require_once __DIR__ . '/../../db/models/Usuario.php';
+require_once __DIR__ . '/../../db/models/Cliente.php';
 session_start();
 $_SESSION['id'] = $rows[0]['id'];
+if ($tableName == Usuario::class) {
+    $_SESSION['rol'] = Rol::USER;
+} else {
+    $_SESSION['rol'] = Rol::CUSTOMER;
+}
 $_SESSION['correo'] = $correo;
 return http_response_code(OK);
 ?>

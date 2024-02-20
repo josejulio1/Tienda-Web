@@ -40,7 +40,7 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
         ?>
      	</thead>
      </table>
-        <div class="modal fade" id="modal-producto-actualizar" tabindex="-1" aria-labelledby="modal-producto-actualizar" aria-hidden="true">
+        <div class="modal modal-unique fade" id="modal-producto-actualizar" tabindex="-1" aria-labelledby="modal-producto-actualizar" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-xl">
             <form class="modal-content">
               <div class="modal__header">
@@ -81,7 +81,7 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
         </div>
         <?php
         if ($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::CREATE) { ?>
-          <div class="modal fade" id="modal-producto-crear" tabindex="-1" aria-labelledby="modal-producto-crear" aria-hidden="true">
+          <div class="modal modal-unique fade" id="modal-producto-crear" tabindex="-1" aria-labelledby="modal-producto-crear" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-xl">
             <form class="modal-content">
               <div class="modal__header">
@@ -160,7 +160,7 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
     }
     ?>
   </main>
-  <div class="modal fade" id="modal-info" tabindex="-1" aria-labelledby="modal-info" aria-hidden="true">
+  <div class="modal modal-unique fade" id="modal-info" tabindex="-1" aria-labelledby="modal-info" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
@@ -174,7 +174,7 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
         </div>
       </div>
     </div>
-    <div class="modal fade" id="modal-choice" tabindex="-1" aria-labelledby="modal-choice" aria-hidden="true">
+    <div class="modal modal-unique fade" id="modal-choice" tabindex="-1" aria-labelledby="modal-choice" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">

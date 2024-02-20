@@ -1,5 +1,5 @@
 <?php
-class rol {
+class Rol {
     const ID = 'id';
     const NOMBRE = 'nombre';
     const COLOR = 'color';

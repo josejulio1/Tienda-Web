@@ -1,6 +1,7 @@
 import { updateRow } from "../../../crud.js";
-import { CATEGORIA } from "../../../models/models.js";
+import { CATEGORIA } from "../../../../crud/models.js";
 import { $tablaCategorias } from "../category.js";
+import { XSS_REGEX } from "../../../../helpers/regex.js";
 
 export const $modalCategoriaActualizar = $('#modal-categoria-actualizar');
 
@@ -11,19 +12,16 @@ $modalCategoriaActualizar.on('hide.bs.modal', () => {
     $('.lista-item-categoria[selected]').removeAttr('selected');
 })
 
-// Events
-/* $campoCategoriaActualizar.on('focusout', removeErrors); */
-
 $buttonActualizar.on('click', e => {
     e.preventDefault();
 
-    if (!$campoCategoriaActualizar.val()) {
+    if (!$campoCategoriaActualizar.val() || XSS_REGEX.test($campoCategoriaActualizar.val())) {
         $campoCategoriaActualizar.addClass('is-invalid');
         return
     }
 
     const fields = {
-        [CATEGORIA.NOMBRE]: $campoCategoriaActualizar.val(),
+        [CATEGORIA.NOMBRE]: $campoCategoriaActualizar.val()
     };
     const filters = {
         [CATEGORIA.ID]: $('tr[selected]').children()[0].textContent

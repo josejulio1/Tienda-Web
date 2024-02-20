@@ -1,10 +1,11 @@
 import { hasDeletePermission, hasUpdatePermission } from "../product.js";
 import { insert } from "../../../crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
-import { PRODUCTO } from "../../../models/models.js";
+import { PRODUCTO } from "../../../../crud/models.js";
 import { $tablaProductos, openUpdateProduct } from "../product.js";
 import { ProductRow } from "../../../models/row/ProductRow.js";
 import { PreviewImage } from "../../../../components/PreviewImage.js";
+import { XSS_REGEX } from "../../../../helpers/regex.js";
 
 const $campoNombreCrear = $('#nombre-producto-crear');
 const $campoPrecioCrear = $('#precio-producto-crear');
@@ -20,32 +21,32 @@ $buttonCrear.on('click', e => {
     const $campoImagenCrear = $('#imagen-producto-crear');
 
     let hayErrores = false;
-    if (!$campoNombreCrear.val()) {
+    if (!$campoNombreCrear.val() || XSS_REGEX.test($campoNombreCrear.val())) {
         $campoNombreCrear.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoPrecioCrear.val()) {
+    if (!$campoPrecioCrear.val() || XSS_REGEX.test($campoPrecioCrear.val())) {
         $campoPrecioCrear.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoMarcaCrear.val()) {
+    if (!$campoMarcaCrear.val() || XSS_REGEX.test($campoMarcaCrear.val())) {
         $campoMarcaCrear.addClass('is-invalid');
         hayErrores = true;
     }
     
-    if (!$campoStockCrear.val()) {
+    if (!$campoStockCrear.val() || XSS_REGEX.test($campoStockCrear.val())) {
         $campoStockCrear.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoDescripcionCrear.val()) {
+    if (!$campoDescripcionCrear.val() || XSS_REGEX.test($campoDescripcionCrear.val())) {
         $campoDescripcionCrear.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoImagenCrear.prop('files')[0]) {
+    if (!$campoImagenCrear.prop('files')[0] || XSS_REGEX.test($campoImagenCrear.val())) {
         $('label[for=imagen-producto-crear]').addClass('is-invalid');
         hayErrores = true;
     }
