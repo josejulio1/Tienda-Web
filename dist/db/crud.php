@@ -141,15 +141,18 @@ function deleteRow(string $tableName, array $keys) {
     $fieldsKeys = array_keys($keys);
     $preparedValues = [];
     foreach ($fieldsKeys as $fieldKey) {
-        $sentence .= "$fieldKey = :$fieldKey,";
+        $sentence .= " $fieldKey = :$fieldKey AND";
         $preparedValues[] = ":$fieldKey";
     }
-    $sentence = substr($sentence, 0, strlen($sentence) - 1);
+    $sentence = substr($sentence, 0, strlen($sentence) - 4);
     $statement = $db -> prepare($sentence);
     $i = 0;
     foreach ($keys as $key) {
         $statement -> bindValue($preparedValues[$i++], $key);
+        var_dump($key);
     }
+    var_dump($preparedValues);
+    var_dump($sentence);
     $statement -> execute();
     return http_response_code($statement -> rowCount() > 0 ? OK : NOT_FOUND);
 }

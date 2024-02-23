@@ -1,3 +1,4 @@
+// JavaScript de búsqueda de productos en la página principal
 import { select } from "../admin/crud.js";
 import { V_PRODUCTO_VALORACION_PROMEDIO } from "../crud/models.js";
 import { TYPE_FILTERS } from "../crud/utils.js";

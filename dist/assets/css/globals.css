@@ -18,6 +18,10 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+li {
+    list-style: none;
+}
+
 a,
 label,
 button {

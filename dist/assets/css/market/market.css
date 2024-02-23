@@ -10,15 +10,6 @@ header p {
     font-size: 1.2rem;
 }
 
-nav {
-    padding: 1rem;
-    justify-content: space-around;
-}
-
-nav > a {
-    font-size: 2.5rem;
-}
-
 nav,
 .search-bar,
 .cuenta,
@@ -28,6 +19,15 @@ nav,
     column-gap: 1rem;
 }
 
+nav {
+    padding: 1rem;
+    justify-content: space-around;
+}
+
+nav > a {
+    font-size: 2.5rem;
+}
+
 .search-bar {
     padding: .3rem;
     justify-content: space-between;
@@ -35,6 +35,16 @@ nav,
     user-select: none;
     flex: 0 1 500px;
     position: relative;
+}
+
+@media (max-width: 1024px) {
+    nav {
+        flex-direction: column;
+    }
+
+    .search-bar {
+        flex-basis: 0;
+    }
 }
 
 #search-bar--input {
@@ -128,11 +138,78 @@ nav,
     padding: .6rem;
     transition: .4s background-color;
     border-radius: .5rem;
+    position: relative;
 }
 
 .cuenta:hover,
 .carrito:hover {
     background-color: var(--azul);
+}
+
+.carrito__items--container,
+.cuenta-opciones {
+    display: none;
+    top: 100%;
+    position: absolute;
+    background-color: var(--primario);
+    border-radius: 1rem;
+}
+
+.carrito__items--container {
+    cursor: auto;
+}
+
+.cuenta-opciones {
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .cuenta-opciones {
+        display: none !important;
+    }
+}
+
+.cuenta:hover .cuenta-opciones,
+.carrito:hover .carrito__items--container {
+    display: block;
+}
+
+.cuenta-opciones ul {
+    padding: 1rem;
+}
+
+.option-separator {
+    width: 80%;
+    height: 2px;
+    margin: auto;
+    background-color: var(--secundario);
+    margin: 1rem auto;
+}
+
+.cuenta-opciones li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 0 .2rem;
+    transition: .4s border-radius, .4s background-color;
+}
+
+.cuenta-opciones li:hover {
+    border-radius: 1rem;
+    background-color: var(--seleccionable);
+}
+
+.cuenta-opciones li img {
+    width: 20%;
+}
+
+.cuenta-opciones li p {
+    color: var(--secundario);
+    flex-basis: 100%;
 }
 
 .cuenta img,
@@ -148,8 +225,68 @@ nav,
     text-align: center;
 }
 
-.carrito {
-    position: relative;
+.carrito__items--container {
+    right: 0;
+    width: 400%;
+    padding: 1rem;
+}
+
+.carrito__items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.carrito__item {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.carrito__item img {
+    border-radius: 0;
+}
+
+.carrito__item #eliminar-item {
+    cursor: pointer;
+    border-radius: 0;
+    transition: .4s background-color, .4s border-radius;
+}
+
+.carrito__item #eliminar-item:hover {
+    background-color: salmon;
+    border-radius: 1rem;
+}
+
+.item__descripcion {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.item__descripcion p {
+    color: var(--secundario);
+    text-align: left;
+}
+
+.item__nombre-producto {
+    font-size: 1.5rem !important;
+}
+
+.item__precio {
+    font-weight: bold;
+}
+
+.precio-total {
+    color: var(--secundario);
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 1.2rem;
+}
+
+.precio-total__span {
+    font-size: 1.8rem;
+    font-weight: bold;
 }
 
 #num-articulos-carrito {
@@ -168,9 +305,76 @@ nav,
     color: var(--primario);
 }
 
+@keyframes shake {
+    0% {
+
+    }
+
+    100% {
+
+    }
+}
+
+.no-cart {
+    color: var(--secundario);
+    text-align: center;
+}
+
 /* Main */
 main {
     max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.descubrir-productos {
+    padding: 2rem 0;
+}
+
+.descubrir-productos__titulo {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: .5rem;
+}
+
+#descubrir-productos__items,
+.producto__item,
+.producto__item__estrellas {
+    display: flex;
+}
+
+#descubrir-productos__items {
+    max-width: 800px;
+    margin: auto;
+    overflow-y: auto;
+    gap: 2rem;
+}
+
+.producto__item {
+    flex-direction: column;
+    flex: 0 1 200px;
+    border: 1px solid var(--secundario);
+    padding: 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.producto__item * {
+    pointer-events: none;
+}
+
+.producto__item__descripcion {
+    padding: .5rem;
+}
+
+.producto__item__estrellas img {
+    width: 20px;
+    height: 20px;
+    z-index: -1;
 }
 
 /* Footer */

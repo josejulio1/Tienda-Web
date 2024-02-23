@@ -43,7 +43,7 @@ if ($_SESSION) {
                 </article>
             </section>
             <!-- COMPONENTE: LoadingButton -->
-            <button class="btn-info" type="submit"></button>
+            <button class="btn-info" type="submit">Iniciar Sesión</button>
         </form>
     </main>
 </body>

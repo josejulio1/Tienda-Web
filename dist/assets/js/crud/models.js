@@ -73,6 +73,13 @@ export const CLIENTE = {
     RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil'
 }
 
+export const CARRITO_ITEM = {
+    TABLE_NAME: 'Carrito_Item',
+    PRODUCTO_ID: 'producto_id',
+    CLIENTE_ID: 'cliente_id',
+    CANTIDAD: 'cantidad'
+}
+
 export const V_PEDIDO = {
     TABLE_NAME: 'v_pedido',
     ID: 'id',
@@ -83,6 +90,14 @@ export const V_PEDIDO = {
     METODO_PAGO: 'metodo_pago',
     ESTADO_PAGO: 'estado_pago',
     DIRECCION_ENVIO: 'direccion_envio'
+}
+
+export const V_CARRITO_CLIENTE = {
+    TABLE_NAME: 'v_carrito_cliente',
+    CLIENTE_ID: 'cliente_id',
+    NOMBRE_PRODUCTO: 'nombre_producto',
+    PRECIO_PRODUCTO: 'precio_producto',
+    RUTA_IMAGEN_PRODUCTO: 'ruta_imagen_producto'
 }
 
 export const V_PRODUCTO_VALORACION_PROMEDIO = {

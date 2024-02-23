@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/db/crud.php';
+require_once __DIR__ . '/db/utils/utils.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,42 +14,55 @@
     <link rel="stylesheet" href="/assets/css/utils.css">
     <script src="/assets/js/lib/jquery-3.7.1.min.js" defer></script>
     <script src="/assets/js/market/search-bar.js" type="module" defer></script>
+    <script src="/assets/js/market/account-options.js" type="module" defer></script>
+    <script src="/assets/js/market/market.js" defer></script>
+    <script src="/assets/js/market/cart.js" type="module" defer></script>
 </head>
 <body>
     <header>
-        <nav>
-            <a href="#">BYTEMARKET</a>
-            <section class="search-bar">
-                <input type="text" id="search-bar--input" placeholder="Buscar">
-                <img src="/assets/img/web/svg/search.svg" alt="Buscar" id="search-bar--img">
-                <article id="search-bar--items"></article>
-            </section>
-            <?php
-            session_start();
-            require_once __DIR__ . '/api/utils/Rol.php';
-            if ($_SESSION && $_SESSION['rol'] == Rol::CUSTOMER) { ?>
-                <a href="#" class="cuenta">
-                    <img src="/assets/img/internal/default/default-avatar.jpg" alt="Foto de perfil">
-                    <p>Cuenta</p>
-                </a>
-                <section class="carrito">
-                    <span id="num-articulos-carrito">0</span>
-                    <img src="/assets/img/web/svg/cart.svg" alt="Carrito">
-                    <p>Carrito</p>
-                </section>
-                <?php
-            } else { ?>
-                <a href="/views/login.php" class="cuenta">
-                    <img src="/assets/img/web/svg/user.svg" alt="Acceder cuenta">
-                    <p>Acceder a una cuenta</p>
-                </a>
-                <?php
-            }
-            ?>
-        </nav>
+        <?php
+        require_once __DIR__ . '/templates/market/nav.php';
+        ?>
     </header>
     <main>
-        
+        <section class="descubrir-productos">
+            <h2 class="descubrir-productos__titulo">Descubra nuestros productos</h2>
+            <div id="descubrir-productos__items">
+                <?php
+                require_once __DIR__ . '/db/models/v_producto_valoracion_promedio.php';
+                $productos = select(v_producto_valoracion_promedio::class, [
+                    v_producto_valoracion_promedio::ID,
+                    v_producto_valoracion_promedio::NOMBRE,
+                    v_producto_valoracion_promedio::PRECIO,
+                    v_producto_valoracion_promedio::RUTA_IMAGEN,
+                    v_producto_valoracion_promedio::VALORACION_PROMEDIO
+                ], null, 10);
+
+                foreach ($productos as $producto) { ?>
+                    <article item-id="<?php echo $producto[v_producto_valoracion_promedio::ID]; ?>" class="producto__item">
+                        <img src="<?php echo $producto[v_producto_valoracion_promedio::RUTA_IMAGEN]; ?>" alt="Imagen Producto" loading="lazy">
+                        <div class="producto__item__descripcion">
+                            <h2><?php echo $producto[v_producto_valoracion_promedio::NOMBRE]; ?></h2>
+                            <p class="precio"><?php echo $producto[v_producto_valoracion_promedio::PRECIO]; ?> €</p>
+                            <div class="producto__item__estrellas">
+                                <?php
+                                $numEstrellas = $producto[v_producto_valoracion_promedio::VALORACION_PROMEDIO];
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($numEstrellas-- > 0) {
+                                        echo '<img src="/assets/img/web/svg/star-filled.svg" alt="Estrella" loading="lazy">';
+                                    } else {
+                                        echo '<img src="/assets/img/web/svg/star-no-filled.svg" alt="Estrella" class="invert-color" loading="lazy">';
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </article>
+                    <?php
+                }
+                ?>
+            </div>
+        </section>
     </main>
     <footer>
         <p>Todos los derechos reservados</p>

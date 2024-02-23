@@ -1,6 +1,6 @@
-import { ErrorWindow } from "../../components/ErrorWindow.js";
-import { END_POINTS } from "../../api/end-points.js";
-import { HTTP_STATUS_CODES } from "../../api/http-status-codes.js";
+import { END_POINTS } from "../api/end-points.js";
+import { HTTP_STATUS_CODES } from "../api/http-status-codes.js";
+import { ErrorWindow } from "../components/ErrorWindow.js";
 
 const $cerrarSesion = $('#cerrar-sesion');
 
@@ -15,4 +15,4 @@ $cerrarSesion.on('click', () => {
         }
         window.location.href = '/';
     })
-});
+})

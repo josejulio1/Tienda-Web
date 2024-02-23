@@ -5,13 +5,21 @@ export const END_POINTS = {
     UPDATE_ROW: `${PATH}/update-row.php`,
     DELETE_ROW: `${PATH}/delete-row.php`,
     CLOSE_SESSION: `${PATH}/close-session.php`,
+    HAS_SESSION: `${PATH}/has-session.php`,
     LOGIN: `${PATH}/login.php`,
+    MARKET: {
+        CART: {
+            ADD: `${PATH}/market/cart/add/index.php`,
+            DELETE: `${PATH}/market/cart/delete/index.php`
+        }
+    },
     USER: {
         INSERT: `${PATH}/user/insert/index.php`,
         UPDATE: `${PATH}/user/update/index.php`
     },
     CUSTOMER: {
-        INSERT: `${PATH}/customer/insert/index.php`
+        INSERT: `${PATH}/customer/insert/index.php`,
+        REGISTER: `${PATH}/customer/register/index.php`
     },
     PRODUCT: {
         INSERT: `${PATH}/product/insert/index.php`

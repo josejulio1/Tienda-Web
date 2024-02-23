@@ -8,6 +8,7 @@ export class UserRow extends Row {
         colorRolSpan.style.backgroundColor = `#${colorRol}`;
         perfilUsuarioImg.src = imagenPerfil;
         perfilUsuarioImg.alt = 'Imagen de Perfil';
+        perfilUsuarioImg.loading = 'lazy';
 
         super(puedeBorrar, 'eliminar-usuario', usuarioId, usuario, correo, rol, colorRolSpan.outerHTML, perfilUsuarioImg.outerHTML);
     }

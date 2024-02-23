@@ -32,29 +32,16 @@ insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen
 insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (9, 'Elliot', 'Crushing injury of unspecified hand', 789.89, 'Leader Extra Strength Medicated Pain Relief Patch', 84, '/assets/img/internal/default/default-avatar.jpg', 3);
 insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (10, 'Nertie', 'Other sprain of left foot, initial encounter', 95.29, 'Periodontium Quartz', 12, '/assets/img/internal/default/default-avatar.jpg', 4);
 
--- Carrito
-insert into Carrito (id, cliente_id, producto_id) values (1, 9, 6);
-insert into Carrito (id, cliente_id, producto_id) values (2, 5, 6);
-insert into Carrito (id, cliente_id, producto_id) values (3, 2, 3);
-insert into Carrito (id, cliente_id, producto_id) values (4, 7, 5);
-insert into Carrito (id, cliente_id, producto_id) values (5, 3, 1);
-insert into Carrito (id, cliente_id, producto_id) values (6, 5, 8);
-insert into Carrito (id, cliente_id, producto_id) values (7, 8, 10);
-insert into Carrito (id, cliente_id, producto_id) values (8, 8, 1);
-insert into Carrito (id, cliente_id, producto_id) values (9, 5, 10);
-insert into Carrito (id, cliente_id, producto_id) values (10, 3, 9);
-
--- CarritoItem
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (1, 4, 9, 1);
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (2, 3, 1, 50);
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (3, 7, 9, 48);
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (4, 4, 4, 59);
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (5, 6, 9, 81);
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (6, 5, 7, 77);
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (7, 9, 6, 37);
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (8, 6, 1, 51);
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (9, 3, 1, 66);
-insert into CarritoItem (id, carrito_id, producto_id, cantidad) values (10, 7, 2, 50);
+-- Carrito_Item
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (4, 9, 1);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (3, 1, 50);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (7, 9, 48);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (4, 4, 59);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (6, 9, 81);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (5, 7, 77);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (9, 6, 37);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (6, 1, 51);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (7, 2, 50);
 
 -- Metodo_Pago
 insert into Metodo_Pago (id, nombre) values (1, 'Eveleen');
@@ -81,16 +68,19 @@ insert into Estado_Pago (id, nombre) values (9, 'Dyna');
 insert into Estado_Pago (id, nombre) values (10, 'Tab');
 
 -- Pedido
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (1, 2, 7, 6, 9, 'Apt 207');
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (2, 3, 8, 5, 9, 'Suite 72');
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (3, 9, 5, 10, 1, '3rd Floor');
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (4, 4, 10, 3, 1, 'Suite 68');
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (5, 6, 8, 1, 4, '11th Floor');
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (6, 6, 7, 7, 9, '9th Floor');
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (7, 5, 6, 10, 6, 'PO Box 54704');
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (8, 10, 7, 10, 9, 'Suite 56');
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (9, 9, 9, 8, 7, 'Suite 7');
-insert into Pedido (id, cliente_id, carrito_id, metodo_pago_id, estado_pago_id, direccion_envio) values (10, 10, 7, 1, 9, 'Apt 219');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (1, 2, 6, 9, 'Apt 207');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (2, 3, 5, 9, 'Suite 72');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (3, 9, 10, 1, '3rd Floor');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (4, 4, 3, 1, 'Suite 68');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (5, 6, 1, 4, '11th Floor');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (6, 6, 7, 9, '9th Floor');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (7, 5, 10, 6, 'PO Box 54704');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (8, 10, 10, 9, 'Suite 56');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (9, 9, 8, 7, 'Suite 7');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (10, 10, 1, 9, 'Apt 219');
+
+-- Pedido_Producto_Item
+INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (1, 1, 2, 8, 587.94);
 
 -- Rol
 INSERT INTO Rol (nombre, color, permiso_categoria, permiso_producto, permiso_cliente, permiso_usuario, permiso_rol) VALUES ('Administrador', '000000', 15, 15, 15, 15, 15);

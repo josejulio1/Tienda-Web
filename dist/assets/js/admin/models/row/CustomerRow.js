@@ -6,6 +6,7 @@ export class CustomerRow extends Row {
 
         perfilUsuarioImg.src = imagenPerfil;
         perfilUsuarioImg.alt = 'Imagen de Perfil';
+        perfilUsuarioImg.loading = 'lazy';
 
         super(puedeBorrar, 'eliminar-cliente', clienteId, nombre, apellidos, telefono, direccion, correo, perfilUsuarioImg.outerHTML);
     }

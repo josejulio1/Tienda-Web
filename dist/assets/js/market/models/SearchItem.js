@@ -25,6 +25,7 @@ export class SearchItem {
         for (let i = 0; i < 5; i++) {
             imagenEstrella = document.createElement('img');
             imagenEstrella.alt = 'Estrella';
+            imagenEstrella.loading = 'lazy';
             if (numValoracion-- > 0) {
                 imagenEstrella.src = '/assets/img/web/svg/star-filled.svg';
             } else {
@@ -35,7 +36,7 @@ export class SearchItem {
         descripcionContenedor.appendChild(contenedorEstrellas);
         this.searchItem.appendChild(descripcionContenedor);
         this.searchItem.addEventListener('click', e => {
-            window.location.href = `/producto/${e.target.getAttribute('item-id')}`;
+            window.location.href = `/views/producto.php?id=${e.target.getAttribute('item-id')}`;
         })
     }
 

@@ -1,0 +1,57 @@
+main {
+    max-width: 1500px;
+}
+
+.producto {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    min-height: 500px;
+}
+
+.producto > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.producto > article {
+    padding: 1rem;
+}
+
+.producto__detalles__valoracion {
+    display: flex;
+}
+
+.producto__detalles__valoracion img {
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width: 1024px) {
+    .producto {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .compra {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+    }
+}
+
+.compra {
+    border: 2px solid var(--secundario);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.btn-info {
+    margin: 0 auto;
+}
+
+.compra h2 {
+    font-size: 2.5rem;
+}

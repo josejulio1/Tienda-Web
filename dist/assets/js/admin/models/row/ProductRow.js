@@ -6,6 +6,7 @@ export class ProductRow extends Row {
 
         imagenProductoImg.src = imagenProducto;
         imagenProductoImg.alt = 'Imagen del Producto';
+        imagenProductoImg.loading = 'lazy';
 
         super(puedeBorrar, 'eliminar-producto', productoId, nombre, precio, marca, stock, imagenProductoImg.outerHTML, nombreCategoria);
     }
