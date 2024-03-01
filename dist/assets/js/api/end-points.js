@@ -5,9 +5,9 @@ export const END_POINTS = {
     UPDATE_ROW: `${PATH}/update-row.php`,
     DELETE_ROW: `${PATH}/delete-row.php`,
     CLOSE_SESSION: `${PATH}/close-session.php`,
-    HAS_SESSION: `${PATH}/has-session.php`,
     LOGIN: `${PATH}/login.php`,
     MARKET: {
+        HAS_CUSTOMER_SESSION: `${PATH}/market/has-customer-session.php`,
         CART: {
             ADD: `${PATH}/market/cart/add/index.php`,
             DELETE: `${PATH}/market/cart/delete/index.php`

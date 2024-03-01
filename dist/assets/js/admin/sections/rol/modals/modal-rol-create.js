@@ -1,5 +1,5 @@
 import { $tablaRoles, hasDeletePermission, hasUpdatePermission, openUpdateRol } from "../rol.js";
-import { insert } from "../../../crud.js";
+import { insert } from "../../../../crud/crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { ROL } from "../../../../crud/models.js";
 import { RolRow } from "../../../models/row/RolRow.js";
@@ -75,7 +75,13 @@ $buttonCrear.on('click', e => {
     fd.append(ROL.PERMISO_ROL, permisoRol);
 
     insert(END_POINTS.ROL.INSERT, fd, data => {
-        $tablaRoles.row.add(new RolRow(data.rol_id, $campoNombreRolCrear.val(), $campoColorCrear.val().substring(1), hasDeletePermission).getRow()).draw();
+        $tablaRoles.row.add(
+            new RolRow(
+                data[ROL.ID],
+                $campoNombreRolCrear.val(),
+                $campoColorCrear.val().substring(1),
+                hasDeletePermission
+            ).getRow()).draw();
         if (hasUpdatePermission) {
             $tablaRoles.on('click', 'tbody tr:last', openUpdateRol);
         }

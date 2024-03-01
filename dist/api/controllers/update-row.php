@@ -21,4 +21,3 @@ if ($tableName == Cliente::class && isset($fields[Cliente::CONTRASENIA])) {
     $fields[Cliente::CONTRASENIA] = password_hash($fields[Cliente::CONTRASENIA], PASSWORD_DEFAULT);
 }
 return update($tableName, $fields, $json['filters']);
-?>

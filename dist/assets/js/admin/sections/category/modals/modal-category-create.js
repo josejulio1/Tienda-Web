@@ -1,5 +1,5 @@
 import { $tablaCategorias, hasDeletePermission } from "../category.js";
-import { insert } from "../../../crud.js";
+import { insert } from "../../../../crud/crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { CategoryRow } from "../../../models/row/CategoryRow.js";
 import { openUpdateCategory } from "../category.js";
@@ -21,7 +21,12 @@ $buttonCrear.on('click', e => {
     fd.append(CATEGORIA.NOMBRE, $campoCategoriaCrear.val());
 
     insert(END_POINTS.CATEGORY.INSERT, fd, data => {
-        $tablaCategorias.row.add(new CategoryRow(data.categoria_id, $campoCategoriaCrear.val(), hasDeletePermission).getRow()).draw();
+        $tablaCategorias.row.add(
+            new CategoryRow(
+                data[CATEGORIA.ID],
+                $campoCategoriaCrear.val(),
+                hasDeletePermission
+            ).getRow()).draw();
         if (hasDeletePermission) {
             $('#tabla-categorias tbody tr:last').on('click', openUpdateCategory);
         }

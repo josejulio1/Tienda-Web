@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/../../../../utils/http-status-codes.php';
-require_once __DIR__ . '/../../../../utils/Rol.php';
+require_once __DIR__ . '/../../../../utils/RolAccess.php';
 session_start();
-if ($_SERVER['REQUEST_METHOD'] != 'DELETE' || !$_SESSION || $_SESSION['rol'] != Rol::CUSTOMER) {
+if ($_SERVER['REQUEST_METHOD'] != 'DELETE' || !$_SESSION || $_SESSION['rol'] != RolAccess::CUSTOMER) {
     return http_response_code(METHOD_NOT_ALLOWED);
 }
 
@@ -14,4 +14,3 @@ $statusCode = deleteRow(Carrito_Item::class, [
     Carrito_Item::CLIENTE_ID => $_SESSION['id']
 ]);
 return $statusCode;
-?>

@@ -9,7 +9,7 @@ $cerrarSesion.on('click', () => {
         method: 'POST'
     })
     .then(response => {
-        if (response.status != HTTP_STATUS_CODES.OK) {
+        if (response.status !== HTTP_STATUS_CODES.OK) {
             ErrorWindow.make('No se pudo cerrar sesión. Inténtelo más tarde');
             return;
         }

@@ -11,80 +11,55 @@ insert into Cliente (id, nombre, apellidos, telefono, direccion, correo, contras
 insert into Cliente (id, nombre, apellidos, telefono, direccion, correo, contrasenia, ruta_imagen_perfil) values (10, 'Konrad', 'Schuck', '+375 5421625244', 'Room 1066', 'kschuck9@bing.com', '$2y$10$G3lxPK6tte2Jvh7qneHUHOxf3PCmHPxq8Njj5.x1l88Cre1gpdfGO', '/assets/img/internal/default/default-avatar.jpg');
 
 -- Categoría
-insert into Categoria (id, nombre) values (1, 'Roofing (Asphalt)');
-insert into Categoria (id, nombre) values (2, 'Prefabricated Aluminum');
-insert into Categoria (id, nombre) values (3, 'Drilled Shafts');
-insert into Categoria (id, nombre) values (4, 'Ornamental Railings');
-insert into Categoria (id, nombre) values (5, 'Rebar & Wire Mesh Install');
-insert into Categoria (id, nombre) values (6, 'Painting & Vinyl Wall Covering');
-insert into Categoria (id, nombre) values (7, 'Sitework & Site Utilities');
-insert into Categoria (id, nombre) values (8, 'Masonry');
+insert into Categoria (id, nombre) values (1, 'Tarjetas Gráficas');
+insert into Categoria (id, nombre) values (2, 'Procesadores');
+insert into Categoria (id, nombre) values (3, 'Almacenamiento');
+insert into Categoria (id, nombre) values (4, 'Monitores');
+insert into Categoria (id, nombre) values (5, 'Placas Bases');
 
 -- Producto
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (1, 'Maureen', 'Other synovitis and tenosynovitis, left forearm', 28.86, 'Clarithromycin', 8, '/assets/img/internal/default/default-avatar.jpg', 2);
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (2, 'Cherice', 'String or thread causing external constriction', 587.94, 'sunmark anti', 87, '/assets/img/internal/default/default-avatar.jpg', 8);
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (3, 'Jacinda', 'Nondisplaced comminuted fracture of shaft of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with nonunion', 413.35, 'Privigen', 12, '/assets/img/internal/default/default-avatar.jpg', 8);
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (4, 'Brennan', 'Toxic effect of chlorine gas, intentional self-harm, initial encounter', 718.24, 'Fruit Punch Scented Hand Sanitizer', 91, '/assets/img/internal/default/default-avatar.jpg', 3);
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (5, 'Alvira', 'Unspecified physeal fracture of lower end of radius, unspecified arm, subsequent encounter for fracture with routine healing', 610.46, 'No7 Dual Action Tinted Moisturiser Fair', 11, '/assets/img/internal/default/default-avatar.jpg', 1);
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (6, 'Missy', 'Osteonecrosis in diseases classified elsewhere, right shoulder', 573.15, 'LBEL HYDRATESS', 88, '/assets/img/internal/default/default-avatar.jpg', 3);
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (7, 'Abraham', 'Exposure of graft of urinary organ, initial encounter', 711.84, 'HYDROCORTISONE', 4, '/assets/img/internal/default/default-avatar.jpg', 5);
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (8, 'Raina', 'Open bite of right great toe without damage to nail', 532.64, 'Ciprofloxacin', 32, '/assets/img/internal/default/default-avatar.jpg', 4);
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (9, 'Elliot', 'Crushing injury of unspecified hand', 789.89, 'Leader Extra Strength Medicated Pain Relief Patch', 84, '/assets/img/internal/default/default-avatar.jpg', 3);
-insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (10, 'Nertie', 'Other sprain of left foot, initial encounter', 95.29, 'Periodontium Quartz', 12, '/assets/img/internal/default/default-avatar.jpg', 4);
+insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (1, 'ASUS GTX 1060 6GB', 'Tarjeta gráfica de gama media', 339, 'ASUS', 8, '/assets/img/internal/products/ASUS GTX 1060 6GB/asus.jpg', 1);
+insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (2, 'Intel Core i9-9900K', 'Procesador de gama media-alta. La calidad a tus pies', 789.89, 'Intel', 84, '/assets/img/internal/products/Intel Core i9-9900K/intel.jpg', 2);
+insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (3, 'WD 1TB 7.2K RPM Blue', 'Disco duro de 7.200 revoluciones/minuto. Estándar blue', 30.5, 'Western Digital', 12, '/assets/img/internal/products/WD 1TB 7.2K RPM Blue/disco-duro.jpg', 3);
+insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (4, 'MSI B450M Artic Tomahawk', 'Placa base para gamers. Chipset B450. Socket AM4', 160.3, 'MSI', 12, '/assets/img/internal/products/MSI B450M Artic Tomahawk/msi.jpg', 5);
+insert into Producto (id, nombre, descripcion, precio, marca, stock, ruta_imagen, categoria_id) values (5, 'Lenovo D24-45', 'Monitor para uso personal', 120, 'Lenovo', 12, '/assets/img/internal/products/Lenovo D24-45/d24-45.jpg', 4);
 
 -- Carrito_Item
 insert into Carrito_Item (producto_id, cliente_id, cantidad) values (4, 9, 1);
 insert into Carrito_Item (producto_id, cliente_id, cantidad) values (3, 1, 50);
-insert into Carrito_Item (producto_id, cliente_id, cantidad) values (7, 9, 48);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (2, 9, 48);
 insert into Carrito_Item (producto_id, cliente_id, cantidad) values (4, 4, 59);
-insert into Carrito_Item (producto_id, cliente_id, cantidad) values (6, 9, 81);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (5, 9, 81);
 insert into Carrito_Item (producto_id, cliente_id, cantidad) values (5, 7, 77);
-insert into Carrito_Item (producto_id, cliente_id, cantidad) values (9, 6, 37);
-insert into Carrito_Item (producto_id, cliente_id, cantidad) values (6, 1, 51);
-insert into Carrito_Item (producto_id, cliente_id, cantidad) values (7, 2, 50);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (1, 6, 37);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (2, 1, 51);
+insert into Carrito_Item (producto_id, cliente_id, cantidad) values (3, 2, 50);
 
 -- Metodo_Pago
-insert into Metodo_Pago (id, nombre) values (1, 'Eveleen');
-insert into Metodo_Pago (id, nombre) values (2, 'Ivonne');
-insert into Metodo_Pago (id, nombre) values (3, 'Rhys');
-insert into Metodo_Pago (id, nombre) values (4, 'Heda');
-insert into Metodo_Pago (id, nombre) values (5, 'Khalil');
-insert into Metodo_Pago (id, nombre) values (6, 'Carolina');
-insert into Metodo_Pago (id, nombre) values (7, 'Grethel');
-insert into Metodo_Pago (id, nombre) values (8, 'Vicki');
-insert into Metodo_Pago (id, nombre) values (9, 'Jared');
-insert into Metodo_Pago (id, nombre) values (10, 'Imogen');
+insert into Metodo_Pago (id, nombre) values (1, 'VISA');
+insert into Metodo_Pago (id, nombre) values (2, 'MasterCard');
+insert into Metodo_Pago (id, nombre) values (3, 'PayPal');
 
 -- Estado_Pago
-insert into Estado_Pago (id, nombre) values (1, 'Warde');
-insert into Estado_Pago (id, nombre) values (2, 'Stanwood');
-insert into Estado_Pago (id, nombre) values (3, 'Wandie');
-insert into Estado_Pago (id, nombre) values (4, 'Cynthia');
-insert into Estado_Pago (id, nombre) values (5, 'Felicio');
-insert into Estado_Pago (id, nombre) values (6, 'Katerine');
-insert into Estado_Pago (id, nombre) values (7, 'Ashlin');
-insert into Estado_Pago (id, nombre) values (8, 'Cathrine');
-insert into Estado_Pago (id, nombre) values (9, 'Dyna');
-insert into Estado_Pago (id, nombre) values (10, 'Tab');
+insert into Estado_Pago (id, nombre) values (1, 'Aceptado');
+insert into Estado_Pago (id, nombre) values (2, 'Denegado');
+insert into Estado_Pago (id, nombre) values (3, 'Pendiente');
 
 -- Pedido
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (1, 2, 6, 9, 'Apt 207');
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (2, 3, 5, 9, 'Suite 72');
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (3, 9, 10, 1, '3rd Floor');
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (4, 4, 3, 1, 'Suite 68');
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (5, 6, 1, 4, '11th Floor');
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (6, 6, 7, 9, '9th Floor');
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (7, 5, 10, 6, 'PO Box 54704');
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (8, 10, 10, 9, 'Suite 56');
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (9, 9, 8, 7, 'Suite 7');
-insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (10, 10, 1, 9, 'Apt 219');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (1, 2, 2, 1, 'Apt 207');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (2, 3, 3, 2, 'Suite 72');
+insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (3, 9, 2, 2, '3rd Floor');
 
 -- Pedido_Producto_Item
-INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (1, 1, 2, 8, 587.94);
+INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (1, 1, 2, 8, 2644);
+INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (2, 2, 5, 8, 3949.45);
+INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (3, 2, 7, 8, 5529.23);
 
 -- Rol
 INSERT INTO Rol (nombre, color, permiso_categoria, permiso_producto, permiso_cliente, permiso_usuario, permiso_rol) VALUES ('Administrador', '000000', 15, 15, 15, 15, 15);
 INSERT INTO Rol (nombre, color, permiso_categoria, permiso_producto, permiso_cliente, permiso_usuario, permiso_rol) VALUES ('Moderador', '777777', 0, 3, 0, 2, 6);
+
+-- Usuario
 INSERT INTO Usuario (usuario, correo, contrasenia, rol_id, ruta_imagen_perfil) VALUES ('jose', 'jose@gmail.com', '$2y$10$G3lxPK6tte2Jvh7qneHUHOxf3PCmHPxq8Njj5.x1l88Cre1gpdfGO', 1, '/assets/img/internal/default/default-avatar.jpg');
 INSERT INTO Usuario (usuario, correo, contrasenia, rol_id, ruta_imagen_perfil) VALUES ('pepe', 'pepe@gmail.com', '$2y$10$G3lxPK6tte2Jvh7qneHUHOxf3PCmHPxq8Njj5.x1l88Cre1gpdfGO', 1, '/assets/img/internal/default/default-avatar.jpg');
 INSERT INTO Usuario (usuario, correo, contrasenia, rol_id, ruta_imagen_perfil) VALUES ('antonio', 'antonio@gmail.com', '$2y$10$G3lxPK6tte2Jvh7qneHUHOxf3PCmHPxq8Njj5.x1l88Cre1gpdfGO', 2, '/assets/img/internal/default/default-avatar.jpg');

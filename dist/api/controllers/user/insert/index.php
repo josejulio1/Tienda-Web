@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/../../../utils/http-status-codes.php';
-require_once __DIR__ . '/../../../utils/Rol.php';
+require_once __DIR__ . '/../../../utils/RolAccess.php';
 session_start();
-if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$_SESSION || $_SESSION['rol'] != Rol::USER) {
+if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$_SESSION || $_SESSION['rol'] != RolAccess::USER) {
     echo 'Acceso no autorizado';
     return http_response_code(METHOD_NOT_ALLOWED);
 }
@@ -19,7 +19,8 @@ if ($_FILES) {
     $path = '/assets/img/internal/users/' . $email . '/';
     $_POST[Usuario::RUTA_IMAGEN_PERFIL] = $path . $fileNameFormatted;
 } else {
-    $_POST[Usuario::RUTA_IMAGEN_PERFIL] = '/assets/img/internal/default/default-avatar.jpg';
+    require_once __DIR__ . '/../../../utils/utils.php';
+    $_POST[Usuario::RUTA_IMAGEN_PERFIL] = USER_DEFAULT_IMAGE_PATH;
 }
 $statusCode = insert(Usuario::class, $_POST);
 if ($statusCode == OK && $_FILES) {
@@ -31,7 +32,6 @@ $userId = select(Usuario::class, [Usuario::ID], [
 ])[0][Usuario::ID];
 echo json_encode([
     'status' => $statusCode,
-    'usuario_id' => $userId,
-    'ruta_imagen_perfil' => $_POST[Usuario::RUTA_IMAGEN_PERFIL]
+    Usuario::ID => $userId,
+    Usuario::RUTA_IMAGEN_PERFIL => $_POST[Usuario::RUTA_IMAGEN_PERFIL]
 ]);
-?>

@@ -1,5 +1,5 @@
 import { XSS_REGEX } from "../../../../helpers/regex.js";
-import { updateRow } from "../../../crud.js";
+import { updateRow } from "../../../../crud/crud.js";
 import { USUARIO } from "../../../../crud/models.js";
 import { $tablaUsuarios } from "../user.js";
 

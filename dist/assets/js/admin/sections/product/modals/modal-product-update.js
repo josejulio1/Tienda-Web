@@ -1,5 +1,5 @@
 import { XSS_REGEX } from "../../../../helpers/regex.js";
-import { updateRow } from "../../../crud.js";
+import { updateRow } from "../../../../crud/crud.js";
 import { PRODUCTO } from "../../../../crud/models.js";
 import { $tablaProductos } from "../product.js";
 
@@ -15,22 +15,26 @@ $buttonActualizar.on('click', e => {
     e.preventDefault();
 
     let hayErrores = false;
-    if (!$campoNombreActualizar.val() || XSS_REGEX.test($campoNombreActualizar.val())) {
+    const nombre = $campoNombreActualizar.val();
+    if (!nombre || XSS_REGEX.test(nombre)) {
         $campoNombreActualizar.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoPrecioActualizar.val() || XSS_REGEX.test($campoPrecioActualizar.val())) {
+    const precio = $campoPrecioActualizar.val();
+    if (!precio || XSS_REGEX.test(precio) || precio < 1) {
         $campoPrecioActualizar.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoDescripcionActualizar.val() || XSS_REGEX.test($campoDescripcionActualizar.val())) {
+    const descripcion = $campoDescripcionActualizar.val();
+    if (!descripcion || XSS_REGEX.test(descripcion)) {
         $campoDescripcionActualizar.addClass('is-invalid');
         hayErrores = true;
     }
 
-    if (!$campoMarcaActualizar.val() || XSS_REGEX.test($campoMarcaActualizar.val())) {
+    const marca = $campoMarcaActualizar.val();
+    if (!marca || XSS_REGEX.test(marca)) {
         $campoMarcaActualizar.addClass('is-invalid');
         hayErrores = true;
     }
@@ -40,10 +44,10 @@ $buttonActualizar.on('click', e => {
     }
 
     const fields = {
-        [PRODUCTO.NOMBRE]: $campoNombreActualizar.val(),
-        [PRODUCTO.PRECIO]: $campoPrecioActualizar.val(),
-        [PRODUCTO.MARCA]: $campoMarcaActualizar.val(),
-        [PRODUCTO.DESCRIPCION]: $campoDescripcionActualizar.val()
+        [PRODUCTO.NOMBRE]: nombre,
+        [PRODUCTO.PRECIO]: precio,
+        [PRODUCTO.MARCA]: marca,
+        [PRODUCTO.DESCRIPCION]: descripcion
     }
     const filters = {
         [PRODUCTO.ID]: $('tr[selected]').children()[0].textContent
@@ -51,8 +55,8 @@ $buttonActualizar.on('click', e => {
 
     updateRow(PRODUCTO.TABLE_NAME, fields, filters, async () => {
         const id = $tablaProductos.row($('tr[selected]')).index();
-        $tablaProductos.cell({row: id, column: 1}).data($campoNombreActualizar.val());
-        $tablaProductos.cell({row: id, column: 2}).data($campoPrecioActualizar.val());
-        $tablaProductos.cell({row: id, column: 3}).data($campoMarcaActualizar.val()).draw();
+        $tablaProductos.cell({row: id, column: 1}).data(nombre);
+        $tablaProductos.cell({row: id, column: 2}).data(precio);
+        $tablaProductos.cell({row: id, column: 3}).data(marca).draw();
     });
 })

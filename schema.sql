@@ -133,15 +133,19 @@ FROM Producto p JOIN Categoria c ON p.categoria_id = c.id
 
 CREATE VIEW v_pedido AS
 SELECT p.id, c.id AS "cliente_id", c.nombre AS "nombre_cliente", c.apellidos AS "apellidos_cliente", pr.nombre AS "nombre_producto", m.nombre AS "metodo_pago", e.nombre AS "estado_pago", p.direccion_envio
-FROM pedido_producto_item pp JOIN pedido p ON pp.pedido_id = p.id JOIN cliente c ON p.cliente_id = c.id JOIN producto pr ON pp.producto_id = pr.id JOIN metodo_pago m ON p.metodo_pago_id = m.id JOIN estado_pago e ON p.estado_pago_id = e.id
+FROM Pedido_Producto_Item pp JOIN Pedido p ON pp.pedido_id = p.id JOIN Cliente c ON p.cliente_id = c.id JOIN Producto pr ON pp.producto_id = pr.id JOIN Metodo_Pago m ON p.metodo_pago_id = m.id JOIN Estado_Pago e ON p.estado_pago_id = e.id
 ;
 
 CREATE VIEW v_carrito_cliente AS
 SELECT c.cliente_id AS "cliente_id", p.id AS "producto_id", p.nombre AS "nombre_producto", p.precio AS "precio_producto", c.cantidad, p.ruta_imagen AS "ruta_imagen_producto" 
-FROM carrito_item c JOIN producto p ON c.producto_id = p.id
+FROM Carrito_Item c JOIN Producto p ON c.producto_id = p.id
 ;
 
 CREATE VIEW v_producto_valoracion_promedio AS
 SELECT vp.id, vp.nombre, vp.descripcion, vp.ruta_imagen, vp.precio, vp.marca, vp.valoracion_promedio
-FROM (SELECT p.id, p.nombre, p.descripcion, p.ruta_imagen, p.precio, p.marca, ROUND(AVG(c.num_estrellas), 0) AS "valoracion_promedio" FROM Producto p JOIN Comentario c ON p.id = c.producto_id UNION SELECT id, nombre, descripcion, ruta_imagen, precio, marca, NULL FROM producto) vp GROUP BY vp.nombre
+FROM (SELECT p.id, p.nombre, p.descripcion, p.ruta_imagen, p.precio, p.marca, ROUND(AVG(c.num_estrellas), 0) AS "valoracion_promedio" FROM Producto p JOIN Comentario c ON p.id = c.producto_id UNION SELECT id, nombre, descripcion, ruta_imagen, precio, marca, NULL FROM Producto) vp GROUP BY vp.nombre
+;
+
+CREATE VIEW v_comentario_cliente_producto AS 
+SELECT c.producto_id, cl.nombre AS "nombre_cliente", cl.apellidos AS "apellidos_cliente", cl.ruta_imagen_perfil, c.comentario, c.num_estrellas FROM Comentario c JOIN Cliente cl ON c.cliente_id = cl.id JOIN Producto p ON c.producto_id = p.id
 ;

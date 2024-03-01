@@ -1,5 +1,5 @@
 import { $tablaUsuarios, hasDeletePermission, hasUpdatePermission, openUpdateUser } from "../user.js";
-import { insert } from "../../../crud.js";
+import { insert } from "../../../../crud/crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { UserRow } from "../../../models/row/UserRow.js";
 import { USUARIO } from "../../../../crud/models.js";
@@ -16,7 +16,7 @@ $buttonCrear.on('click', e => {
     e.preventDefault();
 
     let hayErrores = false;
-    if (!$campoNombreCrear.val() || XSS_REGEX.test($ca.val())) {
+    if (!$campoNombreCrear.val() || XSS_REGEX.test($campoRolCrear.val())) {
         $campoNombreCrear.addClass('is-invalid');
         hayErrores = true;
     }
@@ -55,8 +55,16 @@ $buttonCrear.on('click', e => {
         // Coger color del rol
         const roleSelectedOption = $(`#rol-usuario-crear option[value=${$campoRolCrear.val()}]`);
 
-        $tablaUsuarios.row.add(new UserRow(data.usuario_id, $campoNombreCrear.val(), $campoCorreoCrear.val(),
-            roleSelectedOption.text(), roleSelectedOption.attr('color'), data.ruta_imagen_perfil, hasDeletePermission).getRow()).draw();
+        $tablaUsuarios.row.add(
+            new UserRow(
+                data[USUARIO.ID],
+                $campoNombreCrear.val(),
+                $campoCorreoCrear.val(),
+                roleSelectedOption.text(),
+                roleSelectedOption.attr('color'),
+                data[USUARIO.RUTA_IMAGEN_PERFIL],
+                hasDeletePermission
+            ).getRow()).draw();
         if (hasUpdatePermission) {
             $tablaUsuarios.on('click', 'tbody tr:last', openUpdateUser);
         }

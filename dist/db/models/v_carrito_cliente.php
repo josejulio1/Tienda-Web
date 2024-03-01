@@ -7,4 +7,3 @@ class v_carrito_cliente {
     const CANTIDAD = 'cantidad';
     const RUTA_IMAGEN_PRODUCTO = 'ruta_imagen_producto';
 }
-?>

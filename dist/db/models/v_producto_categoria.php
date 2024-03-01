@@ -9,4 +9,3 @@ class v_producto_categoria {
     const RUTA_IMAGEN = 'ruta_imagen';
     const NOMBRE_CATEGORIA = 'nombre_categoria';
 }
-?>

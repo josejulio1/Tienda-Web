@@ -32,16 +32,15 @@ if (!password_verify($_POST['contrasenia'], $rows[0]['contrasenia'])) {
     // Mantener sesión iniciada por 2 semanas
     session_set_cookie_params(60 * 60 * 24 * 14);
 } */
-require_once __DIR__ . '/../utils/Rol.php';
+require_once __DIR__ . '/../utils/RolAccess.php';
 require_once __DIR__ . '/../../db/models/Usuario.php';
 require_once __DIR__ . '/../../db/models/Cliente.php';
 session_start();
 $_SESSION['id'] = $rows[0]['id'];
 if ($tableName == Usuario::class) {
-    $_SESSION['rol'] = Rol::USER;
+    $_SESSION['rol'] = RolAccess::USER;
 } else {
-    $_SESSION['rol'] = Rol::CUSTOMER;
+    $_SESSION['rol'] = RolAccess::CUSTOMER;
 }
 $_SESSION['correo'] = $correo;
 return http_response_code(OK);
-?>

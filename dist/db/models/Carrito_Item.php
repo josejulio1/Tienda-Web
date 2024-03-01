@@ -4,4 +4,3 @@ class Carrito_Item {
     const CLIENTE_ID = 'cliente_id';
     const CANTIDAD = 'cantidad';
 }
-?>

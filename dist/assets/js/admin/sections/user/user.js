@@ -1,6 +1,6 @@
 import { $campoCorreoActualizar, $campoRolUsuarioActualizarOptions, $campoUsuarioActualizar, $modalUsuarioActualizar } from "./modals/modal-user-update.js";
 import { USUARIO, V_USUARIO_ROL } from "../../../crud/models.js";
-import { deleteRow, select } from "../../crud.js";
+import { deleteRow, select } from "../../../crud/crud.js";
 import { UserRow } from "../../models/row/UserRow.js";
 import { PERMISSIONS } from "../../../api/permissions.js";
 import { PreviewImage } from "../../../components/PreviewImage.js";
@@ -13,11 +13,19 @@ window.addEventListener('load', async () => {
     $tablaUsuarios = $('#tabla-usuarios').DataTable();
     const json = await select(V_USUARIO_ROL.TABLE_NAME, null, null, true);
     const { data: users } = json;
-    hasUpdatePermission = json['has-update-permission'] != PERMISSIONS.NO_PERMISSIONS;
-    hasDeletePermission = json['has-delete-permission'] != PERMISSIONS.NO_PERMISSIONS;
+    hasUpdatePermission = json['has-update-permission'] !== PERMISSIONS.NO_PERMISSIONS;
+    hasDeletePermission = json['has-delete-permission'] !== PERMISSIONS.NO_PERMISSIONS;
     for (const user of users) {
-        $tablaUsuarios.row.add(new UserRow(user.usuario_id, user.usuario,
-            user.correo, user.nombre_rol, user.color_rol, user.ruta_imagen_perfil, hasDeletePermission).getRow());
+        $tablaUsuarios.row.add(
+            new UserRow(
+                user[V_USUARIO_ROL.USUARIO_ID],
+                user[V_USUARIO_ROL.USUARIO],
+                user[V_USUARIO_ROL.CORREO],
+                user[V_USUARIO_ROL.NOMBRE_ROL],
+                user[V_USUARIO_ROL.COLOR_ROL],
+                user[V_USUARIO_ROL.RUTA_IMAGEN_PERFIL],
+                hasDeletePermission
+            ).getRow());
     }
     $tablaUsuarios.draw();
     $tablaUsuarios.tableName = USUARIO.TABLE_NAME;

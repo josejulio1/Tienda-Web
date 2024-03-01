@@ -1,7 +1,12 @@
 <?php
 session_start();
+require_once __DIR__ . '/../api/utils/RolAccess.php';
 if ($_SESSION) {
-    header('Location: /admin/user.php');
+    if ($_SESSION['rol'] == RolAccess::USER) {
+        header('Location: /admin/user.php');
+    } else if ($_SESSION['rol'] == RolAccess::CUSTOMER) {
+        header('Location: /');
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -11,7 +16,7 @@ if ($_SESSION) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autenticación</title>
     <link rel="stylesheet" href="/assets/css/globals.css">
-    <link rel="stylesheet" href="/assets/css/auth.css">
+    <link rel="stylesheet" href="/assets/css/admin/auth.css">
     <link rel="stylesheet" href="/assets/css/utils.css">
     <script src="/assets/js/lib/jquery-3.7.1.min.js" defer></script>
     <script src="/assets/js/admin/auth.js" type="module" defer></script>

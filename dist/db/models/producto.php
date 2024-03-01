@@ -9,4 +9,3 @@ class Producto {
     const RUTA_IMAGEN = 'ruta_imagen';
     const CATEGORIA_ID = 'categoria_id';
 }
-?>

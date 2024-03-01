@@ -1,5 +1,5 @@
 // JavaScript de búsqueda de productos en la página principal
-import { select } from "../admin/crud.js";
+import { select } from "../crud/crud.js";
 import { V_PRODUCTO_VALORACION_PROMEDIO } from "../crud/models.js";
 import { TYPE_FILTERS } from "../crud/utils.js";
 import { SearchItem } from "./models/SearchItem.js";
@@ -14,13 +14,13 @@ $searchBarInput.on('focusin', () => {
 $searchBarInput.on('focusout', () => {
     setTimeout(() => {
         $searchBarItems.addClass('hide');
-    }, 100);
+    }, 200);
 })
 
 $searchBarInput.on('keyup', async e => {
     // Si la letra no es una letra del alfabeto o el retroceso, no continuar
     const { keyCode } = e;
-    if ((keyCode < 65 || keyCode > 90) || keyCode == 8) {
+    if ((keyCode < 65 || keyCode > 90) || keyCode === 8) {
         return;
     }
     $searchBarItems.removeClass('hide');

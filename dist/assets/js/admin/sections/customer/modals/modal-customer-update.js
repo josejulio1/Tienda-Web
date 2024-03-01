@@ -1,5 +1,5 @@
 import { PHONE_REGEX, XSS_REGEX } from "../../../../helpers/regex.js";
-import { select, updateRow } from "../../../crud.js";
+import { select, updateRow } from "../../../../crud/crud.js";
 import { CLIENTE, V_PEDIDO } from "../../../../crud/models.js";
 import { $tablaClientes } from "../customer.js";
 import { TYPE_FILTERS } from "../../../../crud/utils.js";

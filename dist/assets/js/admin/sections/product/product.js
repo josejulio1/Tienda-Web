@@ -1,6 +1,6 @@
 import { $campoPrecioActualizar, $campoMarcaActualizar, $campoNombreActualizar, $modalProductoActualizar, $campoDescripcionActualizar } from "./modals/modal-product-update.js";
 import { PRODUCTO, V_PRODUCTO_CATEGORIA } from "../../../crud/models.js";
-import { deleteRow, select } from "../../crud.js";
+import { deleteRow, select } from "../../../crud/crud.js";
 import { ProductRow } from "../../models/row/ProductRow.js";
 import { PERMISSIONS } from "../../../api/permissions.js";
 import { PreviewImage } from "../../../components/PreviewImage.js";
@@ -22,12 +22,20 @@ window.addEventListener('load', async () => {
         V_PRODUCTO_CATEGORIA.NOMBRE_CATEGORIA
     ], null, true);
     const { data: products } = json;
-    hasUpdatePermission = json['has-update-permission'] != PERMISSIONS.NO_PERMISSIONS;
-    hasDeletePermission = json['has-delete-permission'] != PERMISSIONS.NO_PERMISSIONS;
+    hasUpdatePermission = json['has-update-permission'] !== PERMISSIONS.NO_PERMISSIONS;
+    hasDeletePermission = json['has-delete-permission'] !== PERMISSIONS.NO_PERMISSIONS;
     for (const product of products) {
-        $tablaProductos.row.add(new ProductRow(product.producto_id, product.nombre,
-            product.precio, product.marca, product.stock,
-            product.ruta_imagen, product.nombre_categoria, hasDeletePermission).getRow());
+        $tablaProductos.row.add(
+            new ProductRow(
+                product[V_PRODUCTO_CATEGORIA.PRODUCTO_ID],
+                product[V_PRODUCTO_CATEGORIA.NOMBRE],
+                product[V_PRODUCTO_CATEGORIA.PRECIO],
+                product[V_PRODUCTO_CATEGORIA.MARCA],
+                product[V_PRODUCTO_CATEGORIA.STOCK],
+                product[V_PRODUCTO_CATEGORIA.RUTA_IMAGEN],
+                product[V_PRODUCTO_CATEGORIA.NOMBRE_CATEGORIA],
+                hasDeletePermission
+            ).getRow());
     }
     $tablaProductos.draw();
     $tablaProductos.tableName = PRODUCTO.TABLE_NAME;

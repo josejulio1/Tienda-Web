@@ -9,4 +9,3 @@ class Cliente {
     const CONTRASENIA = 'contrasenia';
     const RUTA_IMAGEN_PERFIL = 'ruta_imagen_perfil';
 }
-?>

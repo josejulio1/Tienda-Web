@@ -8,4 +8,3 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 session_start();
 $_SESSION = [];
 return http_response_code(OK);
-?>

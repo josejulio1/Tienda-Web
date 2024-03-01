@@ -99,9 +99,8 @@ button {
 }
 
 .checkbox-column label {
-    margin: 0;
     user-select: none;
-    margin-left: .6rem;
+    margin: 0 0 0 .6rem;
 }
 
 @media (max-width: 1024px) {

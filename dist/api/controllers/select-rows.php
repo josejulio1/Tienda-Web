@@ -33,7 +33,7 @@ if ($selectPermissions == 'true') {
     } else if ($tableName == Cliente::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_CLIENTE;
     }
-    
+
     $permiso = intval(select(v_usuario_rol::class, [$permisoBuscado], [
         TypesFilters::EQUALS => [
             'correo' => $_SESSION['correo']
@@ -51,4 +51,3 @@ if ($selectPermissions == 'true') {
 } else {
     echo json_encode(select($tableName, $fields, $filters));
 }
-?>

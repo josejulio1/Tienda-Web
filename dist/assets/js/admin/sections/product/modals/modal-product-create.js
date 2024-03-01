@@ -1,5 +1,5 @@
 import { hasDeletePermission, hasUpdatePermission } from "../product.js";
-import { insert } from "../../../crud.js";
+import { insert } from "../../../../crud/crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { PRODUCTO } from "../../../../crud/models.js";
 import { $tablaProductos, openUpdateProduct } from "../product.js";
@@ -26,7 +26,7 @@ $buttonCrear.on('click', e => {
         hayErrores = true;
     }
 
-    if (!$campoPrecioCrear.val() || XSS_REGEX.test($campoPrecioCrear.val())) {
+    if (!$campoPrecioCrear.val() || XSS_REGEX.test($campoPrecioCrear.val()) || $campoPrecioCrear.val() < 1) {
         $campoPrecioCrear.addClass('is-invalid');
         hayErrores = true;
     }
@@ -36,7 +36,7 @@ $buttonCrear.on('click', e => {
         hayErrores = true;
     }
     
-    if (!$campoStockCrear.val() || XSS_REGEX.test($campoStockCrear.val())) {
+    if (!$campoStockCrear.val() || XSS_REGEX.test($campoStockCrear.val()) || $campoStockCrear.val() < 1) {
         $campoStockCrear.addClass('is-invalid');
         hayErrores = true;
     }
@@ -65,9 +65,17 @@ $buttonCrear.on('click', e => {
     fd.append(PRODUCTO.RUTA_IMAGEN, $campoImagenCrear.prop('files')[0]);
 
     insert(END_POINTS.PRODUCT.INSERT, fd, data => {
-        $tablaProductos.row.add(new ProductRow(data.producto_id, $campoNombreCrear.val(), $campoPrecioCrear.val(),
-            $campoMarcaCrear.val(), $campoStockCrear.val(), data.ruta_imagen, $('#categoria-producto-crear option:selected').text(), hasDeletePermission).getRow())
-            .draw();
+        $tablaProductos.row.add(
+            new ProductRow(
+                data[PRODUCTO.ID],
+                $campoNombreCrear.val(),
+                $campoPrecioCrear.val(),
+                $campoMarcaCrear.val(),
+                $campoStockCrear.val(),
+                data[PRODUCTO.RUTA_IMAGEN],
+                $('#categoria-producto-crear option:selected').text(),
+                hasDeletePermission
+            ).getRow()).draw();
         if (hasUpdatePermission) {
             $tablaProductos.on('click', 'tbody tr:last', openUpdateProduct);
         }

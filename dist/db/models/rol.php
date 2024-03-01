@@ -8,4 +8,3 @@ class Rol {
     const PERMISO_CLIENTE = 'permiso_cliente';
     const PERMISO_USUARIO = 'permiso_usuario';
 }
-?>

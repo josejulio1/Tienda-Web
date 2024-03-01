@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../../utils/http-status-codes.php';
-require_once __DIR__ . '/../../../utils/Rol.php';
+require_once __DIR__ . '/../../../utils/RolAccess.php';
 session_start();
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo 'Acceso no autorizado';
@@ -32,9 +32,8 @@ $customerId = select(Cliente::class, [Cliente::ID], [
 ])[0][Cliente::ID];
 session_start();
 $_SESSION['id'] = $customerId;
-$_SESSION['rol'] = Rol::CUSTOMER;
+$_SESSION['rol'] = RolAccess::CUSTOMER;
 $_SESSION['correo'] = $email;
 echo json_encode([
     'status' => $statusCode
 ]);
-?>

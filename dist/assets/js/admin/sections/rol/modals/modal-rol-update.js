@@ -1,4 +1,4 @@
-import { updateRow } from "../../../crud.js";
+import { updateRow } from "../../../../crud/crud.js";
 import { ROL } from "../../../../crud/models.js";
 import { $tablaRoles } from "../rol.js";
 import { clearCheckboxes, getPermissions, validatePermissions } from "../rol-system.js";

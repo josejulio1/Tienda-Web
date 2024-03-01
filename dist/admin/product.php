@@ -123,8 +123,8 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
                         <label for="categoria-producto-crear">Categoría</label>
                         <select id="categoria-producto-crear" required>
                             <?php
-                            require_once __DIR__ . '/../db/models/categoria.php';
-                            $rows = select(categoria::class, [categoria::ID, categoria::NOMBRE]);
+                            require_once __DIR__ . '/../db/models/Categoria.php';
+                            $rows = select(Categoria::class, [Categoria::ID, Categoria::NOMBRE]);
                             $propertiesName = array_keys($rows[0]);
                             foreach ($rows as $categoriaRow) { ?>
                                 <option value="<?php echo $categoriaRow[$propertiesName[0]]; ?>"><?php echo $categoriaRow[$propertiesName[1]]; ?></option>

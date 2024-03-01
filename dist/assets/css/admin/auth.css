@@ -1,0 +1,74 @@
+body {
+    background-color: var(--primario);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+main {
+    width: 800px;
+    max-height: 80vh;
+    overflow-y: scroll;
+    background-color: var(--secundario);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    position: relative;
+    box-shadow: 0px 0px 20px 0px black;
+}
+
+.back {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.register-login {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+@media (max-width: 1024px) {
+    .register-login {
+        flex-direction: column;
+        row-gap: 1rem;
+    }
+}
+
+.register-login-selected::after {
+    display: block;
+    content: '';
+    background-color: white;
+    height: 1px;
+    margin: auto;
+}
+
+@media (min-width: 1024px) {
+    .register-login-selected::after {
+        width: 60%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .register-login-selected::after {
+        max-width: 80px;
+    }
+}
+
+/* Login Usuario */
+.security {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translate(50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid var(--primario);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    padding: 1rem;
+    margin: auto;
+    background-color: var(--secundario);
+}

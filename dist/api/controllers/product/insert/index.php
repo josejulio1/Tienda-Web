@@ -1,13 +1,13 @@
 <?php
 require_once __DIR__ . '/../../../utils/http-status-codes.php';
-require_once __DIR__ . '/../../../utils/Rol.php';
+require_once __DIR__ . '/../../../utils/RolAccess.php';
 session_start();
-if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$_SESSION || $_SESSION['rol'] != Rol::USER) {
+if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$_SESSION || $_SESSION['rol'] != RolAccess::USER) {
     return http_response_code(METHOD_NOT_ALLOWED);
 }
 
-require_once '../../../../db/crud.php';
-require_once '../../../../db/models/Producto.php';
+require_once __DIR__ . '/../../../../db/crud.php';
+require_once __DIR__ . '/../../../../db/models/Producto.php';
 $nombre = $_POST[Producto::NOMBRE];
 $fileName = $_FILES[Producto::RUTA_IMAGEN]['name'];
 $fileNameFormatted = uniqid() . substr($fileName, strrpos($fileName, '.'));
@@ -16,7 +16,8 @@ $_POST[Producto::RUTA_IMAGEN] = $path . $fileNameFormatted;
 
 $statusCode = insert(Producto::class, $_POST);
 if ($statusCode != OK) {
-    return http_response_code($statusCode);
+    echo json_encode(['status' => $statusCode]);
+    return;
 }
 mkdir($_SERVER['DOCUMENT_ROOT'] . $path);
 move_uploaded_file($_FILES[Producto::RUTA_IMAGEN]['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $path . $fileNameFormatted);
@@ -25,7 +26,6 @@ $productId = select(Producto::class, [Producto::ID], [
 ])[0][Producto::ID];
 echo json_encode([
     'status' => $statusCode,
-    'producto_id' => $productId,
-    'ruta_imagen' => $_POST[Producto::RUTA_IMAGEN]
+    Producto::ID => $productId,
+    Producto::RUTA_IMAGEN => $_POST[Producto::RUTA_IMAGEN]
 ]);
-?>

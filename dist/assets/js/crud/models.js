@@ -108,3 +108,13 @@ export const V_PRODUCTO_VALORACION_PROMEDIO = {
     PRECIO: 'precio',
     VALORACION_PROMEDIO: 'valoracion_promedio'
 }
+
+export const V_COMENTARIO_CLIENTE_PRODUCTO = {
+    TABLE_NAME: 'v_comentario_cliente_producto',
+    PRODUCTO_ID: 'producto_id',
+    NOMBRE_CLIENTE: 'nombre_cliente',
+    APELLIDOS_CLIENTE: 'apellidos_cliente',
+    RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil',
+    COMENTARIO: 'comentario',
+    NUM_ESTRELLAS: 'num_estrellas'
+}

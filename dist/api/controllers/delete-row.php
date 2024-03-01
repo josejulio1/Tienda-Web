@@ -21,7 +21,7 @@ session_start();
 // Evitar que un usuario se pueda eliminar así mismo o el asociado que tiene el usuario logueado
 if ($tableName == Usuario::class && $_SESSION['id'] == $id) {
     return http_response_code(UNAUTHORIZED);
-} else if ($tableName == rol::class) {
+} else if ($tableName == RolAccess::class) {
     require_once __DIR__ . '/../../db/models/v_usuario_rol.php';
     $rolId = select(v_usuario_rol::class, [v_usuario_rol::ID_ROL], [
         TypesFilters::EQUALS => [
@@ -65,4 +65,3 @@ if ($statusCode == OK && $imgPath != USER_DEFAULT_IMAGE_PATH) {
     rmdir($_SERVER['DOCUMENT_ROOT'] . $userImgFolderPath);
 }
 return $statusCode;
-?>

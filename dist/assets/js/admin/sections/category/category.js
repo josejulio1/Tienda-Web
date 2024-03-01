@@ -1,6 +1,6 @@
 import { $campoCategoriaActualizar, $modalCategoriaActualizar } from "./modals/modal-category-update.js";
 import { CATEGORIA } from "../../../crud/models.js";
-import { deleteRow, select } from "../../crud.js";
+import { deleteRow, select } from "../../../crud/crud.js";
 import { CategoryRow } from "../../models/row/CategoryRow.js";
 import { PERMISSIONS } from "../../../api/permissions.js";
 
@@ -11,10 +11,15 @@ window.addEventListener('load', async () => {
     $tablaCategorias = $('#tabla-categorias').DataTable();
     const json = await select(CATEGORIA.TABLE_NAME, null, null, true);
     const { data: categories } = json;
-    hasUpdatePermission = json['has-update-permission'] != PERMISSIONS.NO_PERMISSIONS;
-    hasDeletePermission = json['has-delete-permission'] != PERMISSIONS.NO_PERMISSIONS;
+    hasUpdatePermission = json['has-update-permission'] !== PERMISSIONS.NO_PERMISSIONS;
+    hasDeletePermission = json['has-delete-permission'] !== PERMISSIONS.NO_PERMISSIONS;
     for (const category of categories) {
-        $tablaCategorias.row.add(new CategoryRow(category.id, category.nombre, hasDeletePermission).getRow());
+        $tablaCategorias.row.add(
+            new CategoryRow(
+                category[CATEGORIA.ID],
+                category[CATEGORIA.NOMBRE],
+                hasDeletePermission
+            ).getRow());
     }
     $tablaCategorias.draw();
     $tablaCategorias.tableName = CATEGORIA.TABLE_NAME;

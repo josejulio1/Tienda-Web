@@ -5,5 +5,4 @@ class PERMISSIONS {
     const READ = 2;
     const UPDATE = 4;
     const DELETE = 8;
-};
-?>
+}

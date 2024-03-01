@@ -66,8 +66,8 @@ if (($userInfo[v_usuario_rol::PERMISO_USUARIO] & PERMISSIONS::READ) == PERMISSIO
                            <label for="rol-usuario-actualizar">Rol</label>
                            <select id="rol-usuario-actualizar" required>
                                <?php
-                               require_once __DIR__ . '/../db/models/rol.php';
-                               $rows = select(rol::class, [rol::ID, rol::NOMBRE, rol::COLOR]);
+                               require_once __DIR__ . '/../db/models/Rol.php';
+                               $rows = select(Rol::class, [Rol::ID, Rol::NOMBRE, Rol::COLOR]);
                                $propertiesName = array_keys($rows[0]);
                                foreach ($rows as $colorRow) { ?>
                                    <option value="<?php echo $colorRow[$propertiesName[0]]; ?>" color="<?php echo $colorRow[$propertiesName[2]]; ?>"><?php echo $colorRow[$propertiesName[1]]; ?></option>
@@ -122,8 +122,8 @@ if (($userInfo[v_usuario_rol::PERMISO_USUARIO] & PERMISSIONS::READ) == PERMISSIO
                         <label for="rol-usuario-crear">Rol</label>
                         <select id="rol-usuario-crear" required>
                             <?php
-                            require_once __DIR__ . '/../db/models/rol.php';
-                            $rows = select(rol::class, [rol::ID, rol::NOMBRE, rol::COLOR]);
+                            require_once __DIR__ . '/../db/models/Rol.php';
+                            $rows = select(Rol::class, [Rol::ID, Rol::NOMBRE, Rol::COLOR]);
                             $propertiesName = array_keys($rows[0]);
                             foreach ($rows as $colorRow) { ?>
                                 <option value="<?php echo $colorRow[$propertiesName[0]]; ?>" color="<?php echo $colorRow[$propertiesName[2]]; ?>"><?php echo $colorRow[$propertiesName[1]]; ?></option>

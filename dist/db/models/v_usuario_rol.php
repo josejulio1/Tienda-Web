@@ -14,4 +14,3 @@ class v_usuario_rol {
     const PERMISO_ROL = 'permiso_rol';
     const PERMISO_USUARIO = 'permiso_usuario';
 }
-?>

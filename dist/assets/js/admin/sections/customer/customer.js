@@ -1,6 +1,6 @@
 import { $campoNombreActualizar, $modalClienteActualizar, $campoApellidosActualizar, $campoTelefonoActualizar, $campoDireccionActualizar } from "./modals/modal-customer-update.js";
 import { CLIENTE } from "../../../crud/models.js";
-import { deleteRow, select } from "../../crud.js";
+import { deleteRow, select } from "../../../crud/crud.js";
 import { PERMISSIONS } from "../../../api/permissions.js";
 import { PreviewImage } from "../../../components/PreviewImage.js";
 import { CustomerRow } from "../../models/row/CustomerRow.js";
@@ -12,14 +12,29 @@ export let $tablaClientes;
 window.addEventListener('load', async () => {
     $tablaClientes = $('#tabla-clientes').DataTable();
     const json = await select(CLIENTE.TABLE_NAME, [
-        CLIENTE.ID, CLIENTE.NOMBRE, CLIENTE.APELLIDOS, CLIENTE.TELEFONO, CLIENTE.DIRECCION, CLIENTE.CORREO, CLIENTE.RUTA_IMAGEN_PERFIL
+        CLIENTE.ID,
+        CLIENTE.NOMBRE,
+        CLIENTE.APELLIDOS,
+        CLIENTE.TELEFONO,
+        CLIENTE.DIRECCION,
+        CLIENTE.CORREO,
+        CLIENTE.RUTA_IMAGEN_PERFIL
     ], null, true);
     const { data: customers } = json;
-    hasUpdatePermission = json['has-update-permission'] != PERMISSIONS.NO_PERMISSIONS;
-    hasDeletePermission = json['has-delete-permission'] != PERMISSIONS.NO_PERMISSIONS;
+    hasUpdatePermission = json['has-update-permission'] !== PERMISSIONS.NO_PERMISSIONS;
+    hasDeletePermission = json['has-delete-permission'] !== PERMISSIONS.NO_PERMISSIONS;
     for (const customer of customers) {
-        $tablaClientes.row.add(new CustomerRow(customer.id, customer.nombre,
-            customer.apellidos, customer.telefono, customer.direccion, customer.correo, customer.ruta_imagen_perfil, hasDeletePermission).getRow());
+        $tablaClientes.row.add(
+            new CustomerRow(
+                customer[CLIENTE.ID],
+                customer[CLIENTE.NOMBRE],
+                customer[CLIENTE.APELLIDOS],
+                customer[CLIENTE.TELEFONO],
+                customer[CLIENTE.DIRECCION],
+                customer[CLIENTE.CORREO],
+                customer[CLIENTE.RUTA_IMAGEN_PERFIL],
+                hasDeletePermission
+            ).getRow());
     }
     $tablaClientes.draw();
     $tablaClientes.tableName = CLIENTE.TABLE_NAME;

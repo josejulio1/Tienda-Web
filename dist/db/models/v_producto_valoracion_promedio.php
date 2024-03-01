@@ -8,4 +8,3 @@ class v_producto_valoracion_promedio {
     const MARCA = 'marca';
     const VALORACION_PROMEDIO = 'valoracion_promedio';
 }
-?>

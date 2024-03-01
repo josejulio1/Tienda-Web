@@ -1,6 +1,7 @@
 <?php
 session_start();
-if (!$_SESSION) {
+require_once __DIR__ . '/../../api/utils/RolAccess.php';
+if (!$_SESSION || $_SESSION['rol'] != RolAccess::USER) {
   header('Location: /admin/auth.php');
   return;
 }
@@ -25,4 +26,3 @@ $userInfo = select(v_usuario_rol::class, [
       v_usuario_rol::CORREO => $_SESSION[v_usuario_rol::CORREO]
   ]
 ])[0];
-?>

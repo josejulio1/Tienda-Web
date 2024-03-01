@@ -4,4 +4,8 @@ class TypesFilters {
     const DISTINCT = '<>';
     const BEGIN = 'LIKE';
 }
-?>
+
+class TypeOrders {
+    const ASC = ' ASC';
+    const DESC = ' DESC';
+}

@@ -6,9 +6,13 @@
                 <article id="search-bar--items"></article>
             </section>
             <?php
+            require_once __DIR__ . '/../../api/utils/RolAccess.php';
             session_start();
-            require_once __DIR__ . '/../../api/utils/Rol.php';
-            if ($_SESSION && $_SESSION['rol'] == Rol::CUSTOMER) {
+            // Si se tiene iniciada sesión como Usuario, enviar al panel de usuarios en admin
+            if ($_SESSION && $_SESSION['rol'] == RolAccess::USER) {
+                header('Location: /admin/user.php');
+            }
+            if ($_SESSION && $_SESSION['rol'] == RolAccess::CUSTOMER) {
                 require_once __DIR__ . '/../../db/models/Cliente.php';
                 $imagenPerfil = select(Cliente::class, [Cliente::RUTA_IMAGEN_PERFIL], [
                     TypesFilters::EQUALS => [
@@ -46,7 +50,7 @@
                     $numItems = count($carritoItems);
                     ?>
                     <span id="num-articulos-carrito"><?php echo $numItems; ?></span>
-                    <img src="/assets/img/web/svg/cart.svg" alt="Carrito">
+                    <img src="/assets/img/web/svg/cart.svg" alt="Carrito" id="img-carrito">
                     <p>Carrito</p>
                     <div class="carrito__items--container">
                         <section class="carrito__items">
@@ -57,9 +61,9 @@
                                     <article class="carrito__item" item-id="<?php echo $carritoItem[v_carrito_cliente::PRODUCTO_ID]; ?>">
                                         <img src="<?php echo $carritoItem[v_carrito_cliente::RUTA_IMAGEN_PRODUCTO]; ?>" alt="Imagen Producto">
                                         <div class="item__descripcion">
-                                            <p class="item__nombre-producto"><?php echo $carritoItem[v_carrito_cliente::NOMBRE_PRODUCTO]; ?></p>
-                                            <p><span class="precio__producto"><?php echo $carritoItem[v_carrito_cliente::PRECIO_PRODUCTO]; ?></span> €</p>
-                                            <p>Unidades: <span class="item__precio"><?php echo $carritoItem[v_carrito_cliente::CANTIDAD]; ?></span></p>
+                                            <p class="item__nombre--producto"><?php echo $carritoItem[v_carrito_cliente::NOMBRE_PRODUCTO]; ?></p>
+                                            <p><span class="precio__producto"><?php echo $carritoItem[v_carrito_cliente::PRECIO_PRODUCTO]; ?></span><span> €</span></p>
+                                            <p><span>Unidades:</span> <span class="item__precio"><?php echo $carritoItem[v_carrito_cliente::CANTIDAD]; ?></span></p>
                                         </div>
                                         <img id="eliminar-item" src="/assets/img/web/svg/delete.svg" alt="Eliminar">
                                     </article>
@@ -67,18 +71,18 @@
                                     $precioTotal += $carritoItem[v_carrito_cliente::PRECIO_PRODUCTO] * $carritoItem[v_carrito_cliente::CANTIDAD];
                                 } 
                                 ?>
-                            </section>
-                            <div class="option-separator"></div>
-                            <h2 class="precio-total">Precio total: <span class="precio-total__span"><?php echo $precioTotal; ?> </span> €</h2>
-                            <button class="btn-info">Realizar pedido</button>
                             <?php
-                            } else { ?>
-                                <h2 class="no-cart">Agregue artículos al carrito</h2>
-                                <?php
                             }
                             ?>
+                            </section>
+                            <section class="<?php echo $numItems == 0 ? 'hide' : ''; ?>" id="detalles-carrito">
+                                <div class="option-separator"></div>
+                                <h2 class="precio-total">Precio total: <span class="precio-total__span"><?php echo $precioTotal ?? 0; ?> </span><span> €</span></h2>
+                                <a class="btn-info" href="/views/checkout.php">Realizar pedido</a>
+                            </section>
+                            <h2 class="no-cart <?php echo $numItems > 0 ? 'hide' : ''; ?>">Agregue artículos al carrito</h2>
                     </div>
-                </div>
+                </section>
                 <?php
             } else { ?>
                 <a href="/views/login.php" class="cuenta">

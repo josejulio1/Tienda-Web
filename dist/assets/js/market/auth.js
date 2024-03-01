@@ -54,11 +54,11 @@ new LoadingButton('#button-iniciar-sesion', 'Iniciar Sesión', ($buttonP, $butto
         $buttonP.removeClass('hide');
         $buttonLoading.addClass('hide');
         const { status } = response;
-        if (status == HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
+        if (status === HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
             ErrorWindow.make(ERROR_MESSAGES[status]);
             return;
         }
-        if (status != HTTP_STATUS_CODES.OK) {
+        if (status !== HTTP_STATUS_CODES.OK) {
             ErrorWindow.make('Correo o contraseña incorrectos');
             return;
         }
@@ -110,7 +110,6 @@ new LoadingButton('#button-registrarse', 'Registrarse', ($buttonP, $buttonLoadin
     fd.append(CLIENTE.CONTRASENIA, contrasenia);
     // Si se ha adjuntado una imagen, no usar la imagen por defecto
     const $imagenRegister = $('#imagen-register');
-    debugger
     if ($imagenRegister.prop('files')) {
         fd.append(CLIENTE.RUTA_IMAGEN_PERFIL, $imagenRegister.prop('files')[0]);
     }
@@ -124,11 +123,11 @@ new LoadingButton('#button-registrarse', 'Registrarse', ($buttonP, $buttonLoadin
         $buttonP.removeClass('hide');
         $buttonLoading.addClass('hide');
         const { status } = response;
-        if (status == HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
+        if (status === HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
             ErrorWindow.make(ERROR_MESSAGES[status]);
             return;
         }
-        if (status != HTTP_STATUS_CODES.OK) {
+        if (status !== HTTP_STATUS_CODES.OK) {
             ErrorWindow.make('No se pudo registrar correctamente');
             return;
         }

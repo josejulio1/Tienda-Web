@@ -9,4 +9,3 @@ define('INCORRECT_DATA', 422);
 
 // Server
 define('SERVICE_UNAVAILABLE', 503);
-?>

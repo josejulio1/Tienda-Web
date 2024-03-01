@@ -1,5 +1,5 @@
 import { $tablaClientes, hasDeletePermission, hasUpdatePermission, openUpdateCustomer } from "../customer.js";
-import { insert } from "../../../crud.js";
+import { insert } from "../../../../crud/crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
 import { CustomerRow } from "../../../models/row/CustomerRow.js";
 import { CLIENTE } from "../../../../crud/models.js";
@@ -66,8 +66,17 @@ $buttonCrear.on('click', e => {
     }
 
     insert(END_POINTS.CUSTOMER.INSERT, fd, data => {
-        $tablaClientes.row.add(new CustomerRow(data.cliente_id, $campoNombreCrear.val(), $campoApellidosCrear.val(), $campoTelefonoCrear.val(),
-            $campoDireccionCrear.val(), $campoCorreoCrear.val(), data.ruta_imagen_perfil, hasDeletePermission).getRow()).draw();
+        $tablaClientes.row.add(
+            new CustomerRow(
+                data[CLIENTE.ID],
+                $campoNombreCrear.val(),
+                $campoApellidosCrear.val(),
+                $campoTelefonoCrear.val(),
+                $campoDireccionCrear.val(),
+                $campoCorreoCrear.val(),
+                data[CLIENTE.RUTA_IMAGEN_PERFIL],
+                hasDeletePermission
+            ).getRow()).draw();
         if (hasUpdatePermission) {
             $tablaClientes.on('click', 'tbody tr:last', openUpdateCustomer);
         }

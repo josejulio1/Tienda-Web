@@ -39,11 +39,11 @@ new LoadingButton('.btn-info', 'Iniciar Sesión', ($buttonP, $buttonLoading) => 
         $buttonP.removeClass('hide');
         $buttonLoading.addClass('hide');
         const { status } = response;
-        if (status == HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
+        if (status === HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
             ErrorWindow.make(ERROR_MESSAGES[status]);
             return;
         }
-        if (status != HTTP_STATUS_CODES.OK) {
+        if (status !== HTTP_STATUS_CODES.OK) {
             ErrorWindow.make('Usuario o contraseña incorrectos');
             return;
         }

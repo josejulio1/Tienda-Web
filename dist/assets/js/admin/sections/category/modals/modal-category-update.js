@@ -1,4 +1,4 @@
-import { updateRow } from "../../../crud.js";
+import { updateRow } from "../../../../crud/crud.js";
 import { CATEGORIA } from "../../../../crud/models.js";
 import { $tablaCategorias } from "../category.js";
 import { XSS_REGEX } from "../../../../helpers/regex.js";
