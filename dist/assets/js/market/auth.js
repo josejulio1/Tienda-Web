@@ -1,5 +1,5 @@
 import { PreviewImage } from "../components/PreviewImage.js";
-import { ErrorWindow } from "../components/ErrorWindow.js";
+import { InfoWindow } from "../components/InfoWindow.js";
 import { END_POINTS } from "../api/end-points.js";
 import { HTTP_STATUS_CODES } from "../api/http-status-codes.js";
 import { LoadingButton } from "../components/LoadingButton.js";
@@ -55,11 +55,11 @@ new LoadingButton('#button-iniciar-sesion', 'Iniciar Sesión', ($buttonP, $butto
         $buttonLoading.addClass('hide');
         const { status } = response;
         if (status === HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
-            ErrorWindow.make(ERROR_MESSAGES[status]);
+            InfoWindow.make(ERROR_MESSAGES[status]);
             return;
         }
         if (status !== HTTP_STATUS_CODES.OK) {
-            ErrorWindow.make('Correo o contraseña incorrectos');
+            InfoWindow.make('Correo o contraseña incorrectos');
             return;
         }
         window.location.href = '/';
@@ -124,11 +124,11 @@ new LoadingButton('#button-registrarse', 'Registrarse', ($buttonP, $buttonLoadin
         $buttonLoading.addClass('hide');
         const { status } = response;
         if (status === HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
-            ErrorWindow.make(ERROR_MESSAGES[status]);
+            InfoWindow.make(ERROR_MESSAGES[status]);
             return;
         }
         if (status !== HTTP_STATUS_CODES.OK) {
-            ErrorWindow.make('No se pudo registrar correctamente');
+            InfoWindow.make('No se pudo registrar correctamente');
             return;
         }
         window.location.href = '/';

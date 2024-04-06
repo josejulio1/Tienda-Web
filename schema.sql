@@ -33,7 +33,7 @@ CREATE TABLE Pedido_Producto_Item (
     pedido_id INT NOT NULL,
     producto_id INT NOT NULL,
     cantidad_producto INT NOT NULL,
-    precio_producto FLOAT(5,2) NOT NULL
+    precio_producto FLOAT(7,2) NOT NULL
 );
 
 CREATE TABLE Cliente (
@@ -55,11 +55,19 @@ CREATE TABLE Comentario (
     num_estrellas INT(1) NOT NULL
 );
 
+CREATE TABLE Chat (
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    cliente_id INT NOT NULL,
+    mensaje VARCHAR(300) NOT NULL,
+    fecha DATETIME NOT NULL,
+    es_cliente BOOLEAN NOT NULL
+);
+
 CREATE TABLE Producto (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(100) UNIQUE NOT NULL,
     descripcion VARCHAR(5000) NOT NULL,
-    precio FLOAT(5,2) NOT NULL,
+    precio FLOAT(7,2) NOT NULL,
     marca VARCHAR(100) NOT NULL,
     stock INT NOT NULL,
     ruta_imagen VARCHAR(100) NOT NULL,
@@ -113,6 +121,10 @@ ADD CONSTRAINT fk_comentario_clienteId FOREIGN KEY (cliente_id) REFERENCES Clien
 ADD CONSTRAINT fk_comentario_productoId FOREIGN KEY (producto_id) REFERENCES Producto(id)
 ;
 
+ALTER TABLE Chat
+ADD CONSTRAINT fk_chat_clienteId FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE
+;
+
 ALTER TABLE Producto
 ADD CONSTRAINT fk_producto_clienteId FOREIGN KEY (categoria_id) REFERENCES Categoria(id) ON DELETE CASCADE
 ;
@@ -136,6 +148,11 @@ SELECT p.id, c.id AS "cliente_id", c.nombre AS "nombre_cliente", c.apellidos AS 
 FROM Pedido_Producto_Item pp JOIN Pedido p ON pp.pedido_id = p.id JOIN Cliente c ON p.cliente_id = c.id JOIN Producto pr ON pp.producto_id = pr.id JOIN Metodo_Pago m ON p.metodo_pago_id = m.id JOIN Estado_Pago e ON p.estado_pago_id = e.id
 ;
 
+CREATE VIEW v_pedido_producto_item_detallado AS
+SELECT ppi.pedido_id, pe.cliente_id, pr.id AS "producto_id", pr.nombre AS "nombre_producto", ppi.cantidad_producto, ppi.precio_producto, pr.ruta_imagen
+FROM pedido_producto_item ppi JOIN pedido pe ON ppi.pedido_id = pe.id JOIN producto pr ON ppi.producto_id = pr.id
+;
+
 CREATE VIEW v_carrito_cliente AS
 SELECT c.cliente_id AS "cliente_id", p.id AS "producto_id", p.nombre AS "nombre_producto", p.precio AS "precio_producto", c.cantidad, p.ruta_imagen AS "ruta_imagen_producto" 
 FROM Carrito_Item c JOIN Producto p ON c.producto_id = p.id
@@ -148,4 +165,9 @@ FROM (SELECT p.id, p.nombre, p.descripcion, p.ruta_imagen, p.precio, p.marca, RO
 
 CREATE VIEW v_comentario_cliente_producto AS 
 SELECT c.producto_id, cl.nombre AS "nombre_cliente", cl.apellidos AS "apellidos_cliente", cl.ruta_imagen_perfil, c.comentario, c.num_estrellas FROM Comentario c JOIN Cliente cl ON c.cliente_id = cl.id JOIN Producto p ON c.producto_id = p.id
+;
+
+CREATE VIEW v_chat_cliente_imagen AS
+SELECT ch.id, ch.cliente_id, cl.ruta_imagen_perfil, ch.mensaje, ch.fecha, ch.es_cliente
+FROM Chat ch JOIN Cliente cl ON ch.cliente_id = cl.id
 ;

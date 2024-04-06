@@ -19,7 +19,9 @@ if ($statusCode != OK) {
     echo json_encode(['status' => $statusCode]);
     return;
 }
+// Crear carpeta con el nombre del producto
 mkdir($_SERVER['DOCUMENT_ROOT'] . $path);
+// Guardar imagen del producto en la carpeta
 move_uploaded_file($_FILES[Producto::RUTA_IMAGEN]['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $path . $fileNameFormatted);
 $productId = select(Producto::class, [Producto::ID], [
     Producto::NOMBRE => $nombre

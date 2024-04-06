@@ -75,6 +75,7 @@
     animation: leave .5s ease-in-out;
 }
 
+.success,
 .error {
     z-index: 100;
     border-radius: 1rem;
@@ -83,7 +84,6 @@
     left: 50%;
     border: 2px solid black;
     transform: translateX(-50%);
-    background-color: var(--rojo);
     width: 300px;
     height: 100px;
     padding: 2rem;
@@ -93,6 +93,14 @@
     text-align: center;
     color: var(--primario);
     font-weight: bold;
+}
+
+.success {
+    background-color: var(--verde);
+}
+
+.error {
+    background-color: var(--rojo);
 }
 
 .error p {
@@ -123,4 +131,10 @@
 
 .invert-color {
     filter: invert(1);
+}
+
+.invalid-feedback {
+    color: red;
+    font-weight: bold;
+    margin-top: .3rem;
 }

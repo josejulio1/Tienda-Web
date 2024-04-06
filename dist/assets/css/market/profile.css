@@ -1,0 +1,140 @@
+.perfil {
+    width: 80%;
+    margin: 4rem auto;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .perfil {
+        flex-direction: column;
+    }
+}
+
+.perfil h3 {
+    text-align: center;
+}
+
+.info-perfil {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.imagen-perfil {
+    position: relative;
+}
+
+.imagen-perfil img {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+}
+
+.imagen-perfil img,
+.imagen-perfil .editar-imagen-perfil {
+    transition: .2s border-radius, .2s background-color;
+}
+
+.imagen-perfil:hover > img,
+.imagen-perfil:hover .editar-imagen-perfil {
+    border-radius: 50%;
+}
+
+.imagen-perfil:hover .editar-imagen-perfil {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.imagen-perfil:hover .editar-imagen-perfil img {
+    display: block !important;
+}
+
+.editar-imagen-perfil,
+.editar-imagen-perfil img {
+    cursor: pointer;
+}
+
+.editar-imagen-perfil {
+    transition: .1s background-color;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editar-imagen-perfil img {
+    width: 50px;
+    height: 50px;
+}
+
+#no-guardado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#no-guardado img {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+#no-guardado p {
+    font-size: 1.5rem;
+    color: red;
+}
+
+.campos-perfil h2 {
+    font-size: 2rem;
+}
+
+.datos {
+    padding: 1rem 0;
+}
+
+.datos label {
+    color: var(--secundario);
+}
+
+.datos input {
+    border-radius: .5rem;
+}
+
+.columna {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    margin-bottom: 2rem;
+}
+
+.guardar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--secundario);
+    padding: 2rem;
+}
+
+#guardar-cambios {
+    background-color: var(--primario);
+    color: var(--secundario);
+    border-radius: 0;
+    width: 100%;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: .2s background-color, .2s border-radius;
+}
+
+#guardar-cambios:hover {
+    background-color: var(--seleccionable);
+    border-radius: .5rem;
+}

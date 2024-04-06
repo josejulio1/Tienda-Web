@@ -51,9 +51,9 @@ insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_en
 insert into Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) values (3, 9, 2, 2, '3rd Floor');
 
 -- Pedido_Producto_Item
-INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (1, 1, 2, 8, 2644);
-INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (2, 2, 5, 8, 3949.45);
-INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (3, 2, 7, 8, 5529.23);
+INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (1, 1, 2, 8, 789.89);
+INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (2, 2, 5, 8, 120);
+INSERT INTO Pedido_Producto_Item (id, pedido_id, producto_id, cantidad_producto, precio_producto) VALUES (3, 2, 3, 8, 30.5);
 
 -- Rol
 INSERT INTO Rol (nombre, color, permiso_categoria, permiso_producto, permiso_cliente, permiso_usuario, permiso_rol) VALUES ('Administrador', '000000', 15, 15, 15, 15, 15);

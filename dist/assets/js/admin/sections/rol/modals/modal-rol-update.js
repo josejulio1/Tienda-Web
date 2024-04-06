@@ -2,7 +2,7 @@ import { updateRow } from "../../../../crud/crud.js";
 import { ROL } from "../../../../crud/models.js";
 import { $tablaRoles } from "../rol.js";
 import { clearCheckboxes, getPermissions, validatePermissions } from "../rol-system.js";
-import { ErrorWindow } from "../../../../components/ErrorWindow.js";
+import { InfoWindow } from "../../../../components/InfoWindow.js";
 import { XSS_REGEX } from "../../../../helpers/regex.js";
 
 export const $modalRolActualizar = $('#modal-rol-actualizar');
@@ -93,27 +93,27 @@ $buttonActualizar.on('click', e => {
     const permisoRol = getPermissions($permisoVerActualizarRol, $permisoCrearActualizarRol, $permisoActualizarActualizarRol, $permisoEliminarActualizarRol);
 
     if (permisoUsuario && !validatePermissions($permisoCrearActualizarUsuario, $permisoActualizarActualizarUsuario, $permisoEliminarActualizarUsuario)) {
-        ErrorWindow.make('Debe tener el permiso Ver en Usuario marcado');
+        InfoWindow.make('Debe tener el permiso Ver en Usuario marcado');
         return;
     }
 
     if (permisoProducto && !validatePermissions($permisoCrearActualizarProducto, $permisoActualizarActualizarProducto, $permisoEliminarActualizarProducto)) {
-        ErrorWindow.make('Debe tener el permiso Ver en Producto marcado');
+        InfoWindow.make('Debe tener el permiso Ver en Producto marcado');
         return;
     }
 
     if (permisoCategoria && !validatePermissions($permisoCrearActualizarCategoria, $permisoActualizarActualizarCategoria, $permisoEliminarActualizarCategoria)) {
-        ErrorWindow.make('Debe tener el permiso Ver en Categoría marcado');
+        InfoWindow.make('Debe tener el permiso Ver en Categoría marcado');
         return;
     }
 
     if (permisoCliente && !validatePermissions($permisoCrearActualizarCliente, $permisoActualizarActualizarCliente, $permisoEliminarActualizarCliente)) {
-        ErrorWindow.make('Debe tener el permiso Ver en Cliente marcado');
+        InfoWindow.make('Debe tener el permiso Ver en Cliente marcado');
         return;
     }
 
     if (permisoRol && !validatePermissions($permisoCrearActualizarRol, $permisoActualizarActualizarRol, $permisoEliminarActualizarRol)) {
-        ErrorWindow.make('Debe tener el permiso Ver en Rol marcado');
+        InfoWindow.make('Debe tener el permiso Ver en Rol marcado');
         return;
     }
 

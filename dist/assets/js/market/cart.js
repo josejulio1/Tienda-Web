@@ -1,7 +1,7 @@
 import { select } from "../crud/crud.js";
 import { END_POINTS } from "../api/end-points.js";
 import { HTTP_STATUS_CODES } from "../api/http-status-codes.js";
-import { ErrorWindow } from "../components/ErrorWindow.js";
+import { InfoWindow } from "../components/InfoWindow.js";
 import { CARRITO_ITEM, PRODUCTO } from "../crud/models.js";
 import { TYPE_FILTERS } from "../crud/utils.js";
 import { CartItem } from "./models/CartItem.js";
@@ -25,7 +25,7 @@ $aniadirCarrito.on('click', async () => {
     })
     .then(response => {
         if (response.status !== HTTP_STATUS_CODES.OK) {
-            ErrorWindow.make('Debes tener una cuenta para poder añadir un producto al carrito');
+            InfoWindow.make('Debes tener una cuenta para poder añadir un producto al carrito');
             return false;
         }
         return true;
@@ -63,8 +63,8 @@ $aniadirCarrito.on('click', async () => {
             }
         })
         .then(response => {
-            if (response.status != HTTP_STATUS_CODES.OK) {
-                ErrorWindow.make('No se pudo añadir el producto al carrito');
+            if (response.status !== HTTP_STATUS_CODES.OK) {
+                InfoWindow.make('No se pudo añadir el producto al carrito');
                 return;
             }
             $carritoItems.removeClass('hide');
@@ -85,7 +85,7 @@ $aniadirCarrito.on('click', async () => {
     })
     .then(async response => {
         if (response.status !== HTTP_STATUS_CODES.OK) {
-            ErrorWindow.make('No se pudo añadir el producto al carrito');
+            InfoWindow.make('No se pudo añadir el producto al carrito');
             return;
         }
         const jsonProducto = await select(PRODUCTO.TABLE_NAME, [
@@ -116,12 +116,13 @@ $aniadirCarrito.on('click', async () => {
 
 function actualizarCarrito() {
     const preciosProductos = [];
-    $('.carrito__item').each(function() {
+    const $carritoItems = $('.carrito__item');
+    $carritoItems.each(function() {
         preciosProductos.push(parseFloat($(this).find('.precio__producto').html()) * $(this).find('.item__precio').html());
     })
     $precioTotalSpan.html(Math.round((preciosProductos.reduce((a, b) => a + b, 0))  * 100) / 100);
     // Contar elemento del carrito
-    $numArticulosCarrito.html($('.carrito__item').length);
+    $numArticulosCarrito.html($carritoItems.length);
 }
 
 export function eliminarItem(e) {
@@ -137,12 +138,12 @@ export function eliminarItem(e) {
     })
     .then(response => {
         if (response.status !== HTTP_STATUS_CODES.OK) {
-            ErrorWindow.make('No se pudo eliminar el producto del carrito');
+            InfoWindow.make('No se pudo eliminar el producto del carrito');
             return;
         }
         $carritoItem.remove();
         // Si se ha eliminado el último producto que había en el carrito, ocultar carrito y mostrar mensaje de añadir producto
-        if ($('.carrito__item').length == 0) {
+        if ($('.carrito__item').length === 0) {
             $carritoItems.addClass('hide');
             $detallesCarrito.addClass('hide');
             $noCart.removeClass('hide');

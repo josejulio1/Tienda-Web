@@ -11,7 +11,14 @@ export const END_POINTS = {
         CART: {
             ADD: `${PATH}/market/cart/add/index.php`,
             DELETE: `${PATH}/market/cart/delete/index.php`
-        }
+        },
+        CHAT: {
+            ADD: `${PATH}/market/chat/add/index.php`
+        },
+        ORDER: {
+            ADD: `${PATH}/market/order/add/index.php`
+        },
+        PROFILE: `${PATH}/market/profile/index.php`
     },
     USER: {
         INSERT: `${PATH}/user/insert/index.php`,
@@ -23,6 +30,9 @@ export const END_POINTS = {
     },
     PRODUCT: {
         INSERT: `${PATH}/product/insert/index.php`
+    },
+    BRAND: {
+        INSERT: `${PATH}/brand/insert/index.php`
     },
     ROL: {
         INSERT: `${PATH}/rol/insert/index.php`

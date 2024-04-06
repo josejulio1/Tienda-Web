@@ -5,6 +5,15 @@ if (!filter_var($id, FILTER_VALIDATE_INT) || $id < 1) {
 }
 require_once __DIR__ . '/../db/crud.php';
 require_once __DIR__ . '/../db/utils/utils.php';
+require_once __DIR__ . '/../db/models/Producto.php';
+// Comprobar que no se introduzca un ID de producto inexistente
+$lastIdProduct = select(Producto::class, [Producto::ID], null, [
+        TypeOrders::DESC => Producto::ID
+], 1)[0][Producto::ID];
+if ($id > $lastIdProduct) {
+    header('Location: /');
+}
+
 require_once __DIR__ . '/../db/models/v_producto_valoracion_promedio.php';
 $producto = select(v_producto_valoracion_promedio::class, [
     v_producto_valoracion_promedio::NOMBRE,
@@ -76,35 +85,10 @@ $producto = select(v_producto_valoracion_promedio::class, [
                 </div>
                 <div class="switcher-item comentarios__container hide" id="comentarios__container">
                     <h2 id="no-comentarios">No se encontraron comentarios</h2>
-                    <div class="hide" id="comentarios">
-                        <!-- <div class="comentario__item">
-                            <div class="comentario__item--esencial">
-                                <img src="/assets/img/internal/default/default-avatar.jpg" alt="Foto de perfil cliente">
-                                <h3 class="comentario__item--cliente">Pedro</h3>
-                            </div>
-                            <div class="comentario__item--estrellas">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                            </div>
-                            <p class="comentario__item--comentario">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur veniam quidem fugiat, modi eveniet laboriosam alias sit atque. Ad alias totam cum dolorum maiores molestias, minima facilis odit laudantium placeat inventore et voluptate modi quis amet accusamus necessitatibus? Tempora veritatis illum aperiam quas dolores, voluptatem consequatur voluptas totam neque? Impedit debitis quidem dolor! Tempora temporibus, itaque hic nulla ratione corrupti ad. Laboriosam harum dignissimos molestiae quibusdam in fugit error expedita iste esse suscipit, dicta modi sed temporibus nisi quis sit aut eius quo maxime consequatur aliquam doloribus! Quos dolorum, a beatae illo odio quae. Architecto illum deserunt ipsum error. Beatae.</p>
-                        </div>
-                        <div class="comentario__item">
-                            <div class="comentario__item--esencial">
-                                <img src="/assets/img/internal/default/default-avatar.jpg" alt="Foto de perfil cliente">
-                                <h3 class="comentario__item--cliente">Pedro</h3>
-                            </div>
-                            <div class="comentario__item--estrellas">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                                <img class="comentario__item--estrella" src="/assets/img/web/svg/star-filled.svg" alt="Estrella">
-                            </div>
-                            <p class="comentario__item--comentario">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur veniam quidem fugiat, modi eveniet laboriosam alias sit atque. Ad alias totam cum dolorum maiores molestias, minima facilis odit laudantium placeat inventore et voluptate modi quis amet accusamus necessitatibus? Tempora veritatis illum aperiam quas dolores, voluptatem consequatur voluptas totam neque? Impedit debitis quidem dolor! Tempora temporibus, itaque hic nulla ratione corrupti ad. Laboriosam harum dignissimos molestiae quibusdam in fugit error expedita iste esse suscipit, dicta modi sed temporibus nisi quis sit aut eius quo maxime consequatur aliquam doloribus! Quos dolorum, a beatae illo odio quae. Architecto illum deserunt ipsum error. Beatae.</p>
-                        </div> -->
+                    <div class="hide" id="comentarios"></div>
+                    <div class="nuevo-comentario">
+                        <button id="nuevo-comentario">Comentar</button>
+                        <img src="" alt="">
                     </div>
                 </div>
             </article>

@@ -387,8 +387,8 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal modal-unique fade" id="modal-choice" tabindex="-1" aria-labelledby="modal-choice" aria-hidden="true">
+  </div>
+  <div class="modal modal-unique fade" id="modal-choice" tabindex="-1" aria-labelledby="modal-choice" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
@@ -404,6 +404,9 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
           </div>
         </div>
       </div>
-    </div>
+  </div>
+  <?php
+  require_once __DIR__ . '/../templates/admin/chat.php';
+  ?>
 </body>
 </html>

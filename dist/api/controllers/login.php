@@ -16,7 +16,7 @@ $rows = select($tableName, ['id', 'contrasenia'], [
         'correo' => $correo
     ]
 ]);
-// Si las filas contienen un número, ha fallado la consulta
+// Si las filas contiene el código de estado 503, ha fallado la consulta
 if (is_numeric($rows)) {
     return http_response_code($rows);
 }
@@ -27,11 +27,6 @@ if (count($rows) == 0) {
 if (!password_verify($_POST['contrasenia'], $rows[0]['contrasenia'])) {
     return http_response_code(INCORRECT_DATA);
 }
-// Si el login fue extioso, crear la sesión
-/* if ($mantenerSesion == 'true') {
-    // Mantener sesión iniciada por 2 semanas
-    session_set_cookie_params(60 * 60 * 24 * 14);
-} */
 require_once __DIR__ . '/../utils/RolAccess.php';
 require_once __DIR__ . '/../../db/models/Usuario.php';
 require_once __DIR__ . '/../../db/models/Cliente.php';

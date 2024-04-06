@@ -1,12 +1,14 @@
 <?php
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/utils/utils.php';
+
 /**
  * Introduce un registro en la base de datos
  * @param string $tableName Nombre de la tabla que se desea realizar una inserción. Usar los modelos de la carpeta db. Por ejemplo:
  * insert(Usuario::class).
  * @param array $fields Columnas en el que se insertarán información. Ejemplo: [Usuario::NOMBRE => 'Pepito'].
- * @return bool|int
+ * @return bool|int Devuelve un código de estado si la base de datos no funciona (503), si lo insertó correctamente 200,
+ * y si no se pudo insertar, 404
  */
 function insert(string $tableName, array $fields): bool|int {
     $dbConnector = Database::connect();
@@ -135,7 +137,8 @@ function select(string $tableName, array $fields = null, array $filters = null, 
  * @param array $filters Filtro para indicar las filas que se desea que afecte esta actualización.
  * Ejemplo: [ TypeFilters::EQUALS => [ Usuario::ID => 4 ] ] actualizará las columnas indicadas de una fila en el que el ID del
  * usuario sea igual a 4.
- * @return bool|int
+ * @return bool|int Devuelve un código de estado si la base de datos no funciona (503), si se actualizó correctamente 200,
+ * y si no se pudo actualizar, 404
  */
 function update(string $tableName, array $fields, array $filters): bool|int {
     $dbConnector = Database::connect();
@@ -173,7 +176,8 @@ function update(string $tableName, array $fields, array $filters): bool|int {
  * deleteRow(Usuario::class).
  * @param array $keys Filtro a aplicar a las filas que se quieran eliminar. Ejemplo: [ Usuario::ID => 3 ] elimina el usuario con ID 3.
  * En caso de poner más elementos en los filtros, se aplicará un AND para separar cada filtro.
- * @return bool|int
+ * @return bool|int Devuelve un código de estado si la base de datos no funciona (503), si lo eliminó correctamente 200,
+ *  y si no se pudo eliminar, 404
  */
 function deleteRow(string $tableName, array $keys): bool|int {
     $dbConnector = Database::connect();

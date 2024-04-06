@@ -8,17 +8,6 @@ export const USUARIO = {
     RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil'
 }
 
-export const V_USUARIO_ROL = {
-    TABLE_NAME: 'v_usuario_rol',
-    USUARIO_ID: 'usuario_id',
-    USUARIO: 'usuario',
-    CORREO: 'correo',
-    CONTRASENIA: 'contrasenia',
-    NOMBRE_ROL: 'nombre_rol',
-    COLOR_ROL: 'color_rol',
-    RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil'
-}
-
 export const CATEGORIA = {
     TABLE_NAME: 'Categoria',
     ID: 'id',
@@ -35,18 +24,6 @@ export const PRODUCTO = {
     STOCK: 'stock',
     RUTA_IMAGEN: 'ruta_imagen',
     CATEGORIA_ID: 'categoria_id'
-}
-
-export const V_PRODUCTO_CATEGORIA = {
-    TABLE_NAME: 'v_producto_categoria',
-    PRODUCTO_ID: 'producto_id',
-    NOMBRE: 'nombre',
-    DESCRIPCION: 'descripcion',
-    PRECIO: 'precio',
-    MARCA: 'marca',
-    STOCK: 'stock',
-    RUTA_IMAGEN: 'ruta_imagen',
-    NOMBRE_CATEGORIA: 'nombre_categoria'
 }
 
 export const ROL = {
@@ -80,6 +57,27 @@ export const CARRITO_ITEM = {
     CANTIDAD: 'cantidad'
 }
 
+export const PEDIDO = {
+    TABLE_NAME: 'pedido',
+    ID: 'id',
+    CLIENTE_ID: 'cliente_id',
+    METODO_PAGO_ID: 'metodo_pago_id',
+    ESTADO_PAGO_ID: 'estado_pago_id',
+    DIRECCION_ENVIO: 'direccion_envio'
+}
+
+export const V_PRODUCTO_CATEGORIA = {
+    TABLE_NAME: 'v_producto_categoria',
+    PRODUCTO_ID: 'producto_id',
+    NOMBRE: 'nombre',
+    DESCRIPCION: 'descripcion',
+    PRECIO: 'precio',
+    MARCA: 'marca',
+    STOCK: 'stock',
+    RUTA_IMAGEN: 'ruta_imagen',
+    NOMBRE_CATEGORIA: 'nombre_categoria'
+}
+
 export const V_PEDIDO = {
     TABLE_NAME: 'v_pedido',
     ID: 'id',
@@ -90,14 +88,6 @@ export const V_PEDIDO = {
     METODO_PAGO: 'metodo_pago',
     ESTADO_PAGO: 'estado_pago',
     DIRECCION_ENVIO: 'direccion_envio'
-}
-
-export const V_CARRITO_CLIENTE = {
-    TABLE_NAME: 'v_carrito_cliente',
-    CLIENTE_ID: 'cliente_id',
-    NOMBRE_PRODUCTO: 'nombre_producto',
-    PRECIO_PRODUCTO: 'precio_producto',
-    RUTA_IMAGEN_PRODUCTO: 'ruta_imagen_producto'
 }
 
 export const V_PRODUCTO_VALORACION_PROMEDIO = {
@@ -117,4 +107,25 @@ export const V_COMENTARIO_CLIENTE_PRODUCTO = {
     RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil',
     COMENTARIO: 'comentario',
     NUM_ESTRELLAS: 'num_estrellas'
+}
+
+export const V_USUARIO_ROL = {
+    TABLE_NAME: 'v_usuario_rol',
+    USUARIO_ID: 'usuario_id',
+    USUARIO: 'usuario',
+    CORREO: 'correo',
+    CONTRASENIA: 'contrasenia',
+    NOMBRE_ROL: 'nombre_rol',
+    COLOR_ROL: 'color_rol',
+    RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil'
+}
+
+export const V_CHAT_CLIENTE_IMAGEN = {
+    TABLE_NAME: 'v_chat_cliente_imagen',
+    ID: 'id',
+    CLIENTE_ID: 'cliente_id',
+    RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil',
+    MENSAJE: 'mensaje',
+    FECHA: 'fecha',
+    ES_CLIENTE: 'es_cliente'
 }

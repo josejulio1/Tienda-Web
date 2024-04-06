@@ -68,10 +68,6 @@ nav > a {
     width: 100%;
 }
 
-#search-bar--items img {
-    object-fit: cover;
-}
-
 .search-bar--item {
     padding: 1rem;
     background-color: var(--secundario);
@@ -101,6 +97,7 @@ nav > a {
 .search-bar--item img {
     width: 100px;
     height: 100px;
+    object-fit: contain;
 }
 
 .search-bar--item__description {
@@ -119,8 +116,11 @@ nav > a {
 }
 
 .precio {
-    color: var(--seleccionable);
     font-size: 1.4rem;
+}
+
+.search-bar--item__description .precio {
+    color: var(--primario);
 }
 
 .search-bar--item__valoracion {
@@ -150,6 +150,11 @@ nav > a {
 .cuenta:hover,
 .carrito:hover {
     background-color: var(--azul);
+}
+
+.cuenta {
+    width: 100%;
+    max-width: 200px;
 }
 
 .carrito__items--container,
@@ -193,7 +198,8 @@ nav > a {
     margin: 1rem auto;
 }
 
-.cuenta-opciones li {
+.cuenta-opciones li,
+.cuenta-opciones li a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -206,6 +212,10 @@ nav > a {
 .cuenta-opciones li:hover {
     border-radius: 1rem;
     background-color: var(--seleccionable);
+}
+
+.cuenta-perfil img {
+    filter: invert(1);
 }
 
 .cuenta-opciones li img {
@@ -222,6 +232,7 @@ nav > a {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    object-fit: contain;
 }
 
 .cuenta p,
@@ -244,7 +255,6 @@ nav > a {
 
 .carrito__item {
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
     gap: 1rem;
 }
@@ -257,6 +267,7 @@ nav > a {
     cursor: pointer;
     border-radius: 0;
     transition: .4s background-color, .4s border-radius;
+    margin-left: auto;
 }
 
 .carrito__item #eliminar-item:hover {
@@ -421,6 +432,20 @@ main {
 
 .producto__item__descripcion {
     padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .2rem;
+}
+
+.producto__item__descripcion h2 {
+    text-wrap: balance;
+    text-align: center;
+}
+
+.producto__item__descripcion .precio {
+    color: var(--secundario);
 }
 
 .producto__item__estrellas img {

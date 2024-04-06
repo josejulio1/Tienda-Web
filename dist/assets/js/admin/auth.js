@@ -2,7 +2,7 @@ import { HTTP_STATUS_CODES } from "../api/http-status-codes.js";
 import { END_POINTS } from "../api/end-points.js";
 import { LoadingButton } from "../components/LoadingButton.js";
 import { USUARIO } from "../crud/models.js";
-import { ErrorWindow } from "../components/ErrorWindow.js";
+import { InfoWindow } from "../components/InfoWindow.js";
 import { ERROR_MESSAGES } from "../api/error-messages.js";
 
 const $correo = $('#correo');
@@ -40,11 +40,11 @@ new LoadingButton('.btn-info', 'Iniciar Sesión', ($buttonP, $buttonLoading) => 
         $buttonLoading.addClass('hide');
         const { status } = response;
         if (status === HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
-            ErrorWindow.make(ERROR_MESSAGES[status]);
+            InfoWindow.make(ERROR_MESSAGES[status]);
             return;
         }
         if (status !== HTTP_STATUS_CODES.OK) {
-            ErrorWindow.make('Usuario o contraseña incorrectos');
+            InfoWindow.make('Usuario o contraseña incorrectos');
             return;
         }
         window.location.href = '/admin/user.php';

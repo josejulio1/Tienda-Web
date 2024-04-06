@@ -28,12 +28,18 @@ export function insert(endPoint, formData, postOperationCb) {
 }
 
 /**
- *
- * @param {string} tableName Nombre de la tabla a la que consultar datos (usar constantes de /assets/js/admin/models)
- * @param fields
- * @param filters
- * @param {boolean} selectPermissions Si se desea consultar también los permisos de actualizar y eliminar
- * @returns
+ * Consulta los datos de la base de datos, conectándose como intermediario con el backend.
+ * @param {string} tableName Nombre de la tabla a la que consultar datos (usar constantes de /assets/js/crud/models.js)
+ * @param {Array} fields Campos que se desea recoger de la consulta a la base de datos
+ * @param {Object} filters Filtros WHERE por los que se quiere filtrar la información en la base de datos. La forma de utilizarse
+ * es utilizando antes TYPE_FILTERS, ubicado en assets/js/crud/utils.js. Por ejemplo, se desea filtrar que el ID del cliente
+ * sea 3. Ejemplo: {
+ *     [TYPE_FILTERS.EQUALS]: {
+ *         [CLIENTE.ID]: 3
+ *     }
+ * }
+ * @param {boolean} selectPermissions Si se desea consultar también los permisos de actualizar y eliminar. Exclusivo para el panel de administración
+ * @returns Devuelve una lista con los elementos encontrados en la base de datos, según los parámetros especificados
  */
 export async function select(tableName, fields = null, filters = null, selectPermissions = false) {
     return new Promise((resolve, reject) => {

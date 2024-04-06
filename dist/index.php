@@ -36,12 +36,14 @@ function imprimirProductos(array $productos): void {
     <title>BYTEMARKET - Inicio</title>
     <link rel="stylesheet" href="/assets/css/globals.css">
     <link rel="stylesheet" href="/assets/css/market/market.css">
+    <link rel="stylesheet" href="/assets/css/chat.css">
     <link rel="stylesheet" href="/assets/css/utils.css">
     <script src="/assets/js/lib/jquery-3.7.1.min.js" defer></script>
     <script src="/assets/js/market/search-bar.js" type="module" defer></script>
     <script src="/assets/js/market/account-options.js" type="module" defer></script>
     <script src="/assets/js/market/market.js" defer></script>
     <script src="/assets/js/market/cart.js" type="module" defer></script>
+    <script src="/assets/js/market/chat.js" type="module" defer></script>
 </head>
 <body>
     <header>
@@ -109,5 +111,31 @@ function imprimirProductos(array $productos): void {
     <footer>
         <p>Todos los derechos reservados</p>
     </footer>
+    <?php
+    if ($_SESSION && $_SESSION['rol'] == RolAccess::CUSTOMER) { ?>
+        <aside class="chat-container">
+            <section class="chat">
+                <h2>Chat BYTEMARKET</h2>
+                <section class="chat__detalles">
+                    <article id="chat__mensajes">
+                        <div class="mensaje mensaje-usuario">
+                            <img src="/assets/img/internal/default/default-avatar.jpg" alt="Imagen">
+                            <p>¡Buenas! ¿En qué podemos ayudarte?</p>
+                        </div>
+                    </article>
+                    <article class="enviar-mensaje">
+                        <input type="text" id="enviar-mensaje" placeholder="Introduzca su mensaje...">
+                        <img src="/assets/img/web/svg/market/send.svg" alt="Enviar Mensaje" id="enviar-mensaje-button">
+                    </article>
+                </section>
+            </section>
+            <section class="chat-container__open-close">
+                <img src="/assets/img/web/svg/market/chat.svg" alt="Chat" id="chat-abierto">
+                <img class="hide" src="/assets/img/web/svg/market/send.svg" alt="Chat" id="chat-cerrado">
+            </section>
+        </aside>
+        <?php
+    }
+    ?>
 </body>
 </html>

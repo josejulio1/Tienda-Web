@@ -65,5 +65,5 @@ export async function openUpdateProduct() {
             [PRODUCTO.ID]: $('tr[selected]').children()[0].textContent
         }
     })
-    $campoDescripcionActualizar.val(descripcionProducto[0].descripcion);
+    $campoDescripcionActualizar.val(descripcionProducto[0][PRODUCTO.DESCRIPCION]);
 }

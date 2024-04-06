@@ -7,32 +7,56 @@
             </section>
             <?php
             require_once __DIR__ . '/../../api/utils/RolAccess.php';
-            session_start();
+            // Si se ha iniciado ya una sesión, no iniciar otra
+            if (session_status() != PHP_SESSION_ACTIVE) {
+                session_start();
+            }
             // Si se tiene iniciada sesión como Usuario, enviar al panel de usuarios en admin
             if ($_SESSION && $_SESSION['rol'] == RolAccess::USER) {
                 header('Location: /admin/user.php');
             }
             if ($_SESSION && $_SESSION['rol'] == RolAccess::CUSTOMER) {
                 require_once __DIR__ . '/../../db/models/Cliente.php';
-                $imagenPerfil = select(Cliente::class, [Cliente::RUTA_IMAGEN_PERFIL], [
+                $infoClienteNav = select(Cliente::class, [
+                        Cliente::NOMBRE,
+                        Cliente::APELLIDOS,
+                        Cliente::RUTA_IMAGEN_PERFIL
+                ], [
+                        TypesFilters::EQUALS => [
+                                Cliente::ID => $_SESSION['id']
+                        ]
+                ])[0];
+                /*$imagenPerfil = select(Cliente::class, [Cliente::RUTA_IMAGEN_PERFIL], [
                     TypesFilters::EQUALS => [
                         Cliente::ID => $_SESSION['id']
                     ]
-                ])[0][Cliente::RUTA_IMAGEN_PERFIL];
+                ])[0][Cliente::RUTA_IMAGEN_PERFIL];*/
                 ?>
-                <a href="#" class="cuenta">
-                    <img src="<?php echo $imagenPerfil; ?>" alt="Foto de perfil">
-                    <p><?php echo $_SESSION['correo']; ?></p>
+                <section class="cuenta">
+                    <img src="<?php echo $infoClienteNav[Cliente::RUTA_IMAGEN_PERFIL]; ?>" alt="Foto de perfil" id="imagen-perfil-nav">
+                    <p><span id="nombre-cliente-nav"><?php echo $infoClienteNav[Cliente::NOMBRE]; ?></span> <span id="apellidos-cliente-nav"><?php echo $infoClienteNav[Cliente::APELLIDOS]; ?></span></p>
                     <div class="cuenta-opciones">
                         <ul>
-                            <div class="option-separator"></div>
+                            <li class="cuenta-perfil">
+                                <a href="/views/profile.php">
+                                    <img src="/assets/img/web/svg/user.svg" alt="Mi Perfil">
+                                    <p>Mi Perfil</p>
+                                </a>
+                            </li>
+                            <li class="cuenta-pedidos">
+                                <a href="/views/orders.php">
+                                    <img src="/assets/img/web/svg/market/account-options/order.svg" alt="Pedidos">
+                                    <p>Pedidos</p>
+                                </a>
+                            </li>
+                            <li class="option-separator"></li>
                             <li id="cerrar-sesion">
                                 <img src="/assets/img/web/svg/market/account-options/close-session.svg" alt="Cerrar Sesión">
                                 <p>Cerrar Sesión</p>
                             </li>
                         </ul>
                     </div>
-                </a>
+                </section>
                 <section class="carrito">
                     <?php
                     require_once __DIR__ . '/../../db/models/v_carrito_cliente.php';
