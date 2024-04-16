@@ -38,12 +38,14 @@ function imprimirProductos(array $productos): void {
     <link rel="stylesheet" href="/assets/css/market/market.css">
     <link rel="stylesheet" href="/assets/css/chat.css">
     <link rel="stylesheet" href="/assets/css/utils.css">
+    <link rel="stylesheet" href="/assets/css/dark-mode.css">
     <script src="/assets/js/lib/jquery-3.7.1.min.js" defer></script>
     <script src="/assets/js/market/search-bar.js" type="module" defer></script>
     <script src="/assets/js/market/account-options.js" type="module" defer></script>
     <script src="/assets/js/market/market.js" defer></script>
     <script src="/assets/js/market/cart.js" type="module" defer></script>
     <script src="/assets/js/market/chat.js" type="module" defer></script>
+    <script src="/assets/js/dark-mode.js" defer></script>
 </head>
 <body>
     <header>
@@ -136,6 +138,7 @@ function imprimirProductos(array $productos): void {
         </aside>
         <?php
     }
+    require_once __DIR__ . '/templates/dark-mode.php';
     ?>
 </body>
 </html>

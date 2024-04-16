@@ -13,8 +13,10 @@ if ($_SESSION) {
     <link rel="stylesheet" href="/assets/css/globals.css">
     <link rel="stylesheet" href="/assets/css/market/auth.css">
     <link rel="stylesheet" href="/assets/css/utils.css">
+    <link rel="stylesheet" href="/assets/css/dark-mode.css">
     <script src="/assets/js/lib/jquery-3.7.1.min.js" defer></script>
     <script src="/assets/js/market/auth.js" defer type="module"></script>
+    <script src="/assets/js/dark-mode.js" defer></script>
 </head>
 <body>
     <section class="imagen"></section>
@@ -77,5 +79,8 @@ if ($_SESSION) {
             </article>
         </section>
     </main>
+    <?php
+    require_once __DIR__ . '/../templates/dark-mode.php';
+    ?>
 </body>
 </html>

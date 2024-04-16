@@ -38,11 +38,13 @@ $producto = select(v_producto_valoracion_promedio::class, [
     <link rel="stylesheet" href="/assets/css/utils.css">
     <link rel="stylesheet" href="/assets/css/market/market.css">
     <link rel="stylesheet" href="/assets/css/market/producto.css">
+    <link rel="stylesheet" href="/assets/css/dark-mode.css">
     <script src="/assets/js/lib/jquery-3.7.1.min.js" defer></script>
     <script src="/assets/js/market/search-bar.js" type="module" defer></script>
     <script src="/assets/js/market/account-options.js" type="module" defer></script>
     <script src="/assets/js/market/cart.js" type="module" defer></script>
     <script src="/assets/js/market/product.js" type="module" defer></script>
+    <script src="/assets/js/dark-mode.js" defer></script>
 </head>
 <body>
     <header>
@@ -94,5 +96,8 @@ $producto = select(v_producto_valoracion_promedio::class, [
             </article>
         </section>
     </main>
+    <?php
+    require_once __DIR__ . '/../templates/dark-mode.php';
+    ?>
 </body>
 </html>

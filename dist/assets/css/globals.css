@@ -8,7 +8,7 @@
     --gris: #707070;
 
     /* Dark Mode */
-    --primario-dark: #292a2d;
+    --primario-dark: #121e37;
 }
 
 * {
@@ -45,16 +45,13 @@ input {
     padding: .8rem;
     border-radius: 2rem;
     border: 1px solid var(--secundario);
+    font-size: 1.2rem;
 }
 
 button,
 a,
 label {
     font-size: 1.5rem;
-}
-
-input {
-    font-size: 1.2rem;
 }
 
 button {

@@ -8,15 +8,16 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Productos</title>
-  <?php
-  require_once __DIR__ . '/../templates/admin/html-imports.php';
-  ?>
-  <script src="/assets/js/admin/sections/product/product.js" type="module" defer></script>
-  <script src="/assets/js/admin/sections/product/modals/modal-product-create.js" type="module" defer></script>
-  <script src="/assets/js/admin/sections/product/modals/modal-product-update.js" type="module" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <?php
+    require_once __DIR__ . '/../templates/admin/html-imports.php';
+    ?>
+    <script src="/assets/js/admin/sections/product/product.js" type="module" defer></script>
+    <script src="/assets/js/admin/sections/product/modals/modal-product-create.js" type="module" defer></script>
+    <script src="/assets/js/admin/sections/product/modals/modal-product-update.js" type="module" defer></script>
+    <script src="/assets/js/dark-mode.js" defer></script>
 </head>
 <body>
   <?php
@@ -60,22 +61,6 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
                           <div class="invalid-feedback">Introduzca el precio del producto</div>
                       </div>
                   </div>
-                  <div class="modal-row">
-                    <div class="modal-column">
-                        <label for="marca-producto-actualizar">Marca</label>
-                        <select id="marca-producto-actualizar" required>
-                            <?php
-                            require_once __DIR__ . '/../db/models/Marca.php';
-                            $marcas = select(Marca::class, [Marca::ID, Marca::MARCA]);
-                            foreach ($marcas as $marca) { ?>
-                                <option value="<?php echo $marca[Marca::ID];?>"><?php echo $marca[Marca::MARCA]; ?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                        <div class="invalid-feedback">Debe escribir una marca</div>
-                    </div>
-                  </div>
                   <div class="modal-column">
                     <label for="descripcion-producto-actualizar">Descripción</label>
                     <textarea id="descripcion-producto-actualizar" class="form-control" cols="30" rows="10" required></textarea>
@@ -115,6 +100,7 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
                         <label for="marca-producto-crear">Marca</label>
                         <select id="marca-producto-crear" required>
                             <?php
+                            require_once __DIR__ . '/../db/models/Marca.php';
                             $marcas = select(Marca::class, [Marca::ID, Marca::MARCA]);
                             foreach ($marcas as $marca) { ?>
                                 <option value="<?php echo $marca[Marca::ID];?>"><?php echo $marca[Marca::MARCA]; ?></option>
@@ -209,6 +195,7 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
       </div>
   </div>
   <?php
+  require_once __DIR__ . '/../templates/dark-mode.php';
   require_once __DIR__ . '/../templates/admin/chat.php';
   ?>
 </body>

@@ -29,7 +29,7 @@ body,
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     flex: 0 0 90%;
     border-right: 1px solid var(--primario);
 }
@@ -158,6 +158,10 @@ body,
     color: var(--seleccionable);
 }
 
+.opciones #cerrar-sesion:hover {
+    color: goldenrod;
+}
+
 .info-usuario img {
     border-radius: 50%;
     width: 100px;
@@ -211,6 +215,10 @@ td span {
     width: 50%;
     height: 30px;
     border-radius: 1rem;
+}
+
+.dataTables_filter {
+    margin-bottom: 1rem;
 }
 
 table img {

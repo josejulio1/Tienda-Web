@@ -8,16 +8,17 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rol</title>
-  <?php
-  require_once __DIR__ . '/../templates/admin/html-imports.php';
-  ?>
-  <script src="/assets/js/admin/sections/rol/rol-system.js" type="module" defer></script>
-  <script src="/assets/js/admin/sections/rol/rol.js" type="module" defer></script>
-  <script src="/assets/js/admin/sections/rol/modals/modal-rol-create.js" type="module" defer></script>
-  <script src="/assets/js/admin/sections/rol/modals/modal-rol-update.js" type="module" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rol</title>
+    <?php
+    require_once __DIR__ . '/../templates/admin/html-imports.php';
+    ?>
+    <script src="/assets/js/admin/sections/rol/rol-system.js" type="module" defer></script>
+    <script src="/assets/js/admin/sections/rol/rol.js" type="module" defer></script>
+    <script src="/assets/js/admin/sections/rol/modals/modal-rol-create.js" type="module" defer></script>
+    <script src="/assets/js/admin/sections/rol/modals/modal-rol-update.js" type="module" defer></script>
+    <script src="/assets/js/dark-mode.js" defer></script>
 </head>
 <body>
   <?php
@@ -456,6 +457,7 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
       </div>
   </div>
   <?php
+  require_once __DIR__ . '/../templates/dark-mode.php';
   require_once __DIR__ . '/../templates/admin/chat.php';
   ?>
 </body>

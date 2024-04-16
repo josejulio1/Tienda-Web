@@ -1,32 +1,198 @@
-.dark-mode {
-    background-color: var(--primario-dark);
-}
-
-.dark-mode input {
-    background-color: #999999;
-}
-
+/* Botón */
 .dark-mode-button {
-    width: 70px;
-    height: 70px;
+    width: 75px;
+    height: 75px;
     position: fixed;
-    right: 20px;
-    bottom: 20px;
-    background-color: var(--primario);
+    left: 50px;
+    bottom: 50px;
+    background-color: var(--secundario);
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     padding: .5rem;
-}
-
-@media (max-width: 1024px) {
-    .dark-mode-button {
-        right: 50%;
-        transform: translateX(50%)
-    }
-}
-
-.dark-mode-button img {
     cursor: pointer;
+    border: 2px solid var(--primario);
+}
+
+/* Botón reservado para el panel de administración */
+.panel .dark-mode-button {
+    position: static;
+    align-self: center;
+}
+
+/* Dark mode */
+.dark-mode {
+    background: var(--primario-dark);
+}
+
+.dark-mode h2,
+.dark-mode h3 {
+    color: var(--primario);
+}
+
+.dark-mode .precio-total {
+    color: var(--secundario);
+}
+
+/* Nav */
+.dark-mode .search-bar,
+.dark-mode .search-bar input {
+    background-color: var(--primario-dark);
+}
+
+.dark-mode .search-bar input {
+    color: var(--primario);
+}
+
+.dark-mode .search-bar > img {
+    filter: invert(1);
+}
+
+.dark-mode .cuenta-opciones,
+.dark-mode .carrito__items--container {
+    border: 1px solid var(--primario);
+    background-color: var(--secundario);
+}
+
+.dark-mode .cuenta-opciones {
+    background-color: var(--primario-dark);
+}
+
+.dark-mode .carrito__items--container {
+}
+
+.dark-mode .cuenta-opciones li {
+    background-color: var(--secundario);
+    border-radius: 1rem;
+}
+
+.dark-mode .cuenta-opciones img[alt="Mi Perfil"] {
+    filter: invert(0);
+}
+
+.dark-mode .cuenta-opciones img {
+    filter: invert(1);
+}
+
+.dark-mode .cuenta-opciones p {
+    color: var(--primario);
+}
+
+.dark-mode .carrito__items--container * {
+    color: var(--primario);
+}
+
+.dark-mode #eliminar-item:hover {
+    background-color: var(--primario);
+}
+
+.dark-mode .option-separator {
+    background-color: var(--primario);
+}
+
+/* Tienda */
+.dark-mode .producto__item {
+    background-color: var(--secundario);
+}
+
+.dark-mode .producto__item__descripcion * {
+    color: var(--primario);
+}
+
+.dark-mode .producto__item__estrellas img {
+    filter: invert(0) !important;
+}
+
+/* Producto */
+.dark-mode .producto__detalles,
+.dark-mode .descripcion-comentarios {
+    color: var(--primario);
+}
+
+.dark-mode .producto__detalles__valoracion img {
+    filter: invert(0);
+}
+
+/* Admin */
+.dark-mode .info-container,
+.dark-mode .info {
+    background-color: var(--primario-dark);
+    color: var(--primario);
+}
+
+.dark-mode .info {
+    border: none;
+}
+
+.dark-mode .dataTables_wrapper label {
+    color: var(--primario);
+}
+
+.dark-mode input {
+    background-color: var(--primario-dark);
+    color: var(--primario)
+}
+
+.dark-mode input:focus {
+    background-color: var(--primario-dark);
+    border: 2px solid var(--primario);
+}
+
+.dark-mode input:disabled {
+    border: 1px solid var(--primario);
+}
+
+.dark-mode .dataTables_length select {
+    background-color: var(--secundario);
+}
+
+.dark-mode .dataTables_filter input {
+    background-color: var(--secundario);
+}
+
+.dark-mode table {
+    background-color: var(--secundario);
+    border-radius: 1rem;
+}
+
+.dark-mode .eliminar:hover {
+    background-color: var(--primario);
+}
+
+.dark-mode .dataTables_paginate span a {
+    background-color: var(--secundario) !important;
+}
+
+.dark-mode .modal-content {
+    background-color: var(--secundario);
+}
+
+.dark-mode .modal-content * {
+    color: var(--primario);
+}
+
+.dark-mode .modal-content .btn-close {
+    filter: invert(1);
+}
+
+.dark-mode .modal-column select {
+    background-color: var(--primario-dark) !important;
+}
+
+.dark-mode .img-container {
+    border: 1px solid var(--primario);
+}
+
+.dark-mode .img-container img[alt=Plus] {
+    filter: invert(0) !important;
+}
+
+/* Editar perfil cliente */
+.dark-mode .campos-perfil {
+    background-color: var(--secundario);
+}
+
+.dark-mode .datos label {
+    color: var(--primario) !important;
 }

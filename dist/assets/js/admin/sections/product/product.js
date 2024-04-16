@@ -1,10 +1,8 @@
 import {
     $campoPrecioActualizar,
-    $campoMarcaActualizar,
     $campoNombreActualizar,
     $modalProductoActualizar,
     $campoDescripcionActualizar,
-    $campoMarcaProductoActualizarOptions
 } from "./modals/modal-product-update.js";
 import { PRODUCTO, V_PRODUCTO_CATEGORIA } from "../../../crud/models.js";
 import { deleteRow, select } from "../../../crud/crud.js";
@@ -66,18 +64,10 @@ export async function openUpdateProduct() {
     const children = $(this).children();
     $campoNombreActualizar.val(children[1].textContent);
     $campoPrecioActualizar.val(parseFloat(children[2].textContent));
-    $campoMarcaActualizar.val(children[3].textContent);
     const descripcionProducto = await select(PRODUCTO.TABLE_NAME, [PRODUCTO.DESCRIPCION], {
         [TYPE_FILTERS.EQUALS]: {
             [PRODUCTO.ID]: $('tr[selected]').children()[0].textContent
         }
     })
     $campoDescripcionActualizar.val(descripcionProducto[0][PRODUCTO.DESCRIPCION]);
-    const $campoMarca = $(this).children()[3].textContent;
-    $campoMarcaProductoActualizarOptions.each(function() {
-        if ($(this).text() === $campoMarca) {
-            $(this).attr('selected', '');
-            return;
-        }
-    })
 }

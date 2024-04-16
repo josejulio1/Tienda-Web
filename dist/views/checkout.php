@@ -27,10 +27,12 @@ if (!$hasCartItems) {
     <link rel="stylesheet" href="/assets/css/market/market.css">
     <link rel="stylesheet" href="/assets/css/utils.css">
     <link rel="stylesheet" href="/assets/css/market/checkout.css">
+    <link rel="stylesheet" href="/assets/css/dark-mode.css">
     <script src="/assets/js/lib/jquery-3.7.1.min.js" defer></script>
     <script src="/assets/js/market/cart.js" type="module" defer></script>
     <script src="/assets/js/market/checkout.js" defer type="module"></script>
     <script src="/assets/js/market/account-options.js" type="module" defer></script>
+    <script src="/assets/js/dark-mode.js" defer></script>
 </head>
 <body>
     <header>
@@ -117,5 +119,8 @@ if (!$hasCartItems) {
     <aside class="pago">
         <button id="pagar">Pagar</button>
     </aside>
+    <?php
+    require_once __DIR__ . '/../templates/dark-mode.php';
+    ?>
 </body>
 </html>

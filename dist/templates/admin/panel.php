@@ -28,7 +28,9 @@
             ?>
             <a href="#" id="cerrar-sesion">Cerrar Sesión</a>
         </section>
-        <section class="dark-mode"></section>
+        <?php
+        require_once __DIR__ . '/../../templates/dark-mode.php';
+        ?>
     </section>
     <section class="open-close-panel">
         <img src="/assets/img/web/svg/arrow-left.svg" alt="Abrir-Cerrar Panel">

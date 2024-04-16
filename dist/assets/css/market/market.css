@@ -413,6 +413,7 @@ main {
     min-width: 200px;
     flex: 0 1 1000px;
     border: 1px solid var(--secundario);
+    border-radius: 1rem;
     padding: 1rem;
     cursor: pointer;
     user-select: none;
@@ -451,7 +452,7 @@ main {
 .producto__item__estrellas img {
     width: 20px;
     height: 20px;
-    z-index: -1;
+    z-index: 0;
 }
 
 /* Footer */

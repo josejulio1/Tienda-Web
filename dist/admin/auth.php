@@ -18,8 +18,10 @@ if ($_SESSION) {
     <link rel="stylesheet" href="/assets/css/globals.css">
     <link rel="stylesheet" href="/assets/css/admin/auth.css">
     <link rel="stylesheet" href="/assets/css/utils.css">
+    <link rel="stylesheet" href="/assets/css/dark-mode.css">
     <script src="/assets/js/lib/jquery-3.7.1.min.js" defer></script>
     <script src="/assets/js/admin/auth.js" type="module" defer></script>
+    <script src="/assets/js/dark-mode.js" defer></script>
 </head>
 <body>
     <main class="no-overflow">
@@ -51,5 +53,8 @@ if ($_SESSION) {
             <button class="btn-info" type="submit">Iniciar Sesión</button>
         </form>
     </main>
+    <?php
+    require_once __DIR__ . '/../templates/dark-mode.php';
+    ?>
 </body>
 </html>
