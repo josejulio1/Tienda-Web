@@ -8,10 +8,6 @@ export const $modalCategoriaActualizar = $('#modal-categoria-actualizar');
 export const $campoCategoriaActualizar = $('#nombre-categoria-actualizar');
 const $buttonActualizar = $('#actualizar-categoria');
 
-$modalCategoriaActualizar.on('hide.bs.modal', () => {
-    $('.lista-item-categoria[selected]').removeAttr('selected');
-})
-
 $buttonActualizar.on('click', e => {
     e.preventDefault();
 

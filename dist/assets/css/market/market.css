@@ -411,7 +411,7 @@ main {
 
 .producto__item {
     min-width: 200px;
-    flex: 0 1 300px;
+    flex: 0 1 1000px;
     border: 1px solid var(--secundario);
     padding: 1rem;
     cursor: pointer;

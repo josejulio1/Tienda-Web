@@ -1,4 +1,11 @@
-import { $campoPrecioActualizar, $campoMarcaActualizar, $campoNombreActualizar, $modalProductoActualizar, $campoDescripcionActualizar } from "./modals/modal-product-update.js";
+import {
+    $campoPrecioActualizar,
+    $campoMarcaActualizar,
+    $campoNombreActualizar,
+    $modalProductoActualizar,
+    $campoDescripcionActualizar,
+    $campoMarcaProductoActualizarOptions
+} from "./modals/modal-product-update.js";
 import { PRODUCTO, V_PRODUCTO_CATEGORIA } from "../../../crud/models.js";
 import { deleteRow, select } from "../../../crud/crud.js";
 import { ProductRow } from "../../models/row/ProductRow.js";
@@ -66,4 +73,11 @@ export async function openUpdateProduct() {
         }
     })
     $campoDescripcionActualizar.val(descripcionProducto[0][PRODUCTO.DESCRIPCION]);
+    const $campoMarca = $(this).children()[3].textContent;
+    $campoMarcaProductoActualizarOptions.each(function() {
+        if ($(this).text() === $campoMarca) {
+            $(this).attr('selected', '');
+            return;
+        }
+    })
 }

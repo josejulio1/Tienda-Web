@@ -1,4 +1,30 @@
-import { $campoColorActualizar, $campoNombreRolActualizar, $modalRolActualizar, $permisoActualizarActualizarCategoria, $permisoActualizarActualizarCliente, $permisoActualizarActualizarProducto, $permisoActualizarActualizarRol, $permisoActualizarActualizarUsuario, $permisoCrearActualizarCategoria, $permisoCrearActualizarCliente, $permisoCrearActualizarProducto, $permisoCrearActualizarRol, $permisoCrearActualizarUsuario, $permisoEliminarActualizarCategoria, $permisoEliminarActualizarCliente, $permisoEliminarActualizarProducto, $permisoEliminarActualizarRol, $permisoEliminarActualizarUsuario, $permisoVerActualizarCategoria, $permisoVerActualizarCliente, $permisoVerActualizarProducto, $permisoVerActualizarRol, $permisoVerActualizarUsuario, allUpdateCheckBoxes } from "./modals/modal-rol-update.js";
+import {
+    $campoColorActualizar,
+    $campoNombreRolActualizar,
+    $modalRolActualizar,
+    $permisoActualizarActualizarCategoria,
+    $permisoActualizarActualizarCliente, $permisoActualizarActualizarMarca,
+    $permisoActualizarActualizarProducto,
+    $permisoActualizarActualizarRol,
+    $permisoActualizarActualizarUsuario,
+    $permisoCrearActualizarCategoria,
+    $permisoCrearActualizarCliente, $permisoCrearActualizarMarca,
+    $permisoCrearActualizarProducto,
+    $permisoCrearActualizarRol,
+    $permisoCrearActualizarUsuario,
+    $permisoEliminarActualizarCategoria,
+    $permisoEliminarActualizarCliente, $permisoEliminarActualizarMarca,
+    $permisoEliminarActualizarProducto,
+    $permisoEliminarActualizarRol,
+    $permisoEliminarActualizarUsuario,
+    $permisoVerActualizarCategoria,
+    $permisoVerActualizarCliente,
+    $permisoVerActualizarMarca,
+    $permisoVerActualizarProducto,
+    $permisoVerActualizarRol,
+    $permisoVerActualizarUsuario,
+    allUpdateCheckBoxes
+} from "./modals/modal-rol-update.js";
 import { ROL } from "../../../crud/models.js";
 import { deleteRow, select } from "../../../crud/crud.js";
 import { RolRow } from "../../models/row/RolRow.js";
@@ -47,42 +73,56 @@ export async function openUpdateRol() {
     const children = $(this).children();
     $campoNombreRolActualizar.val(children[1].textContent);
     $campoColorActualizar.val(`#${rgbToHex(children[2].children[0].style.backgroundColor)}`);
-    const permissions = await select(ROL.TABLE_NAME, [ROL.PERMISO_USUARIO, ROL.PERMISO_PRODUCTO, ROL.PERMISO_CATEGORIA, ROL.PERMISO_CLIENTE, ROL.PERMISO_ROL], {
+    const permissions = await select(ROL.TABLE_NAME, [
+        ROL.PERMISO_USUARIO,
+        ROL.PERMISO_PRODUCTO,
+        ROL.PERMISO_MARCA,
+        ROL.PERMISO_CATEGORIA,
+        ROL.PERMISO_CLIENTE,
+        ROL.PERMISO_ROL
+    ], {
         [TYPE_FILTERS.EQUALS]: {
             [ROL.ID]: $('tr[selected]').children()[0].textContent
         }
     });
     clearCheckboxes(...allUpdateCheckBoxes);
     permissionNumberToCheckBox(
-        permissions[0].permiso_usuario,
+        permissions[0][ROL.PERMISO_USUARIO],
         $permisoVerActualizarUsuario,
         $permisoCrearActualizarUsuario,
         $permisoActualizarActualizarUsuario,
         $permisoEliminarActualizarUsuario
     );
     permissionNumberToCheckBox(
-        permissions[0].permiso_producto,
+        permissions[0][ROL.PERMISO_PRODUCTO],
         $permisoVerActualizarProducto,
         $permisoCrearActualizarProducto,
         $permisoActualizarActualizarProducto,
         $permisoEliminarActualizarProducto
     );
     permissionNumberToCheckBox(
-        permissions[0].permiso_categoria,
+        permissions[0][ROL.PERMISO_MARCA],
+        $permisoVerActualizarMarca,
+        $permisoCrearActualizarMarca,
+        $permisoActualizarActualizarMarca,
+        $permisoEliminarActualizarMarca
+    );
+    permissionNumberToCheckBox(
+        permissions[0][ROL.PERMISO_CATEGORIA],
         $permisoVerActualizarCategoria,
         $permisoCrearActualizarCategoria,
         $permisoActualizarActualizarCategoria,
         $permisoEliminarActualizarCategoria
     );
     permissionNumberToCheckBox(
-        permissions[0].permiso_cliente,
+        permissions[0][ROL.PERMISO_CLIENTE],
         $permisoVerActualizarCliente,
         $permisoCrearActualizarCliente,
         $permisoActualizarActualizarCliente,
         $permisoEliminarActualizarCliente
     );
     permissionNumberToCheckBox(
-        permissions[0].permiso_rol,
+        permissions[0][ROL.PERMISO_ROL],
         $permisoVerActualizarRol,
         $permisoCrearActualizarRol,
         $permisoActualizarActualizarRol,

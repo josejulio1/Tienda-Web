@@ -82,7 +82,7 @@ export function updateRow(tableName, fields, filters, postOperationCb) {
     })
     .then(response => {
         $modalInfo.modal('show');
-        if (response.status != HTTP_STATUS_CODES.OK) {
+        if (response.status !== HTTP_STATUS_CODES.OK) {
             $('.modal.show').modal('hide');
             incorrectModal(ERROR_MESSAGES[response.status]);
             return;
@@ -103,10 +103,11 @@ export async function deleteRow(e, $table) {
     fetch(`${END_POINTS.DELETE_ROW}?table-name=${$table.tableName}&id=${selectedId}`, {
         method: 'DELETE'
     })
-    .then(response => {
+    .then(async response => {
+        console.log(await response.text())
         $modalInfo.modal('show');
         const { status } = response;
-        if (status != HTTP_STATUS_CODES.OK) {
+        if (status !== HTTP_STATUS_CODES.OK) {
             incorrectModal(ERROR_MESSAGES[status]);
             return;
         }

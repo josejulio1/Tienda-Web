@@ -56,14 +56,23 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
                       </div>
                       <div class="modal-column">
                           <label for="precio-producto-actualizar">Precio</label>
-                          <input type="number" id="precio-producto-actualizar" class="form-control" required>
+                          <input type="number" id="precio-producto-actualizar" class="form-control" min="1" required>
                           <div class="invalid-feedback">Introduzca el precio del producto</div>
                       </div>
                   </div>
                   <div class="modal-row">
                     <div class="modal-column">
                         <label for="marca-producto-actualizar">Marca</label>
-                        <input type="text" id="marca-producto-actualizar" class="form-control" required>
+                        <select id="marca-producto-actualizar" required>
+                            <?php
+                            require_once __DIR__ . '/../db/models/Marca.php';
+                            $marcas = select(Marca::class, [Marca::ID, Marca::MARCA]);
+                            foreach ($marcas as $marca) { ?>
+                                <option value="<?php echo $marca[Marca::ID];?>"><?php echo $marca[Marca::MARCA]; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
                         <div class="invalid-feedback">Debe escribir una marca</div>
                     </div>
                   </div>
@@ -97,14 +106,22 @@ if (($userInfo[v_usuario_rol::PERMISO_PRODUCTO] & PERMISSIONS::READ) == PERMISSI
                       </div>
                       <div class="modal-column">
                       <label for="precio-producto-crear">Precio</label>
-                          <input type="number" id="precio-producto-crear" class="form-control" required>
+                          <input type="number" id="precio-producto-crear" class="form-control" min="1" required>
                           <div class="invalid-feedback">Introduzca el precio del producto</div>
                       </div>
                   </div>
                   <div class="modal-row">
                     <div class="modal-column">
                         <label for="marca-producto-crear">Marca</label>
-                        <input type="text" id="marca-producto-crear" class="form-control" required>
+                        <select id="marca-producto-crear" required>
+                            <?php
+                            $marcas = select(Marca::class, [Marca::ID, Marca::MARCA]);
+                            foreach ($marcas as $marca) { ?>
+                                <option value="<?php echo $marca[Marca::ID];?>"><?php echo $marca[Marca::MARCA]; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
                         <div class="invalid-feedback">Introduzca una marca</div>
                     </div>
                     <div class="modal-column">

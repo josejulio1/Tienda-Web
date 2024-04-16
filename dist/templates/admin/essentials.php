@@ -18,6 +18,7 @@ $userInfo = select(v_usuario_rol::class, [
   v_usuario_rol::RUTA_IMAGEN_PERFIL,
   v_usuario_rol::PERMISO_CATEGORIA,
   v_usuario_rol::PERMISO_PRODUCTO,
+  v_usuario_rol::PERMISO_MARCA,
   v_usuario_rol::PERMISO_CLIENTE,
   v_usuario_rol::PERMISO_USUARIO,
   v_usuario_rol::PERMISO_ROL

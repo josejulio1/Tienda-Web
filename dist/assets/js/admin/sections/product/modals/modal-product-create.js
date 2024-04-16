@@ -58,10 +58,10 @@ $buttonCrear.on('click', e => {
     const fd = new FormData();
     fd.append(PRODUCTO.NOMBRE, $campoNombreCrear.val());
     fd.append(PRODUCTO.PRECIO, $campoPrecioCrear.val());
-    fd.append(PRODUCTO.MARCA, $campoMarcaCrear.val());
     fd.append(PRODUCTO.STOCK, $campoStockCrear.val());
     fd.append(PRODUCTO.DESCRIPCION, $campoDescripcionCrear.val());
     fd.append(PRODUCTO.CATEGORIA_ID, $campoCategoriaCrear.val());
+    fd.append(PRODUCTO.MARCA_ID, $campoMarcaCrear.val());
     fd.append(PRODUCTO.RUTA_IMAGEN, $campoImagenCrear.prop('files')[0]);
 
     insert(END_POINTS.PRODUCT.INSERT, fd, data => {

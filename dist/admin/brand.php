@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../templates/admin/essentials.php';
 require_once __DIR__ . '/../api/utils/permissions.php';
-if (($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) == PERMISSIONS::NO_PERMISSIONS) {
+if (($userInfo[v_usuario_rol::PERMISO_MARCA] & PERMISSIONS::READ) == PERMISSIONS::NO_PERMISSIONS) {
   return http_response_code(UNAUTHORIZED);
 }
 ?>
@@ -10,51 +10,51 @@ if (($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) == PERMISS
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Categorías</title>
+  <title>Marcas</title>
   <?php
   require_once __DIR__ . '/../templates/admin/html-imports.php';
   ?>
-  <script src="/assets/js/admin/sections/category/category.js" type="module" defer></script>
-  <script src="/assets/js/admin/sections/category/modals/modal-category-create.js" type="module" defer></script>
-  <script src="/assets/js/admin/sections/category/modals/modal-category-update.js" type="module" defer></script>
+  <script src="/assets/js/admin/sections/brand/brand.js" type="module" defer></script>
+  <script src="/assets/js/admin/sections/brand/modals/modal-brand-create.js" type="module" defer></script>
+  <script src="/assets/js/admin/sections/brand/modals/modal-brand-update.js" type="module" defer></script>
 </head>
 <body>
   <?php
   require_once __DIR__ . '/../templates/admin/panel.php';
   ?>
   <main class="info-container">
-    <div class="info" id="categoria">
-     <table class="row-border hover" id="tabla-categorias">
+    <div class="info" id="marca">
+     <table class="row-border hover" id="tabla-marcas">
        <thead>
         <th>ID</th>
-        <th>Nombre</th>
+        <th>Marca</th>
         <?php
-        if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::DELETE) {
+        if ($userInfo[v_usuario_rol::PERMISO_MARCA] & PERMISSIONS::DELETE) {
           echo '<th>Borrar</th>';
         }
         ?>
        </thead>
      </table>
      <?php
-     if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::CREATE) { ?>
-      <div class="modal modal-unique fade" id="modal-categoria-actualizar" tabindex="-1" aria-labelledby="modal-categoria-actualizar" aria-hidden="true">
+     if ($userInfo[v_usuario_rol::PERMISO_MARCA] & PERMISSIONS::CREATE) { ?>
+      <div class="modal modal-unique fade" id="modal-marca-actualizar" tabindex="-1" aria-labelledby="modal-marca-actualizar" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-xl">
             <form class="modal-content">
               <div class="modal__header">
-                <h2 class="modal-title">Actualizar Categoría</h2>
+                <h2 class="modal-title">Actualizar Marca</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <div class="modal-row">
                       <div class="modal-column">
-                          <label for="nombre-categoria-actualizar">Nombre</label>
-                          <input type="text" id="nombre-categoria-actualizar" class="form-control" required>
+                          <label for="nombre-marca-actualizar">Nombre</label>
+                          <input type="text" id="nombre-marca-actualizar" class="form-control" required>
                           <div class="invalid-feedback">Introduzca un nombre de categoría</div>
                       </div>
                   </div>
                 </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="actualizar-categoria">Actualizar</button>
+                <button type="submit" class="btn btn-primary" id="actualizar-marca">Actualizar</button>
               </div>
             </form>
           </div>
@@ -63,25 +63,25 @@ if (($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) == PERMISS
      }
      ?>
         <?php
-        if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::CREATE) { ?>
-          <div class="modal modal-unique fade" id="modal-categoria-crear" tabindex="-1" aria-labelledby="modal-categoria-crear" aria-hidden="true">
+        if ($userInfo[v_usuario_rol::PERMISO_MARCA] & PERMISSIONS::CREATE) { ?>
+          <div class="modal modal-unique fade" id="modal-marca-crear" tabindex="-1" aria-labelledby="modal-marca-crear" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-xl">
             <form class="modal-content">
               <div class="modal__header">
-                <h2 class="modal-title">Crear Categoría</h2>
+                <h2 class="modal-title">Crear Marca</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <div class="modal-row">
                     <div class="modal-column">
-                        <label for="nombre-categoria-crear">Categoría</label>
-                        <input type="text" id="nombre-categoria-crear" class="form-control" required>
-                        <div class="invalid-feedback">Introduzca un nombre de categoria</div>
+                        <label for="nombre-marca-crear">Marca</label>
+                        <input type="text" id="nombre-marca-crear" class="form-control" required>
+                        <div class="invalid-feedback">Introduzca un nombre de marca</div>
                     </div>
                 </div>
                 </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="crear-categoria">Crear</button>
+                <button type="submit" class="btn btn-primary" id="crear-marca">Crear</button>
               </div>
             </form>
           </div>
@@ -91,8 +91,9 @@ if (($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::READ) == PERMISS
         ?>
     </div>
   <?php
-  if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] & PERMISSIONS::CREATE) {
-      echo '<button data-bs-toggle="modal" data-bs-target="#modal-categoria-crear" class="btn-crear">Crear</button>';
+  if ($userInfo[v_usuario_rol::PERMISO_MARCA] & PERMISSIONS::CREATE) {
+      echo $userInfo[v_usuario_rol::PERMISO_MARCA] & PERMISSIONS::CREATE;
+      echo '<button data-bs-toggle="modal" data-bs-target="#modal-marca-crear" class="btn-crear">Crear</button>';
   }
   ?>
   </main>

@@ -26,6 +26,8 @@ if ($selectPermissions == 'true') {
         $permisoBuscado = v_usuario_rol::PERMISO_USUARIO;
     } else if ($tableName == v_producto_categoria::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_PRODUCTO;
+    } else if ($tableName == Marca::class) {
+        $permisoBuscado = v_usuario_rol::PERMISO_MARCA;
     } else if ($tableName == Categoria::class) {
         $permisoBuscado = v_usuario_rol::PERMISO_CATEGORIA;
     } else if ($tableName == Rol::class) {

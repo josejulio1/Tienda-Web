@@ -23,6 +23,13 @@ export const $permisoCrearActualizarProducto = $('#crear-permiso-producto-actual
 export const $permisoActualizarActualizarProducto = $('#actualizar-permiso-producto-actualizar');
 export const $permisoEliminarActualizarProducto = $('#eliminar-permiso-producto-actualizar');
 
+// Marca
+const $marcarTodoActualizarMarca = $('#marcar-todo-usuario-marca');
+export const $permisoVerActualizarMarca = $('#ver-permiso-marca-actualizar');
+export const $permisoCrearActualizarMarca = $('#crear-permiso-marca-actualizar');
+export const $permisoActualizarActualizarMarca = $('#actualizar-permiso-marca-actualizar');
+export const $permisoEliminarActualizarMarca = $('#eliminar-permiso-marca-actualizar');
+
 // Categoría
 const $marcarTodoActualizarCategoria = $('#marcar-todo-usuario-categoria');
 export const $permisoVerActualizarCategoria = $('#ver-permiso-categoria-actualizar');
@@ -56,6 +63,12 @@ export const allUpdateCheckBoxes = [
     $permisoCrearActualizarProducto,
     $permisoActualizarActualizarProducto,
     $permisoEliminarActualizarProducto,
+
+    $marcarTodoActualizarMarca,
+    $permisoVerActualizarMarca,
+    $permisoCrearActualizarMarca,
+    $permisoActualizarActualizarMarca,
+    $permisoEliminarActualizarMarca,
     
     $marcarTodoActualizarCategoria,
     $permisoVerActualizarCategoria,
@@ -88,6 +101,7 @@ $buttonActualizar.on('click', e => {
 
     const permisoUsuario = getPermissions($permisoVerActualizarUsuario, $permisoCrearActualizarUsuario, $permisoActualizarActualizarUsuario, $permisoEliminarActualizarUsuario);
     const permisoProducto = getPermissions($permisoVerActualizarProducto, $permisoCrearActualizarProducto, $permisoActualizarActualizarProducto, $permisoEliminarActualizarProducto);
+    const permisoMarca = getPermissions($permisoVerActualizarMarca, $permisoCrearActualizarMarca, $permisoActualizarActualizarMarca, $permisoEliminarActualizarMarca);
     const permisoCategoria = getPermissions($permisoVerActualizarCategoria, $permisoCrearActualizarCategoria, $permisoActualizarActualizarCategoria, $permisoEliminarActualizarCategoria);
     const permisoCliente = getPermissions($permisoVerActualizarCliente, $permisoCrearActualizarCliente, $permisoActualizarActualizarCliente, $permisoEliminarActualizarCliente);
     const permisoRol = getPermissions($permisoVerActualizarRol, $permisoCrearActualizarRol, $permisoActualizarActualizarRol, $permisoEliminarActualizarRol);
@@ -98,6 +112,11 @@ $buttonActualizar.on('click', e => {
     }
 
     if (permisoProducto && !validatePermissions($permisoCrearActualizarProducto, $permisoActualizarActualizarProducto, $permisoEliminarActualizarProducto)) {
+        InfoWindow.make('Debe tener el permiso Ver en Producto marcado');
+        return;
+    }
+
+    if (permisoProducto && !validatePermissions($permisoCrearActualizarMarca, $permisoActualizarActualizarMarca, $permisoEliminarActualizarMarca)) {
         InfoWindow.make('Debe tener el permiso Ver en Producto marcado');
         return;
     }
@@ -122,6 +141,7 @@ $buttonActualizar.on('click', e => {
         [ROL.COLOR]: $campoColorActualizar.val().substring(1),
         [ROL.PERMISO_USUARIO]: permisoUsuario,
         [ROL.PERMISO_PRODUCTO]: permisoProducto,
+        [ROL.PERMISO_MARCA]: permisoMarca,
         [ROL.PERMISO_CATEGORIA]: permisoCategoria,
         [ROL.PERMISO_CLIENTE]: permisoCliente,
         [ROL.PERMISO_ROL]: permisoRol

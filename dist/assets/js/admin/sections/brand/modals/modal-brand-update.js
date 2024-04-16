@@ -1,34 +1,30 @@
 import { updateRow } from "../../../../crud/crud.js";
-import { CATEGORIA } from "../../../../crud/models.js";
-import { $tablaCategorias } from "../brand.js";
+import {MARCA} from "../../../../crud/models.js";
+import { $tablaMarcas } from "../brand.js";
 import { XSS_REGEX } from "../../../../helpers/regex.js";
 
-export const $modalCategoriaActualizar = $('#modal-categoria-actualizar');
+export const $modalMarcaActualizar = $('#modal-marca-actualizar');
 
-export const $campoCategoriaActualizar = $('#nombre-categoria-actualizar');
-const $buttonActualizar = $('#actualizar-categoria');
-
-$modalCategoriaActualizar.on('hide.bs.modal', () => {
-    $('.lista-item-categoria[selected]').removeAttr('selected');
-})
+export const $campoMarcaActualizar = $('#nombre-marca-actualizar');
+const $buttonActualizar = $('#actualizar-marca');
 
 $buttonActualizar.on('click', e => {
     e.preventDefault();
 
-    if (!$campoCategoriaActualizar.val() || XSS_REGEX.test($campoCategoriaActualizar.val())) {
-        $campoCategoriaActualizar.addClass('is-invalid');
+    if (!$campoMarcaActualizar.val() || XSS_REGEX.test($campoMarcaActualizar.val())) {
+        $campoMarcaActualizar.addClass('is-invalid');
         return
     }
 
     const fields = {
-        [CATEGORIA.NOMBRE]: $campoCategoriaActualizar.val()
+        [MARCA.MARCA]: $campoMarcaActualizar.val()
     };
     const filters = {
-        [CATEGORIA.ID]: $('tr[selected]').children()[0].textContent
+        [MARCA.ID]: $('tr[selected]').children()[0].textContent
     }
 
-    updateRow(CATEGORIA.TABLE_NAME, fields, filters, () => {
-        const id = $tablaCategorias.row($('tr[selected]')).index();
-        $tablaCategorias.cell({row: id, column: 1}).data($campoCategoriaActualizar.val()).draw();
+    updateRow(MARCA.TABLE_NAME, fields, filters, () => {
+        const id = $tablaMarcas.row($('tr[selected]')).index();
+        $tablaMarcas.cell({row: id, column: 1}).data($campoMarcaActualizar.val()).draw();
     });
 })

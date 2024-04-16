@@ -11,6 +11,10 @@ const $campoRolUsuarioActualizar = $('#rol-usuario-actualizar');
 export const $campoRolUsuarioActualizarOptions = $('#rol-usuario-actualizar option');
 const $buttonActualizar = $('#actualizar-usuario');
 
+$modalUsuarioActualizar.on('hide.bs.modal', () => {
+    $('#modal-usuario-actualizar option[selected]').removeAttr('selected');
+})
+
 $buttonActualizar.on('click', e => {
     e.preventDefault();
 

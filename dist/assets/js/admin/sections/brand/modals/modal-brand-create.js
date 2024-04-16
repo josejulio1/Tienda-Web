@@ -1,34 +1,34 @@
-import { $tablaCategorias, hasDeletePermission } from "../brand.js";
+import { $tablaMarcas, hasDeletePermission } from "../brand.js";
 import { insert } from "../../../../crud/crud.js";
 import { END_POINTS } from "../../../../api/end-points.js";
-import { CategoryRow } from "../../../models/row/CategoryRow.js";
-import { openUpdateCategory } from "../brand.js";
-import { CATEGORIA } from "../../../../crud/models.js";
+import { openUpdateBrand } from "../brand.js";
+import {MARCA} from "../../../../crud/models.js";
 import { XSS_REGEX } from "../../../../helpers/regex.js";
+import {BrandRow} from "../../../models/row/BrandRow.js";
 
-const $campoCategoriaCrear = $('#nombre-categoria-crear');
-const $buttonCrear = $('#crear-categoria');
+const $campoMarcaCrear = $('#nombre-marca-crear');
+const $buttonCrear = $('#crear-marca');
 
 $buttonCrear.on('click', e => {
     e.preventDefault();
 
-    if (!$campoCategoriaCrear.val() || XSS_REGEX.test($campoCategoriaCrear.val())) {
-        $campoCategoriaCrear.addClass('is-invalid');
+    if (!$campoMarcaCrear.val() || XSS_REGEX.test($campoMarcaCrear.val())) {
+        $campoMarcaCrear.addClass('is-invalid');
         return;
     }
 
     const fd = new FormData();
-    fd.append(CATEGORIA.NOMBRE, $campoCategoriaCrear.val());
+    fd.append(MARCA.MARCA, $campoMarcaCrear.val());
 
-    insert(END_POINTS.CATEGORY.INSERT, fd, data => {
-        $tablaCategorias.row.add(
-            new CategoryRow(
-                data[CATEGORIA.ID],
-                $campoCategoriaCrear.val(),
+    insert(END_POINTS.BRAND.INSERT, fd, data => {
+        $tablaMarcas.row.add(
+            new BrandRow(
+                data[MARCA.ID],
+                $campoMarcaCrear.val(),
                 hasDeletePermission
             ).getRow()).draw();
         if (hasDeletePermission) {
-            $('#tabla-categorias tbody tr:last').on('click', openUpdateCategory);
+            $('#tabla-marcas tbody tr:last').on('click', openUpdateBrand);
         }
         clearFields();
     });
@@ -36,5 +36,5 @@ $buttonCrear.on('click', e => {
 
 // Functions
 function clearFields() {
-    $campoCategoriaCrear.val('');
+    $campoMarcaCrear.val('');
 }

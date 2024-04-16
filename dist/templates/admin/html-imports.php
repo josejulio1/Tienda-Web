@@ -12,4 +12,4 @@
 <script src="/assets/js/admin/open-close-panel.js" defer></script>
 <script src="/assets/js/admin/general-settings.js" defer></script>
 <script src="/assets/js/admin/sections/panel.js" type="module" defer></script>
-<script src="/assets/js/admin/chat.js" type="module" defer></script>
+<!--<script src="/assets/js/admin/chat.js" type="module" defer></script>-->

@@ -20,10 +20,16 @@ export const PRODUCTO = {
     NOMBRE: 'nombre',
     DESCRIPCION: 'descripcion',
     PRECIO: 'precio',
-    MARCA: 'marca',
     STOCK: 'stock',
     RUTA_IMAGEN: 'ruta_imagen',
+    MARCA_ID: 'marca_id',
     CATEGORIA_ID: 'categoria_id'
+}
+
+export const MARCA = {
+    TABLE_NAME: 'Marca',
+    ID: 'id',
+    MARCA: 'marca'
 }
 
 export const ROL = {
@@ -33,6 +39,7 @@ export const ROL = {
     COLOR: 'color',
     PERMISO_CATEGORIA: 'permiso_categoria',
     PERMISO_PRODUCTO: 'permiso_producto',
+    PERMISO_MARCA: 'permiso_marca',
     PERMISO_CLIENTE: 'permiso_cliente',
     PERMISO_USUARIO: 'permiso_usuario',
     PERMISO_ROL: 'permiso_rol'
@@ -117,7 +124,13 @@ export const V_USUARIO_ROL = {
     CONTRASENIA: 'contrasenia',
     NOMBRE_ROL: 'nombre_rol',
     COLOR_ROL: 'color_rol',
-    RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil'
+    RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil',
+    PERMISO_CATEGORIA: 'permiso_categoria',
+    PERMISO_PRODUCTO: 'permiso_producto',
+    PERMISO_MARCA: 'permiso_marca',
+    PERMISO_CLIENTE: 'permiso_cliente',
+    PERMISO_USUARIO: 'permiso_usuario',
+    PERMISO_ROL: 'permiso_rol'
 }
 
 export const V_CHAT_CLIENTE_IMAGEN = {

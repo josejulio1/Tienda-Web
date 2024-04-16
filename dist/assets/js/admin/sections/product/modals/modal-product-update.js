@@ -9,7 +9,12 @@ export const $campoNombreActualizar = $('#nombre-producto-actualizar');
 export const $campoPrecioActualizar = $('#precio-producto-actualizar');
 export const $campoDescripcionActualizar = $('#descripcion-producto-actualizar');
 export const $campoMarcaActualizar = $('#marca-producto-actualizar');
+export const $campoMarcaProductoActualizarOptions = $('#marca-producto-actualizar option');
 const $buttonActualizar = $('#actualizar-producto');
+
+$modalProductoActualizar.on('hide.bs.modal', () => {
+    $('#modal-producto-actualizar option[selected]').removeAttr('selected');
+})
 
 $buttonActualizar.on('click', e => {
     e.preventDefault();
@@ -46,7 +51,7 @@ $buttonActualizar.on('click', e => {
     const fields = {
         [PRODUCTO.NOMBRE]: nombre,
         [PRODUCTO.PRECIO]: precio,
-        [PRODUCTO.MARCA]: marca,
+        [PRODUCTO.MARCA_ID]: marca,
         [PRODUCTO.DESCRIPCION]: descripcion
     }
     const filters = {
@@ -57,6 +62,6 @@ $buttonActualizar.on('click', e => {
         const id = $tablaProductos.row($('tr[selected]')).index();
         $tablaProductos.cell({row: id, column: 1}).data(nombre);
         $tablaProductos.cell({row: id, column: 2}).data(precio);
-        $tablaProductos.cell({row: id, column: 3}).data(marca).draw();
+        $tablaProductos.cell({row: id, column: 3}).data($('#marca-producto-actualizar option:selected').text()).draw();
     });
 })

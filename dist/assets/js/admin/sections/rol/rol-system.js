@@ -100,6 +100,7 @@ export function validatePermissions($checkBoxCrear, $checkBoxActualizar, $checkB
  * @param {HTMLInputElement} $checkBoxEliminar CheckBoxx Eliminar
  */
 export function permissionNumberToCheckBox(permissionNumber, $checkBoxVer, $checkBoxCrear, $checkBoxActualizar, $checkBoxEliminar) {
+    debugger
     if (permissionNumber & PERMISSIONS.READ) {
         $checkBoxVer.prop('checked', true);
     }

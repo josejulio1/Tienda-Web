@@ -13,6 +13,9 @@
             if ($userInfo[v_usuario_rol::PERMISO_PRODUCTO] != PERMISSIONS::NO_PERMISSIONS) {
                 echo '<a href="product.php">Productos</a>';
             }
+            if ($userInfo[v_usuario_rol::PERMISO_MARCA] != PERMISSIONS::NO_PERMISSIONS) {
+                echo '<a href="brand.php">Marcas</a>';
+            }
             if ($userInfo[v_usuario_rol::PERMISO_CATEGORIA] != PERMISSIONS::NO_PERMISSIONS) {
                 echo '<a href="category.php">Categorías</a>';
             }

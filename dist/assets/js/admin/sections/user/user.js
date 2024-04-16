@@ -51,7 +51,7 @@ export function openUpdateUser() {
     $campoCorreoActualizar.val(children[2].textContent);
     const $campoRol = children[3].textContent;
     $campoRolUsuarioActualizarOptions.each(function() {
-        if ($(this).text() == $campoRol) {
+        if ($(this).text() === $campoRol) {
             $(this).attr('selected', '');
             return;
         }

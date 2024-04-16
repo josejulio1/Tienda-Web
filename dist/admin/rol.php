@@ -64,6 +64,7 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
                           <nav>
                             <button class="btn-permiso selected-button" id="permiso-usuario">Usuario</button>
                             <button class="btn-permiso" id="permiso-producto">Producto</button>
+                            <button class="btn-permiso" id="permiso-marca">Marca</button>
                             <button class="btn-permiso" id="permiso-categoria">Categoría</button>
                             <button class="btn-permiso" id="permiso-cliente">Cliente</button>
                             <button class="btn-permiso" id="permiso-rol">Rol</button>
@@ -117,6 +118,30 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
                                 </div>
                               </div>
                             </div>
+                            <div class="contenedor-permiso contenedor-permiso-marca hide">
+                                  <div class="permiso--header">
+                                      <div class="marcar-todo-container">
+                                          <label for="marcar-todo-marca-actualizar">Marcar Todo</label>
+                                          <input type="checkbox" class="marcar-todo" id="marcar-todo-marca-actualizar">
+                                      </div>
+                                      <div class="permiso-ver-container">
+                                          <label for="ver-permiso-marca-actualizar">Ver</label>
+                                          <input type="checkbox" class="permiso-ver" id="ver-permiso-marca-actualizar">
+                                      </div>
+                                      <div class="permiso-crear-container">
+                                          <label for="crear-permiso-marca-actualizar">Crear</label>
+                                          <input type="checkbox" class="permiso-crear" id="crear-permiso-marca-actualizar">
+                                      </div>
+                                      <div class="permiso-actualizar-container">
+                                          <label for="actualizar-permiso-marca-actualizar">Actualizar</label>
+                                          <input type="checkbox" class="permiso-actualizar" id="actualizar-permiso-marca-actualizar">
+                                      </div>
+                                      <div class="permiso-eliminar-container">
+                                          <label for="eliminar-permiso-marca-actualizar">Eliminar</label>
+                                          <input type="checkbox" class="permiso-eliminar" id="eliminar-permiso-marca-actualizar">
+                                      </div>
+                                  </div>
+                              </div>
                             <div class="contenedor-permiso contenedor-permiso-categoria hide">
                               <div class="permiso--header">
                                 <div class="marcar-todo-container">
@@ -229,6 +254,7 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
                           <nav>
                             <button class="btn-permiso selected-button" id="permiso-usuario">Usuario</button>
                             <button class="btn-permiso" id="permiso-producto">Producto</button>
+                            <button class="btn-permiso" id="permiso-marca">Marca</button>
                             <button class="btn-permiso" id="permiso-categoria">Categoría</button>
                             <button class="btn-permiso" id="permiso-cliente">Cliente</button>
                             <button class="btn-permiso" id="permiso-rol">Rol</button>
@@ -282,6 +308,30 @@ if (($userInfo[v_usuario_rol::PERMISO_ROL] & PERMISSIONS::READ) == PERMISSIONS::
                                 </div>
                               </div>
                             </div>
+                            <div class="contenedor-permiso contenedor-permiso-marca hide">
+                                  <div class="permiso--header">
+                                      <div class="marcar-todo-container">
+                                          <label for="marcar-todo-marca">Marcar Todo</label>
+                                          <input type="checkbox" class="marcar-todo" id="marcar-todo-marca">
+                                      </div>
+                                      <div class="permiso-ver-container">
+                                          <label for="ver-permiso-marca">Ver</label>
+                                          <input type="checkbox" class="permiso-ver" id="ver-permiso-marca">
+                                      </div>
+                                      <div class="permiso-crear-container">
+                                          <label for="crear-permiso-marca">Crear</label>
+                                          <input type="checkbox" class="permiso-crear" id="crear-permiso-marca">
+                                      </div>
+                                      <div class="permiso-actualizar-container">
+                                          <label for="actualizar-permiso-marca">Actualizar</label>
+                                          <input type="checkbox" class="permiso-actualizar" id="actualizar-permiso-marca">
+                                      </div>
+                                      <div class="permiso-eliminar-container">
+                                          <label for="eliminar-permiso-marca">Eliminar</label>
+                                          <input type="checkbox" class="permiso-eliminar" id="eliminar-permiso-marca">
+                                      </div>
+                                  </div>
+                              </div>
                             <div class="contenedor-permiso contenedor-permiso-categoria hide">
                               <div class="permiso--header">
                                 <div class="marcar-todo-container">
