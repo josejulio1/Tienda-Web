@@ -1,0 +1,12 @@
+Añadir funcionalidad de que un cliente pueda hacer un comentario sobre un producto
+Permitir cambiar el estado del pago de un pedido en el panel de administración
+Añadir buscador de productos con filtros avanzados
+Mejorar chat en la parte del administrador y solucionar chat oculto en cliente
+Controlar stock
+Mejorar carrusel de fotos del apartado de register/login de cliente
+Probar scrolling en el carrito
+Terminar de arreglar el módulo de roles del panel de admin
+Arreglar en el panel de perfil que los campos no sean obligatorios
+
+// Hecho
+Añadir que se pueda cambiar la cantidad de productos en el carrito

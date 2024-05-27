@@ -1,0 +1,350 @@
+@startuml
+!theme vibrant
+
+AbstractActiveRecord <|-- AbstractActiveRecordCrud
+AbstractActiveRecordCrud <|- AbstractActiveRecordCrudAuth
+
+AbstractActiveRecord <|-- VCarritoCliente
+AbstractActiveRecord <|-- VPedido
+AbstractActiveRecord <|-- VPedidoProductoItemDetallado
+AbstractActiveRecord <|-- VChatClienteImagen
+AbstractActiveRecord <|-- VComentarioClienteProducto
+AbstractActiveRecord <|-- VProductoCategoria
+AbstractActiveRecord <|-- VProductoValoracionPromedio
+
+AbstractActiveRecordCrudAuth <|--- Usuario
+AbstractActiveRecordCrudAuth <|--- Cliente
+AbstractActiveRecordCrudAuth <|--- VUsuarioRol
+
+AbstractActiveRecordCrud <|-- Rol
+AbstractActiveRecordCrud <|-- Categoria
+AbstractActiveRecordCrud <|-- Producto
+AbstractActiveRecordCrud <|-- Marca
+AbstractActiveRecordCrud <|-- CarritoItem
+AbstractActiveRecordCrud <|-- Pedido
+AbstractActiveRecordCrud <|-- PedidoProductoItem
+AbstractActiveRecordCrud <|-- Chat
+AbstractActiveRecordCrud <|-- Comentario
+AbstractActiveRecordCrud <|-- EstadoPago
+AbstractActiveRecordCrud <|-- MetodoPago
+
+abstract class AbstractActiveRecord {
+    # tableName: string {static}
+    # primaryKeyColumn: string {static}
+
+    + all($columns = []: array): array
+    + find($id: int, $columns = []: array): static|null
+}
+
+abstract class AbstractActiveRecordCrud {
+    + create(): bool
+    + save(): bool
+    + getColumns(): array {abstract}
+}
+
+abstract class AbstractActiveRecordCrudAuth {
+    # emailColumn: string {static}
+    + findByEmail($id: int, $columns = []: array): static|null {static}
+}
+
+class Usuario {
+    + ID
+    + USUARIO
+    + CORREO
+    + CONTRASENIA
+    + ROL_ID
+    + RUTA_IMAGEN_PERFIL
+
+    + id: int
+    + usuario: string
+    + correo: string
+    + contrasenia: string
+    + rol_id: int
+    + ruta_imagen_perfil: string
+}
+
+class Cliente {
+    + ID
+    + NOMBRE
+    + APELLIDOS
+    + TELEFONO
+    + DIRECCION
+    + CORREO
+    + CONTRASENIA
+    + RUTA_IMAGEN_PERFIL
+
+    + id: int
+    + nombre: string
+    + apellidos: string
+    + telefono: string
+    + direccion: string
+    + correo: string
+    + contrasenia: string
+    + ruta_imagen_perfil: string
+}
+
+class Rol {
+    + ID
+    + NOMBRE
+    + COLOR
+    + PERMISO_CATEGORIA
+    + PERMISO_PRODUCTO
+    + PERMISO_MARCA
+    + PERMISO_CLIENTE
+    + PERMISO_USUARIO
+    + PERMISO_ROL
+
+    + id: int
+    + nombre: string
+    + color: string
+    + permiso_categoria: int
+    + permiso_producto: int
+    + permiso_marca: int
+    + permiso_cliente: int
+    + permiso_usuario: int
+    + permiso_rol: int
+}
+
+class Producto {
+    + ID
+    + NOMBRE
+    + DESCRIPCION
+    + PRECIO
+    + STOCK
+    + RUTA_IMAGEN
+    + MARCA_ID
+    + CATEGORIA_ID
+
+    + id: int
+    + nombre: string
+    + descripcion: string
+    + precio: float
+    + stock: int
+    + ruta_imagen: string
+    + marca_id: int
+    + categoria_id: int
+}
+
+class Categoria {
+    + ID
+    + NOMBRE
+
+    + id: int
+    + nombre: string
+}
+
+class Marca {
+    + ID
+    + NOMBRE
+
+    + id: int
+    + nombre: string
+}
+
+class Pedido {
+    + ID
+    + CLIENTE_ID
+    + METODO_PAGO_ID
+    + ESTADO_PAGO_ID
+    + DIRECCION_ENVIO
+
+    + id: int
+    + cliente_id: int
+    + metodo_pago_id: int
+    + estado_pago_id: int
+    + id: string
+}
+
+class PedidoProductoItem {
+    + ID
+    + PEDIDO_ID
+    + PRODUCTO_ID
+    + CANTIDAD_PRODUCTO
+    + PRECIO_PRODUCTO
+
+    + id: int
+    + pedido_id: int
+    + producto_id: int
+    + cantidad_producto: int
+    + precio_producto: float
+}
+
+class CarritoItem {
+    + PRODUCTO_ID
+    + CLIENTE_ID
+    + CANTIDAD
+
+    + producto_id: int
+    + cliente_id: int
+    + cantidad: int
+}
+
+class Chat {
+    + ID
+    + CLIENTE_ID
+    + MENSAJE
+    + FECHA
+    + ES_CLIENTE
+
+    + id: int
+    + cliente_id: int
+    + mensaje: string
+    + fecha: string
+    + es_cliente: bool
+}
+
+class Comentario {
+    + ID
+    + CLIENTE_ID
+    + PRODUCTO_ID
+    + COMENTARIO
+    + NUM_ESTRELLAS
+
+    + id: int
+    + cliente_id: int
+    + producto_id: int
+    + comentario: string
+    + num_estrellas: int
+}
+
+class EstadoPago {
+    + ID
+    + NOMBRE
+
+    + id: int
+    + nombre: string
+}
+
+class MetodoPago {
+    + ID
+    + NOMBRE
+
+    + id: int
+    + nombre: string
+}
+
+class VUsuarioRol {
+    + USUARIO_ID
+    + USUARIO
+    + CORREO
+    + CONTRASENIA
+    + ROL_ID
+    + NOMBRE_ROL
+    + COLOR_ROL
+    + RUTA_IMAGEN_PERFIL
+    + PERMISO_CATEGORIA
+    + PERMISO_PRODUCTO
+    + PERMISO_MARCA
+    + PERMISO_CLIENTE
+    + PERMISO_USUARIO
+    + PERMISO_ROL
+
+    + usuario_id: int
+    + usuario: string
+    + correo: string
+    + contrasenia: string
+    + rol_id: int
+    + nombre_rol: string
+    + color_rol: string
+    + ruta_imagen_perfil: string
+    + permiso_categoria: int
+    + permiso_producto: int
+    + permiso_marca: int
+    + permiso_cliente: int
+    + permiso_usuario: int
+    + permiso_rol: int
+}
+
+class VCarritoCliente {
+    + CLIENTE_ID
+    + PRODUCTO_ID
+    + NOMBRE_PRODUCTO
+    + PRECIO_PRODUCTO
+    + CANTIDAD
+    + RUTA_IMAGEN_PERFIL
+
+    + cliente_id: int
+    + producto_id: int
+    + nombre_productp: string
+    + precio_producto: int
+    + cantidad: int
+    + ruta_imagen_perfil: string
+}
+
+class VPedido {
+    + ID
+    + CLIENTE_ID
+    + NOMBRE_CLIENTE
+    + APELLIDOS_CLIENTE
+    + NOMBRE_PRODUCTO
+    + METODO_PAGO
+    + ESTADO_PAGO
+    + DIRECCION_ENVIO
+
+    + id: int
+    + cliente_id: int
+    + nombre_cliente: string
+    + apellidos_cliente: string
+    + nombre_producto: string
+    + metodo_pago: string
+    + estado_pago: string
+    + direccion_envio: string
+}
+
+class VPedidoProductoItemDetallado {
+    + PEDIDO_ID
+    + CLIENTE_ID
+    + PRODUCTO_ID
+    + NOMBRE_PRODUCTO
+    + CANTIDAD_PRODUCTO
+    + PRECIO_PRODUCTO
+    + RUTA_IMAGEN
+}
+
+class VChatClienteImagen {
+    + ID
+    + CLIENTE_ID
+    + RUTA_IMAGEN_PERFIL
+    + MENSAJE
+    + FECHA
+    + ES_CLIENTE
+
+    + id: int
+    + cliente_id: int
+    + ruta_imagen_perfil: string
+    + mensaje: string
+    + fecha: string
+    + es_cliente: bool
+}
+
+class VComentarioClienteProducto {
+    + PRODUCTO_ID
+    + NOMBRE_CLIENTE
+    + APELLIDOS_CLIENTE
+    + RUTA_IMAGEN_PERFIL
+    + COMENTARIO
+    + NUM_ESTRELLAS
+}
+
+class VProductoCategoria {
+    + PRODUCTO_ID
+    + NOMBRE
+    + DESCRIPCION
+    + PRECIO
+    + MARCA
+    + STOCK
+    + RUTA_IMAGEN
+    + NOMBRE_CATEGORIA
+}
+
+class VProductoValoracionPromedio {
+    + ID
+    + NOMBRE
+    + DESCRIPCION
+    + RUTA_IMAGEN
+    + PRECIO
+    + MARCA
+    + VALORACION_PROMEDIO
+}
+
+@enduml

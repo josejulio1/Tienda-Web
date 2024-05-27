@@ -1,0 +1,27 @@
+{
+  "name": "tienda-bytemarket",
+  "version": "1.0.0",
+  "description": "Tienda web de informática (ByteMarket)",
+  "main": "index.js",
+  "scripts": {
+    "create_db": "cd db && mysql -uroot < schema.sql && mysql -uroot < data.sql",
+    "host": "cd src/app/public && php -S localhost:80"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josejulio1/Tienda-Web.git"
+  },
+  "keywords": [
+    "Tienda",
+    "web",
+    "ByteMarket",
+    "informática",
+    "informatica"
+  ],
+  "author": "josejulio1",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/josejulio1/Tienda-Web/issues"
+  },
+  "homepage": "https://github.com/josejulio1/Tienda-Web#readme"
+}

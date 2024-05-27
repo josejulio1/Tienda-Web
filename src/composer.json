@@ -1,0 +1,31 @@
+{
+    "name": "josju/tienda-web-bytemarket",
+    "description": "Tienda web de informática (ByteMarket)",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "josejulio1"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "ext-json": "*",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "app",
+            "View\\": "app/views",
+            "Model\\": "app/domain/models",
+            "Controller\\": "app/controllers",
+            "Database\\": "app/domain/services",
+            "Util\\API\\": "app/utils/api",
+            "Util\\Auth\\": "app/utils/auth",
+            "Util\\SQL\\": "app/utils/sql",
+            "Util\\Permission\\": "app/utils/permissions",
+            "Util\\Constant\\": "app/utils/constants",
+            "API\\": "app/controllers/api"
+        }
+    }
+}

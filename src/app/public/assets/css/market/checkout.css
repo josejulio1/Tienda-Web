@@ -1,0 +1,181 @@
+/* Checkout correcto */
+.pago-realizado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--primario);
+    border-radius: 1rem;
+    width: 50%;
+    padding: 5rem;
+    margin-top: 6rem;
+    gap: 1rem;
+}
+
+.pago-realizado img {
+    width: 200px;
+    height: 200px;
+}
+
+.pago-realizado a {
+    color: var(--azul);
+    text-decoration: underline;
+}
+/* Fin Checkout Correcto */
+
+.detalles-pago {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3rem auto;
+    width: 80%;
+    gap: 10rem;
+}
+
+@media (min-width: 1280px) {
+    .detalles-pago {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        align-items: start;
+    }
+}
+
+@media (max-width: 1279px) {
+    .detalles-pago {
+        gap: 8rem;
+    }
+}
+
+.detalles-pago h2 {
+    font-size: 2.5rem;
+}
+
+/* Detalles */
+.producto-container {
+    margin-top: 1rem;
+    border: 2px solid var(--secundario);
+    border-radius: .5rem;
+    padding: .8rem;
+}
+
+.producto {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.producto img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.producto__detalles,
+.producto__total {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.producto__detalles span,
+.producto__total span {
+    font-weight: bold;
+}
+
+.producto__detalles {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    text-wrap: balance;
+}
+
+.producto__total::before {
+    display: block;
+    content: '';
+    width: 80%;
+    height: 3px;
+    margin: 1rem auto;
+    background-color: var(--secundario);
+}
+
+.precio-pagar {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* Pagos */
+.pagos {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detalles-pago .columna {
+    display: flex;
+    flex-direction: column;
+}
+
+.detalles-pago label {
+    color: var(--secundario);
+    margin-bottom: .3rem;
+}
+
+.detalles-pago input {
+    border-radius: .5rem;
+    max-width: 200px;
+}
+
+.fila {
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+}
+
+.fila input {
+    width: 50px;
+}
+
+.fila p {
+    font-size: 2rem;
+}
+
+#codigo-seguridad {
+    width: 70px;
+}
+
+.pago {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--secundario);
+    padding: 1rem;
+}
+
+.pago button {
+    background-color: var(--primario);
+    color: var(--secundario);
+    font-weight: bold;
+    border-radius: 0;
+    padding: .5rem;
+    width: 100%;
+    transition: .3s background-color, .3s border-radius;
+    font-size: 2rem;
+}
+
+.pago button:hover {
+    background-color: var(--seleccionable);
+    border-radius: 1rem;
+}
+
+/* Facturación */
+.facturacion {
+    margin-bottom: 5rem;
+}
+
+.facturacion-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
