@@ -86,8 +86,6 @@
                     <table id="tabla-pedidos">
                       <thead>
                         <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
                         <th>Nombre Producto</th>
                         <th>Método de pago</th>
                         <th>Estado del pago</th>

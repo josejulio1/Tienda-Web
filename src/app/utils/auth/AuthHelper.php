@@ -28,15 +28,25 @@ class AuthHelper {
             session_abort();
             return false;
         }
-        if ($_SESSION['rol'] === $typeRole) {
+        if ($typeRole) {
+            if ($_SESSION['rol'] === $typeRole) {
+                session_abort();
+                return true;
+            }
             session_abort();
-            return true;
+            return false;
         }
         session_abort();
-        return false;
+        return true;
     }
 
-    public static function startSession(int $id, int $roleAccess) {
+    public static function startSession(int $id, int $roleAccess, bool $keepSession = false) {
+        if ($keepSession) {
+            // Establecer ID de sesión aleatorio
+            session_id(uniqid());
+            // Establecer duración de la sesión durante 1 mes
+            session_set_cookie_params(30 * 24 * 60 * 60);
+        }
         session_start();
         $_SESSION['id'] = $id;
         $_SESSION['rol'] = $roleAccess;

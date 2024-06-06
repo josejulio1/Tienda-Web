@@ -7,8 +7,6 @@ use Model\Marca;
 use Model\Rol;
 use Model\VUsuarioRol;
 use Util\API\HttpStatusCode;
-use Util\Auth\AuthHelper;
-use Util\Auth\RoleAccess;
 use Util\Permission\Permissions;
 
 class AdminController {
@@ -77,9 +75,12 @@ class AdminController {
             return http_response_code(HttpStatusCode::UNAUTHORIZED);
         }
 
+        $js = self::getJsImports() . '<script src="/assets/js/app/pages/admin/sections/customer/customer.js" type="module" defer></script>' .
+            '<script src="/assets/js/app/pages/admin/sections/customer/see-orders.js" type="module" defer></script>';
+
         $router -> render('admin/pages/customer', [
             'css' => self::getCssImports(),
-            'js' => self::getJsImports() . '<script src="/assets/js/app/pages/admin/sections/customer/customer.js" type="module" defer></script>',
+            'js' => $js,
             'userInfo' => self::getUserInfo()
         ]);
     }
@@ -92,25 +93,16 @@ class AdminController {
 
         $router -> render('admin/pages/role', [
             'css' => self::getCssImports(),
-            'js' => self::getJsImports() . '<script src="/assets/js/app/pages/admin/sections/role/role.js" type="module" defer></script>',
+            'js' => self::getJsImports() . '<script src="/assets/js/app/pages/admin/sections/role/role.js" type="module" defer></script>
+                                            <script src="/assets/js/app/pages/admin/sections/role/role-system.js" type="module" defer></script>',
             'userInfo' => self::getUserInfo()
         ]);
     }
 
     public static function login(Router $router) {
-        if (AuthHelper::isAuthenticated(RoleAccess::USER)) {
-            header('Location: /admin/user');
-        }
-        if (AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-            header('Location: /');
-        }
-
-        $css = '<link rel="stylesheet" href="/assets/css/admin/auth.css">';
-        $js = '<script src="/assets/js/app/pages/admin/auth/auth.js" type="module" defer></script>';
-
         $router -> render('admin/pages/auth', [
-            'css' => $css,
-            'js' => $js
+            'css' => '<link rel="stylesheet" href="/assets/css/admin/auth.css">',
+            'js' => '<script src="/assets/js/app/pages/admin/auth/auth.js" type="module" defer></script>'
         ]);
     }
 
@@ -128,18 +120,21 @@ class AdminController {
         ])[0];
     }
 
-    private static function getCssImports() {
+    private static function getCssImports(): string {
         return '<link rel="stylesheet" href="/assets/css/lib/bootstrap.min.css">
                 <link rel="stylesheet" href="/assets/css/lib/jquery.dataTables.css">
                 <link rel="stylesheet" href="/assets/css/admin/admin.css">
-                <link rel="stylesheet" href="/assets/css/admin/modal.css">';
+                <link rel="stylesheet" href="/assets/css/admin/modal.css">
+                <link rel="stylesheet" href="/assets/css/admin/chat.css">';
     }
 
-    private static function getJsImports() {
+    private static function getJsImports(): string {
         return '<script src="/assets/js/lib/bootstrap.bundle.min.js" defer></script>
                 <script src="/assets/js/lib/jquery.dataTables.js" defer></script>
                 <script src="/assets/js/app/pages/close-session.js" type="module" defer></script>
                 <script src="/assets/js/app/pages/admin/responsive/open-close-panel.js" defer></script>
+                <script src="/assets/js/app/pages/admin/chat/open-close.js" defer></script>
+                <!--<script src="/assets/js/app/pages/admin/chat/chat.js" type="module" defer></script>-->
                 <script src="/assets/js/app/pages/admin/general-settings.js" defer></script>';
     }
 }

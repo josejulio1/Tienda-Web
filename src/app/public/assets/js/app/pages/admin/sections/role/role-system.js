@@ -1,14 +1,3 @@
-import { PERMISSIONS } from "../../../api/permissions.js";
-
-$('.marcar-todo').on('click', e => {
-    const { target: { id } } = e;
-    const nombrePagina = id.split('-')[2];
-    $(`#ver-permiso-${nombrePagina}`).prop('checked', true);
-    $(`#crear-permiso-${nombrePagina}`).prop('checked', true);
-    $(`#actualizar-permiso-${nombrePagina}`).prop('checked', true);
-    $(`#eliminar-permiso-${nombrePagina}`).prop('checked', true);
-})
-
 // Cambiar de página
 $('.btn-permiso').on('click', e => {
     e.preventDefault();
@@ -38,37 +27,6 @@ $('.permiso-crear').on('change', checkVer);
 $('.permiso-actualizar').on('change', checkVer);
 $('.permiso-eliminar').on('change', checkVer);
 
-/**
- * Calcula el número equivalente de permiso según los checkboxes que hayan activados.
- * @param {HTMLInputElement} $checkBoxVer CheckBox Ver
- * @param {HTMLInputElement} $checkBoxCrear CheckBox Crear
- * @param {HTMLInputElement} $checkBoxActualizar CheckBox Actualizar
- * @param {HTMLInputElement} $checkBoxEliminar CheckBox Eliminar
- * @returns Devuelve el número de permiso calculado
- */
-export function getPermissions($checkBoxVer, $checkBoxCrear, $checkBoxActualizar, $checkBoxEliminar) {
-    let permissionNumber = 0;
-    if ($checkBoxVer.prop('checked')) {
-        permissionNumber += PERMISSIONS.READ;
-    }
-    if ($checkBoxCrear.prop('checked')) {
-        permissionNumber += PERMISSIONS.CREATE;
-    }
-    if ($checkBoxActualizar.prop('checked')) {
-        permissionNumber += PERMISSIONS.UPDATE;
-    }
-    if ($checkBoxEliminar.prop('checked')) {
-        permissionNumber += PERMISSIONS.DELETE;
-    }
-    return permissionNumber;
-}
-
-export function clearCheckboxes(...$checkBoxes) {
-    for (const $checkBox of $checkBoxes) {
-        $checkBox.prop('checked', false);
-    }
-}
-
 export function validatePermissions($checkBoxCrear, $checkBoxActualizar, $checkBoxEliminar) {
     let strActualizar;
     const checkBoxCrearId = $checkBoxCrear.attr('id');
@@ -89,29 +47,6 @@ export function validatePermissions($checkBoxCrear, $checkBoxActualizar, $checkB
         return true;
     }
     return false;
-}
-
-/**
- * Convierte el permiso numérico a los CheckBoxes, marcando estos según si tengan el permiso o no
- * @param {number} permissionNumber Número de permiso
- * @param {HTMLInputElement} $checkBoxVer CheckBox Ver
- * @param {HTMLInputElement} $checkBoxCrear CheckBox Crear
- * @param {HTMLInputElement} $checkBoxActualizar CheckBox Actualizar
- * @param {HTMLInputElement} $checkBoxEliminar CheckBoxx Eliminar
- */
-export function permissionNumberToCheckBox(permissionNumber, $checkBoxVer, $checkBoxCrear, $checkBoxActualizar, $checkBoxEliminar) {
-    if (permissionNumber & PERMISSIONS.READ) {
-        $checkBoxVer.prop('checked', true);
-    }
-    if (permissionNumber & PERMISSIONS.CREATE) {
-        $checkBoxCrear.prop('checked', true);
-    }
-    if (permissionNumber & PERMISSIONS.UPDATE) {
-        $checkBoxActualizar.prop('checked', true);
-    }
-    if (permissionNumber & PERMISSIONS.DELETE) {
-        $checkBoxEliminar.prop('checked', true);
-    }
 }
 
 /**

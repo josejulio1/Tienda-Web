@@ -17,12 +17,7 @@ class BrandController {
     }
 
     public static function create(): void {
-        if (!AdminHelper::validateAuth('POST')) {
-            return;
-        }
-        http_response_code(HttpStatusCode::OK);
-
-        $marcaFormulario = new Marca(JsonHelper::getPostInJson());
+        $marcaFormulario = new Marca($_POST);
         if (!$marcaFormulario -> create()) {
             if (!Database::isConnected()) {
                 Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);

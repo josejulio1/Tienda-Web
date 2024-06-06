@@ -90,7 +90,7 @@
                     </div>
                     <div class="modal-column">
                         <label for="stock-producto-crear">Stock</label>
-                        <input type="number" id="stock-producto-crear" class="form-control" required>
+                        <input type="number" id="stock-producto-crear" class="form-control" required min="1">
                         <div class="invalid-feedback">Introduzca una cantidad de stock</div>
                     </div>
                   </div>

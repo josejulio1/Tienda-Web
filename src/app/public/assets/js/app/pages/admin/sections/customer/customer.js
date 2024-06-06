@@ -70,6 +70,11 @@ window.addEventListener('load', async () => {
         return {
             [CLIENTE.ID]: entidad[CLIENTE.ID],
             [CLIENTE.NOMBRE]: fields[0].field.val(),
+            [CLIENTE.APELLIDOS]: fields[1].field.val(),
+            [CLIENTE.TELEFONO]: fields[2].field.val(),
+            [CLIENTE.DIRECCION]: fields[3].field.val(),
+            [CLIENTE.CORREO]: fields[4].field.val(),
+            [CLIENTE.RUTA_IMAGEN_PERFIL]: entidad[CLIENTE.RUTA_IMAGEN_PERFIL],
         }
     });
     const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields) => {

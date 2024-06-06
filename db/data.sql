@@ -40,7 +40,7 @@ INSERT INTO Producto (id, nombre, descripcion, precio, stock, ruta_imagen, marca
 -- Carrito_Item
 INSERT INTO Carrito_Item (producto_id, cliente_id, cantidad) VALUES
 (4, 9, 1),
-(3, 1, 50),
+(3, 1, 10),
 (2, 9, 48),
 (4, 4, 59),
 (5, 9, 81),
@@ -88,4 +88,5 @@ INSERT INTO Usuario (usuario, correo, contrasenia, rol_id, ruta_imagen_perfil) V
 INSERT INTO Comentario (id, cliente_id, producto_id, comentario, num_estrellas) VALUES
 (1, 1, 2, 'Buen producto', 5),
 (2, 2, 2, 'Horrible producto', 1),
-(3, 3, 2, 'Producto mediocre', 2);
+(3, 3, 2, 'Producto mediocre', 2),
+(4, 6, 5, 'Me llegó defectuoso', 1);

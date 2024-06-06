@@ -1,0 +1,121 @@
+.chat-container {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.chat {
+    background-color: var(--primario);
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    transition: .5s transform;
+    transform: translateX(150%);
+    width: 100%;
+    border: 1px solid var(--secundario);
+}
+
+@media (max-width: 1024px) {
+    .chat {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 150px;
+        border-radius: 0;
+    }
+}
+
+.chat.open-chat {
+    transform: translateX(0%);
+}
+
+.chat > h2 {
+    background-color: var(--secundario);
+    color: var(--primario);
+    padding: 1rem;
+    border-radius: 1rem 1rem 0 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+    .chat > h2 {
+        border-radius: 0;
+    }
+}
+
+.chat__detalles {
+    padding: 1rem;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#chat__mensajes {
+    min-height: 300px;
+    overflow-y: auto;
+}
+
+.mensaje {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.mensaje-cliente {
+    flex-direction: row-reverse;
+}
+
+.mensaje img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.mensaje p {
+    max-width: 50%;
+    background-color: var(--secundario);
+    color: var(--primario);
+    border-radius: 1rem;
+    padding: .5rem;
+    text-wrap: balance;
+}
+
+.enviar-mensaje {
+    display: flex;
+    gap: 1rem;
+}
+
+.enviar-mensaje img {
+    width: 50px;
+    height: 50px;
+    background-color: var(--secundario);
+    border-radius: 50%;
+    padding: .5rem;
+    cursor: pointer;
+}
+
+#enviar-mensaje {
+    width: 100%;
+}
+
+.chat-container__open-close {
+    border-radius: 50%;
+    background-color: var(--secundario);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    max-width: 80px;
+    max-height: 80px;
+}
+
+.chat-container__open-close > img {
+    padding: 1rem;
+}

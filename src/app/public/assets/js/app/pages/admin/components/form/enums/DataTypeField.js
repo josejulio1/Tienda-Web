@@ -6,5 +6,5 @@ export const DataTypeField = {
     PHONE: 5,
     NUMBER: 6,
     IMAGE: 7,
-    OTHER: 8
+    SELECT: 8
 }

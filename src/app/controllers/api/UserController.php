@@ -12,7 +12,10 @@ use Util\API\JsonHelper;
 use Util\API\Response;
 use Util\Auth\AuthHelper;
 use Util\Auth\RoleAccess;
-use Util\Constant\DefaultPath;
+use Util\Image\DefaultPath;
+use Util\Image\ImageFolder;
+use Util\Image\ImageHelper;
+use Util\Image\TypeImage;
 
 class UserController {
     public static function getAll(): void {
@@ -32,13 +35,14 @@ class UserController {
         }
         http_response_code(HttpStatusCode::OK);
 
-        $json = JsonHelper::getPostInJson();
-        $json[Usuario::CONTRASENIA] = password_hash($json[Usuario::CONTRASENIA], PASSWORD_DEFAULT);
-        $usuarioFormulario = new Usuario($json);
-        // Si no tiene imagen de perfil, aplicarle la de por defecto
-        if (!$usuarioFormulario -> ruta_imagen_perfil) {
-            $usuarioFormulario -> ruta_imagen_perfil = DefaultPath::DEFAULT_IMAGE_PROFILE;
+        $_POST[Usuario::CONTRASENIA] = password_hash($_POST[Usuario::CONTRASENIA], PASSWORD_DEFAULT);
+        if ($_FILES) {
+            $_POST[Usuario::RUTA_IMAGEN_PERFIL] = ImageHelper::createImage($_FILES[Usuario::RUTA_IMAGEN_PERFIL], new ImageFolder($_POST[Usuario::CORREO], TypeImage::PROFILE_USER));
+        } else {
+            // Si no tiene imagen de perfil, aplicarle la de por defecto
+            $_POST[Usuario::RUTA_IMAGEN_PERFIL] = DefaultPath::DEFAULT_IMAGE_PROFILE;
         }
+        $usuarioFormulario = new Usuario($_POST);
         if (!$usuarioFormulario -> create()) {
             if (!Database::isConnected()) {
                 Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);
@@ -64,12 +68,6 @@ class UserController {
     }
 
     public static function login(): void {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            http_response_code(HttpStatusCode::METHOD_NOT_ALLOWED);
-            return;
-        }
-        http_response_code(HttpStatusCode::OK);
-
         $json = JsonHelper::getPostInJson();
         $usuarioDb = Usuario::findByEmail($json[Usuario::CORREO], [
             Usuario::ID,
@@ -91,7 +89,7 @@ class UserController {
             return;
         }
         // En caso de que el usuario sea correcto, ofrecer sesión
-        AuthHelper::startSession($usuarioDb -> id, RoleAccess::USER);
+        AuthHelper::startSession($usuarioDb -> id, RoleAccess::USER, $json['mantener-sesion']);
         Response::sendResponse(HttpStatusCode::OK);
     }
 }

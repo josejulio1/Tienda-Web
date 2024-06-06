@@ -1,5 +1,5 @@
 import {Field} from "../../components/form/models/Field.js";
-import {MARCA, PRODUCTO} from "../../../../api/models.js";
+import {PRODUCTO} from "../../../../api/models.js";
 import {DataTypeField} from "../../components/form/enums/DataTypeField.js";
 import {TypeField} from "../../components/form/enums/TypeField.js";
 import {Form} from "../../components/form/Form.js";
@@ -13,10 +13,10 @@ window.addEventListener('load', async () => {
     const modalCreateFields = [
         new Field('nombre-producto-crear', PRODUCTO.NOMBRE, DataTypeField.TEXT, TypeField.REQUIRED),
         new Field('precio-producto-crear', PRODUCTO.PRECIO, DataTypeField.NUMBER, TypeField.REQUIRED),
-        new Field('marca-producto-crear', PRODUCTO.MARCA_ID, DataTypeField.OTHER, TypeField.REQUIRED),
+        new Field('marca-producto-crear', PRODUCTO.MARCA_ID, DataTypeField.SELECT, TypeField.REQUIRED),
         new Field('stock-producto-crear', PRODUCTO.STOCK, DataTypeField.NUMBER, TypeField.REQUIRED),
         new Field('descripcion-producto-crear', PRODUCTO.DESCRIPCION, DataTypeField.TEXT, TypeField.REQUIRED),
-        new Field('categoria-producto-crear', PRODUCTO.CATEGORIA_ID, DataTypeField.OTHER, TypeField.REQUIRED),
+        new Field('categoria-producto-crear', PRODUCTO.CATEGORIA_ID, DataTypeField.SELECT, TypeField.REQUIRED),
         new Field('imagen-producto-crear', PRODUCTO.RUTA_IMAGEN, DataTypeField.IMAGE, TypeField.REQUIRED)
     ];
     const modalUpdateFields = [
@@ -36,13 +36,15 @@ window.addEventListener('load', async () => {
     }
     const modalCreate = new ModalCreate(modalCreateFields, (fields, data) => {
         const { entidades: entidad } = data;
+        const brandSelectedOption = $(`#marca-producto-crear option[value=${fields[2].field.val()}]`);
         return {
             [PRODUCTO.ID]: entidad[PRODUCTO.ID],
             [PRODUCTO.NOMBRE]: fields[0].field.val(),
             [PRODUCTO.PRECIO]: fields[1].field.val(),
-            [PRODUCTO.MARCA_ID]: fields[2].field.val(),
+            [PRODUCTO.MARCA_ID]: brandSelectedOption.text(),
             [PRODUCTO.STOCK]: fields[3].field.val(),
-            [PRODUCTO.RUTA_IMAGEN]: entidad[PRODUCTO.RUTA_IMAGEN]
+            [PRODUCTO.RUTA_IMAGEN]: entidad[PRODUCTO.RUTA_IMAGEN],
+            [PRODUCTO.CATEGORIA_ID]: fields[4].field.val()
         }
     });
     const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields) => {

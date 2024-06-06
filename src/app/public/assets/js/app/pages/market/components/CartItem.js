@@ -64,6 +64,7 @@ export class CartItem {
             const response = await ajax(END_POINTS.CARRITO.SET_QUANTITY, 'POST', Producto);
             if (response.status !== HTTP_STATUS_CODES.OK) {
                 InfoWindow.make(response.message);
+                target.value = this.ultimaCantidad;
                 return;
             }
             this.cart.actualizarCarrito();
@@ -86,7 +87,6 @@ export class CartItem {
         precioProductoP.appendChild(precioProductoEuroSpan);
         itemDescripcionContainer.appendChild(precioProductoP);
         unidadesProductoP.appendChild(unidadesProductoTextoSpan);
-        /*unidadesProductoP.appendChild(unidadesProductoSpan);*/
         unidadesProductoCantidadRestarButton.appendChild(unidadesProductoCantidadRestarButtonImg);
         unidadesProductoCantidadSumarButton.appendChild(unidadesProductoCantidadSumarButtonImg);
         unidadesProductoContenedorCantidad.appendChild(unidadesProductoCantidadRestarButton);
@@ -102,8 +102,7 @@ export class CartItem {
         const { target } = e;
         // Coger input de la cantidad
         const $input = target.closest('.cantidad__contenedor').children[1];
-        const cantidad = parseInt($input.value);
-        if (!isIncrementar && cantidad <= 1) {
+        if (!isIncrementar && this.ultimaCantidad <= 1) {
             return;
         }
 
@@ -118,7 +117,7 @@ export class CartItem {
             InfoWindow.make(response.message);
             return;
         }
-        $input.value = isIncrementar ? cantidad + 1 : cantidad - 1;
+        $input.value = isIncrementar ? ++this.ultimaCantidad : --this.ultimaCantidad;
         this.cart.actualizarCarrito();
     }
 

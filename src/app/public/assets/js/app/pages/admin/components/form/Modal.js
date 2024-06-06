@@ -7,6 +7,7 @@ import {END_POINTS} from "../../../../api/end-points.js";
 import {ModalType} from "./enums/ModalType.js";
 import {ajax} from "../../../../api/ajax.js";
 import {Validators} from "../../../../controllers/services/Validators.js";
+import {PermissionCheckboxes} from "../../sections/role/models/PermissionCheckboxes.js";
 
 export class Modal {
     constructor(fields, actionButtonId, modalType, afterAjaxSuccessCallback) {
@@ -33,19 +34,27 @@ export class Modal {
             if (this.validate()) {
                 return;
             }
-            const Entity = {};
+            // Adjuntar campos a JSON para mandarlos al backend
+            const formData = new FormData();
             for (const field of fields) {
                 // Si se ha adjuntado una imagen, no usar la imagen por defecto
-                if (field.dataTypeField === DataTypeField.IMAGE && field.typeField === TypeField.OPTIONAL && field.field.prop('files')[0]) {
-                    Entity[field.nameField] = field.field.prop('files')[0];
+                if (field.dataTypeField === DataTypeField.IMAGE && field.field.prop('files').length) {
+                    formData.append(field.nameField, field.field.prop('files')[0]);
+                    continue;
                 }
-                Entity[field.nameField] = field.field.val();
+                // En caso que sean CheckBoxes del formulario de Roles, adjuntar de otra forma
+                if (field instanceof PermissionCheckboxes) {
+                    formData.append(field.nameField, `${field.getPermissions()}`);
+                    continue;
+                }
+                formData.append(field.nameField, field.field.val());
             }
             const { modalType } = this;
             const response = await ajax(
                 END_POINTS[this.form.enumClass.TABLE_NAME.toUpperCase()][modalType],
-                modalType === ModalType.CREATE ? 'POST' : 'PUT',
-                Entity
+                'POST',
+                formData,
+                false
             );
             $modalInfo.modal('show');
             if (response.status !== HTTP_STATUS_CODES.OK) {
@@ -56,7 +65,7 @@ export class Modal {
             const { form } = this;
             if (modalType === ModalType.CREATE) {
                 // En caso de crear, añadir la fila al frontend
-                const data = afterAjaxSuccessCallback(fields, response.data);
+                const data = afterAjaxSuccessCallback(this.fields, response.data);
                 form.dataTable.row.add(
                     new form.rowPrototype.constructor(data, form.hasDeletePermissions).getRow()
                 ).draw();
@@ -75,14 +84,18 @@ export class Modal {
 
     validate() {
         let errors;
-        const fields = this.fields;
+        let { fields } = this;
         for (const field of fields) {
-            if (Validators.validateField(field) || (field.dataTypeField === DataTypeField.IMAGE && !this.validateImage(field))) {
-                // En caso de ser inválido una imagen, validar de otra forma
-                if (field.dataTypeField === DataTypeField.IMAGE) {
-                    $(`label[for=${field.fieldId}]`).addClass('is-invalid');
-                } else {
-                    field.field.addClass('is-invalid');
+            if (field instanceof PermissionCheckboxes && !field.validatePermissions()) {
+                field.showError(field.nameField)
+                return true;
+            }
+            // En caso de ser inválido una imagen, validar de otra forma
+            if (!(field instanceof PermissionCheckboxes) && Validators.validateField(field) || (field.dataTypeField === DataTypeField.IMAGE && !this.validateImage(field))) {
+                // Si el campo no es un CheckBox de permiso de rol, añadir error en el HTML del campo. Esto es debido a que los errores
+                // de estos se realizan mediante el componente InfoWindow de manera interna
+                field.field.addClass('is-invalid');
+                if (!field instanceof PermissionCheckboxes) {
                 }
                 errors = true;
             }
@@ -95,7 +108,7 @@ export class Modal {
             return true;
         }
         // Si es obligatorio y no contiene imagen, no es válido
-        return field.field.prop('files')[0];
+        return field.field.prop('files').length;
     }
 
     clearFields() {
@@ -104,6 +117,10 @@ export class Modal {
             // En caso de que el campo sea de tipo imagen, que utiliza el componente PreviewImage, crear de nuevo
             if (field.dataTypeField === DataTypeField.IMAGE) {
                 new PreviewImage('.img-container', field.fieldId);
+            } else if (field.dataTypeField === DataTypeField.SELECT) {
+                $(`#${field.fieldId} option:first`).attr('selected', '');
+            } else if (field instanceof PermissionCheckboxes) {
+                field.clearCheckboxes();
             } else {
                 field.field.val('');
             }

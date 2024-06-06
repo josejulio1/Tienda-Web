@@ -135,4 +135,5 @@
   </main>
   <?php
   require_once __DIR__ . '/../templates/modal-choice-info.php';
+  require_once __DIR__ . '/../templates/chat.php';
   ?>

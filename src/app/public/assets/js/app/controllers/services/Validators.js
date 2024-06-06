@@ -1,5 +1,6 @@
 import {DataTypeField} from "../../pages/admin/components/form/enums/DataTypeField.js";
 import {TypeField} from "../../pages/admin/components/form/enums/TypeField.js";
+import {PermissionCheckboxes} from "../../pages/admin/sections/role/models/PermissionCheckboxes.js";
 
 export class Validators {
     static fieldToMethod = {
@@ -10,14 +11,20 @@ export class Validators {
         [DataTypeField.PHONE]: [Validators.isPhone, Validators.isNotXss],
         [DataTypeField.NUMBER]: [Validators.isNotXss],
         [DataTypeField.IMAGE]: [Validators.isNotXss],
-        [DataTypeField.OTHER]: [Validators.isNotXss]
+        [DataTypeField.SELECT]: [Validators.isNotXss]
     };
 
     static validateField(field) {
         const validators = Validators.fieldToMethod[field.dataTypeField];
+        // En caso que sean CheckBoxes del formulario de Roles, validar de su forma
+
         // Si el campo es obligatorio, asegurarse de que no esté vacío
         if (field.typeField === TypeField.REQUIRED) {
             validators.push(Validators.isNotEmpty);
+        }
+        // Si es opcional y está vacío, no hacer nada
+        if (field.typeField === TypeField.OPTIONAL && !field.field.val()) {
+            return false;
         }
         let error = false;
         for (const validator of validators) {
@@ -42,6 +49,6 @@ export class Validators {
     }
 
     static isPhone(phone) {
-        return new RegExp(/^\+[1-9][0-9]{0,2} [1-9][0-9]{8,15}$/);
+        return new RegExp(/^\+[1-9][0-9]{0,2} [1-9][0-9]{8,15}$/).test(phone);
     }
 }

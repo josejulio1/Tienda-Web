@@ -1,5 +1,7 @@
+import {V_COMENTARIO_CLIENTE_PRODUCTO} from "../../../api/models.js";
+
 export class CommentItem {
-    constructor(rutaImagenPerfil, nombreCliente, apellidosCliente, numValoracion, comentario) {
+    constructor(data) {
         this.commentItem = document.createElement('div');
         const comentarioItemEsencial = document.createElement('div');
         const imagenPerfil = document.createElement('img');
@@ -10,15 +12,16 @@ export class CommentItem {
 
         this.commentItem.classList.add('comentario__item');
         comentarioItemEsencial.classList.add('comentario__item--esencial');
-        imagenPerfil.src = rutaImagenPerfil;
+        imagenPerfil.src = data[V_COMENTARIO_CLIENTE_PRODUCTO.RUTA_IMAGEN_PERFIL];
         imagenPerfil.alt = 'Foto de perfil cliente';
-        nombreApellidosClienteH3.textContent = `${nombreCliente} ${apellidosCliente}`;
+        nombreApellidosClienteH3.textContent = `${data[V_COMENTARIO_CLIENTE_PRODUCTO.NOMBRE_CLIENTE]} ${data[V_COMENTARIO_CLIENTE_PRODUCTO.APELLIDOS_CLIENTE]}`;
         contenedorEstrellas.classList.add('comentario__item--estrellas');
         comentarioP.classList.add('comentario__item--comentario');
-        comentarioP.textContent = comentario;
+        comentarioP.textContent = data[V_COMENTARIO_CLIENTE_PRODUCTO.COMENTARIO];
 
         comentarioItemEsencial.appendChild(imagenPerfil);
         comentarioItemEsencial.appendChild(nombreApellidosClienteH3);
+        let numValoracion = data[V_COMENTARIO_CLIENTE_PRODUCTO.NUM_ESTRELLAS];
         for (let i = 0; i < 5; i++) {
             imagenEstrella = document.createElement('img');
             imagenEstrella.alt = 'Estrella';

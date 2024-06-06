@@ -30,7 +30,8 @@ new LoadingButton('.btn-info', 'Iniciar Sesión', async ($buttonP, $buttonLoadin
 
     const Usuario = {
         [USUARIO.CORREO]: correo,
-        [USUARIO.CONTRASENIA]: contrasenia
+        [USUARIO.CONTRASENIA]: contrasenia,
+        'mantener-sesion': $mantenerSesion.prop('checked')
     }
 
     $buttonP.addClass('hide');
@@ -42,5 +43,5 @@ new LoadingButton('.btn-info', 'Iniciar Sesión', async ($buttonP, $buttonLoadin
         InfoWindow.make(response.message, false);
         return;
     }
-    window.location.href = '/admin';
+    window.location.href = '/admin/user';
 });

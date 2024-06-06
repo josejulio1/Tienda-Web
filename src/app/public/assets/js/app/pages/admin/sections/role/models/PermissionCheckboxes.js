@@ -1,10 +1,18 @@
+import {ROL} from "../../../../../api/models.js";
+import {InfoWindow} from "../../../../../components/InfoWindow.js";
+
 export class PermissionCheckboxes {
-    constructor(checkBoxes) {
-        this.checkBoxes = checkBoxes;
-        const mapPermissionToCheckbox = {};
-        for (const checkBox of checkBoxes) {
-            mapPermissionToCheckbox[checkBox.permission] = checkBox.field;
-        }
+    constructor(nameField, verPermiso, crearPermiso, actualizarPermiso, eliminarPermiso) {
+        this.nameField = nameField;
+        this.checkBoxes = [verPermiso, crearPermiso, actualizarPermiso, eliminarPermiso];
+        this.mapPermissionToError = {
+            [ROL.PERMISO_USUARIO]: 'Usuario',
+            [ROL.PERMISO_PRODUCTO]: 'Producto',
+            [ROL.PERMISO_MARCA]: 'Marca',
+            [ROL.PERMISO_CATEGORIA]: 'Categoría',
+            [ROL.PERMISO_CLIENTE]: 'Cliente',
+            [ROL.PERMISO_ROL]: 'Rol'
+        };
     }
 
     getPermissions() {
@@ -26,14 +34,16 @@ export class PermissionCheckboxes {
     }
 
     /**
-     * Valida que los permisos sean correctos.
+     * Valida que los permisos sean correctos. Los permisos serán correctos en caso de que
+     * se tenga marcado el campo "ver" siempre que haya alguna otra opción seleccionada como "crear",
+     * ya que no será posible tener desmarcado el campo "ver" y marcado el campo "crear"
      * @param $checkBoxCrear
      * @param $checkBoxActualizar
      * @param $checkBoxEliminar
      * @returns {boolean}
      */
-    validatePermissions($checkBoxCrear, $checkBoxActualizar, $checkBoxEliminar) {
-        let strActualizar;
+    validatePermissions() {
+        /*let strActualizar;
         const checkBoxCrearId = $checkBoxCrear.attr('id');
         if (checkBoxCrearId.includes('-actualizar')) {
             strActualizar = '-actualizar';
@@ -43,46 +53,42 @@ export class PermissionCheckboxes {
             $checkBoxVer = $(`#ver-permiso-${checkBoxCrearId.split('-')[2]}${strActualizar}`);
         } else {
             $checkBoxVer = $(`#ver-permiso-${checkBoxCrearId.split('-')[2]}`);
+        }*/
+        const { checkBoxes } = this;
+        // Validar que todos los CheckBoxes estén vacíos
+        let empty = true;
+        for (const checkBox of checkBoxes) {
+            if (checkBox.field.prop('checked')) {
+                empty = false;
+            }
         }
-        if ($checkBoxVer.prop('checked')) {
+        if (empty) {
             return true;
         }
+        if (checkBoxes[0].field.prop('checked')) {
+            return true;
+        }
+        return !!((checkBoxes[1].field.prop('checked') || checkBoxes[2].field.prop('checked') || checkBoxes[3].field.prop('checked')) && checkBoxes[0].field.prop('checked'));
+    }
 
-        if (($checkBoxCrear.prop('checked') || $checkBoxActualizar.prop('checked') || $checkBoxEliminar.prop('checked')) && $checkBoxVer.prop('checked')) {
-            return true;
-        }
-        return false;
+    showError(nameField) {
+        InfoWindow.make(`Debe tener el permiso Ver en ${this.mapPermissionToError[nameField]} marcado`)
     }
 
     /**
      * Convierte el permiso numérico a los CheckBoxes, marcando estos según si tengan el permiso o no
-     * @param {number} permissionNumber Número de permiso
+     * @param {number} permissionNumberVer Número de permiso
      * @param {HTMLInputElement} $checkBoxVer CheckBox Ver
      * @param {HTMLInputElement} $checkBoxCrear CheckBox Crear
      * @param {HTMLInputElement} $checkBoxActualizar CheckBox Actualizar
-     * @param {HTMLInputElement} $checkBoxEliminar CheckBoxx Eliminar
+     * @param {HTMLInputElement} $checkBoxEliminar CheckBox Eliminar
      */
-    permissionNumberToCheckBox(permissionNumber) {
-        const { checkBoxes } = this;
-        for (const checkBox of checkBoxes) {
-            if (permissionNumber & checkBox.permission) {
-                checkBox.field.prop('checked', true);
+    permissionNumberToCheckBoxes(permissionsNumber) {
+        const { checkBoxes, checkBoxes: { length: numCheckBoxes } } = this;
+        for (let i = 0; i < numCheckBoxes; i++) {
+            if (permissionsNumber & checkBoxes[i].permission) {
+                checkBoxes[i].field.prop('checked', true);
             }
         }
-    }
-
-    /**
-     * Marca el CheckBox "Ver Permiso" en caso de que se marque "Crear, Actualizar o Eliminar"
-     * @param {Event} e CheckBox que accionó el evento
-     * @returns En caso de que se haya desmarcado el CheckBox, no hará nada
-     */
-    checkVer(e) {
-        const { target, target: { id } } = e;
-        // Si se desmarca, no hacer nada
-        if (!target.checked) {
-            return;
-        }
-        // Si es del modal de actualizar, cambiar el ID para coger la referencia del modal de actualizar
-        $(`#ver-permiso-${id.split('-')[2]}${id.includes('-actualizar') ? '-actualizar' : ''}`).prop('checked', true);
     }
 }

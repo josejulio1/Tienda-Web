@@ -1,7 +1,7 @@
 <?php
 namespace Model;
 
-class Rol extends AbstractActiveRecordAuth {
+class Rol extends AbstractActiveRecordCrud {
     protected static string $tableName = 'Rol';
     protected static string $primaryKeyColumn = self::ID;
 
@@ -19,27 +19,37 @@ class Rol extends AbstractActiveRecordAuth {
     public int $id;
     public string $nombre;
     public string $color;
-    public int $permisoCategoria;
-    public int $permisoProducto;
-    public int $permisoMarca;
-    public int $permisoCliente;
-    public int $permisoUsuario;
-    public int $permisoRol;
+    public int $permiso_categoria;
+    public int $permiso_producto;
+    public int $permiso_marca;
+    public int $permiso_cliente;
+    public int $permiso_usuario;
+    public int $permiso_rol;
 
     public function __construct(array $data = []) {
         parent::__construct($data);
         $this -> id = $data[Rol::ID] ?? 0;
         $this -> nombre = $data[Rol::NOMBRE] ?? '';
         $this -> color = $data[Rol::COLOR] ?? '';
-        $this -> permisoCategoria = $data[Rol::PERMISO_CATEGORIA] ?? 0;
-        $this -> permisoProducto = $data[Rol::PERMISO_PRODUCTO] ?? 0;
-        $this -> permisoMarca = $data[Rol::PERMISO_MARCA] ?? 0;
-        $this -> permisoCliente = $data[Rol::PERMISO_CLIENTE] ?? 0;
-        $this -> permisoUsuario = $data[Rol::PERMISO_USUARIO] ?? 0;
-        $this -> permisoRol = $data[Rol::PERMISO_ROL] ?? 0;
+        $this -> permiso_categoria = $data[Rol::PERMISO_CATEGORIA] ?? 0;
+        $this -> permiso_producto = $data[Rol::PERMISO_PRODUCTO] ?? 0;
+        $this -> permiso_marca = $data[Rol::PERMISO_MARCA] ?? 0;
+        $this -> permiso_cliente = $data[Rol::PERMISO_CLIENTE] ?? 0;
+        $this -> permiso_usuario = $data[Rol::PERMISO_USUARIO] ?? 0;
+        $this -> permiso_rol = $data[Rol::PERMISO_ROL] ?? 0;
     }
 
     public function getColumns(): array {
-        return [];
+        return [
+            self::ID => $this -> id,
+            self::NOMBRE => $this -> nombre,
+            self::COLOR => $this -> color,
+            self::PERMISO_CATEGORIA => $this -> permiso_categoria,
+            self::PERMISO_PRODUCTO => $this -> permiso_producto,
+            self::PERMISO_MARCA => $this -> permiso_marca,
+            self::PERMISO_CLIENTE => $this -> permiso_cliente,
+            self::PERMISO_USUARIO => $this -> permiso_usuario,
+            self::PERMISO_ROL => $this -> permiso_rol
+        ];
     }
 }

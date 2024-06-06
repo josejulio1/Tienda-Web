@@ -39,7 +39,7 @@ export class SearchItem {
         descripcionContenedor.appendChild(contenedorEstrellas);
         this.searchItem.appendChild(descripcionContenedor);
         this.searchItem.addEventListener('click', e => {
-            window.location.href = `/views/producto.php?id=${e.target.getAttribute('item-id')}`;
+            window.location.href = `/product?id=${e.target.getAttribute('item-id')}`;
         })
     }
 

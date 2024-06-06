@@ -400,7 +400,7 @@ require_once __DIR__ . '/../templates/panel.php';
         </div>
       <?php
       if ($userInfo -> permiso_rol & PERMISSIONS::CREATE) {
-          echo '<button data-bs-toggle="modal" data-bs-target="#modal-role-crear" class="btn-crear">Crear</button>';
+          echo '<button data-bs-toggle="modal" data-bs-target="#modal-rol-crear" class="btn-crear">Crear</button>';
       }
       ?>
   </main>

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "create_db": "cd db && mysql -uroot < schema.sql && mysql -uroot < data.sql",
-    "host": "cd src/app/public && php -S localhost:80"
+    "host": "cd src/app/public && php -S localhost:80",
+    "chat": "cd src/app && php chat.php"
   },
   "repository": {
     "type": "git",

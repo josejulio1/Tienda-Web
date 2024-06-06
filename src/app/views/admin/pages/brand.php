@@ -73,7 +73,6 @@
     </div>
   <?php
   if ($userInfo -> permiso_marca & Permissions::CREATE) {
-      echo $userInfo -> permiso_marca & Permissions::CREATE;
       echo '<button data-bs-toggle="modal" data-bs-target="#modal-marca-crear" class="btn-crear">Crear</button>';
   }
   ?>

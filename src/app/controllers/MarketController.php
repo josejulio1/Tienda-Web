@@ -15,15 +15,9 @@ use Util\SQL\TypeOrder;
 
 class MarketController {
     public static function index(Router $router) {
-        if (AuthHelper::isAuthenticated(RoleAccess::USER)) {
-            header('Location: /admin/user');
-        }
-
-        $js = self::getJsImports() . '<script src="/assets/js/app/pages/market/market.js" defer></script>';
-
         $router -> render('index', [
             'css' => self::getCssImports(),
-            'js' => $js,
+            'js' => self::getJsImports(),
             ...self::loadNav(),
             'productos' => VProductoValoracionPromedio::all([
                 VProductoValoracionPromedio::ID,
@@ -54,10 +48,6 @@ class MarketController {
     }
 
     public static function login(Router $router) {
-        if (AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-            header('Location: /');
-        }
-
         $router -> render('market/pages/login', [
             'css' => '<link rel="stylesheet" href="/assets/css/market/auth.css">',
             'js' => '<script src="/assets/js/app/pages/market/auth/auth.js" defer type="module"></script>'
@@ -74,10 +64,14 @@ class MarketController {
             header('Location: /');
         }
 
+        $isAuthenticated = AuthHelper::isAuthenticated(RoleAccess::CUSTOMER);
         $router -> render('market/pages/product', [
             'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/product.css">',
             'js' => self::getJsImports() . '<script src="/assets/js/app/pages/market/product.js" type="module" defer></script>',
-            'cliente' => AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)
+            'puedeComentar' => $isAuthenticated
+                ? VComentarioClienteProducto::customerHasCommentedInProduct($productId)
+                : null,
+            'cliente' => $isAuthenticated
                 ? Cliente::findOne($_SESSION['id'], [Cliente::NOMBRE, Cliente::APELLIDOS, Cliente::RUTA_IMAGEN_PERFIL])
                 : null,
             'producto' => VProductoValoracionPromedio::findOne($productId, [
@@ -100,17 +94,9 @@ class MarketController {
     }
 
     public static function profile(Router $router) {
-        if (!AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-            header('Location: /');
-        }
-
-        $css = self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/profile.css">';
-
-        $js = self::getJsImports() . '<script src="/assets/js/app/pages/market/profile.js" type="module" defer></script>';
-
         $router -> render('market/pages/profile', [
-            'css' => $css,
-            'js' => $js,
+            'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/profile.css">',
+            'js' => self::getJsImports() . '<script src="/assets/js/app/pages/market/profile.js" type="module" defer></script>',
             'cliente' => Cliente::findOne($_SESSION['id'], [
                 Cliente::NOMBRE,
                 Cliente::APELLIDOS,
@@ -123,14 +109,8 @@ class MarketController {
     }
 
     public static function orders(Router $router) {
-        if (!AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-            header('Location: /');
-        }
-
-        $css = self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/orders.css">';
-
         $router -> render('market/pages/orders', [
-            'css' => $css,
+            'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/orders.css">',
             'js' => self::getJsImports(),
             'pedidosCliente' => VPedidoProductoItemDetallado::find($_SESSION['id'], [
                 VPedidoProductoItemDetallado::PEDIDO_ID,
@@ -146,21 +126,15 @@ class MarketController {
     }
 
     public static function checkout(Router $router) {
-        if (!AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-            header('Location: /');
-        }
         $hasCartItems = count(CarritoItem::find($_SESSION['id'], [CarritoItem::PRODUCTO_ID])) > 0;
         // Si no tiene productos en el carrito, volver a la página principal
         if (!$hasCartItems) {
             header('Location: /');
         }
 
-        $css = self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/checkout.css">';
-        $js = self::getJsImports() . '<script src="/assets/js/market/checkout.js" defer type="module"></script>';
-
         $router -> render('market/pages/checkout', [
-            'css' => $css,
-            'js' => $js,
+            'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/checkout.css">',
+            'js' => self::getJsImports() . '<script src="/assets/js/market/checkout.js" defer type="module"></script>',
             'cartItems' => VCarritoCliente::find($_SESSION['id'], [
                 VCarritoCliente::NOMBRE_PRODUCTO,
                 VCarritoCliente::PRECIO_PRODUCTO,
@@ -172,13 +146,19 @@ class MarketController {
     }
 
     public static function getCssImports(): string {
-        return '<link rel="stylesheet" href="/assets/css/market/market.css">';
+        return '<link rel="stylesheet" href="/assets/css/market/market.css">' . (AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)
+            ? '<link rel="stylesheet" href="/assets/css/market/chat.css">' : '');
     }
 
     public static function getJsImports(): string {
-        return '<script src="/assets/js/app/pages/market/search-bar.js" type="module" defer></script>
-        <script src="/assets/js/app/pages/market/cart.js" type="module" defer></script>
-        <script src="/assets/js/app/pages/close-session.js" type="module" defer></script>';
+        $js = '<script src="/assets/js/app/pages/market/search-bar.js" type="module" defer></script>
+        <script src="/assets/js/app/pages/market/cart.js" type="module" defer></script>';
+        if (AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
+            $js .= '<script src="/assets/js/app/pages/close-session.js" type="module" defer></script>
+                    <script src="/assets/js/app/pages/market/chat/open-close.js" type="module" defer></script>
+                    <script src="/assets/js/app/pages/market/chat/chat.js" type="module" defer></script>';
+        }
+        return $js;
     }
 
     private static function loadNav(): array {

@@ -13,21 +13,21 @@ window.addEventListener('load', async () => {
         new Field('nombre-usuario-crear', USUARIO.USUARIO, DataTypeField.TEXT, TypeField.REQUIRED),
         new Field('correo-usuario-crear', USUARIO.CORREO, DataTypeField.EMAIL, TypeField.REQUIRED),
         new Field('contrasenia-usuario-crear', USUARIO.CONTRASENIA, DataTypeField.PASSWORD, TypeField.REQUIRED),
-        new Field('role-usuario-crear', USUARIO.ROL_ID, DataTypeField.OTHER, TypeField.REQUIRED),
+        new Field('rol-usuario-crear', USUARIO.ROL_ID, DataTypeField.SELECT, TypeField.REQUIRED),
         new Field('imagen-usuario-crear', USUARIO.RUTA_IMAGEN_PERFIL, DataTypeField.IMAGE, TypeField.OPTIONAL)
     ];
     const modalUpdateFields = [
         new Field('id-usuario-actualizar', USUARIO.ID, DataTypeField.ID, TypeField.REQUIRED),
         new Field('nombre-usuario-actualizar', USUARIO.USUARIO, DataTypeField.TEXT, TypeField.REQUIRED),
         new Field('correo-usuario-actualizar', USUARIO.CORREO, DataTypeField.EMAIL, TypeField.REQUIRED),
-        new Field('role-usuario-actualizar', USUARIO.ROL_ID, DataTypeField.OTHER, TypeField.REQUIRED)
+        new Field('rol-usuario-actualizar', USUARIO.ROL_ID, DataTypeField.SELECT, TypeField.REQUIRED)
     ];
     const openUpdateUserCb = (fields, tableColumns) => {
         fields[0].field.val(tableColumns[0].textContent);
         fields[1].field.val(tableColumns[1].textContent);
         fields[2].field.val(tableColumns[2].textContent);
         const $campoRol = tableColumns[3].textContent;
-        $('#role-usuario-actualizar option').each(function() {
+        $('#rol-usuario-actualizar option').each(function() {
             if ($(this).text() === $campoRol) {
                 $(this).attr('selected', '');
                 return false;
@@ -36,7 +36,7 @@ window.addEventListener('load', async () => {
     }
     const modalCreate = new ModalCreate(
         modalCreateFields,
-        (dataTable, fields, data) => {
+        (fields, data) => {
         const roleSelectedOption = $(`#rol-usuario-crear option[value=${fields[3].field.val()}]`);
 
         const { entidades: entidad } = data;
@@ -52,7 +52,7 @@ window.addEventListener('load', async () => {
     const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields) => {
         const id = dataTable.row($('tr[selected]')).index();
         dataTable.cell({row: id, column: 1}).data(fields[1].field.val()).draw();
-        const $selectedOption = $('#role-usuario-actualizar option:selected');
+        const $selectedOption = $('#rol-usuario-actualizar option:selected');
         dataTable.cell({row: id, column: 3}).data($selectedOption.text());
         const spanColor = document.createElement('span');
         spanColor.style.backgroundColor = `#${$selectedOption.attr('color')}`;

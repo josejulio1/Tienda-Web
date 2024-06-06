@@ -23,19 +23,14 @@ window.addEventListener('load', () => {
 
 function aniadirCarrito() {
     $aniadirCarrito.on('click', async () => {
-        // Comprobar si tiene iniciada sesión para añadir al carrito
-        let response = await ajax(END_POINTS.HAS_CUSTOMER_SESSION, 'GET');
-        if (response.status !== HTTP_STATUS_CODES.OK) {
-            InfoWindow.make(response.message);
-            return;
-        }
-        const { data: { hasSession } } = response;
-        if (!hasSession) {
+        if (!(await cart.tieneSesion())) {
+            InfoWindow.make('Debes tener iniciada sesión para introducir artículos en el carrito');
             return;
         }
 
         const productoId = new URLSearchParams(window.location.search).get('id');
         const $carritoItem = $(`.carrito__item[item-id=${productoId}]`);
+        let response;
         // Si existe el producto, añadir en cantidad +1
         if ($carritoItem.length) {
             const Cantidad = {

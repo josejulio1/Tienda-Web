@@ -124,7 +124,7 @@ ADD CONSTRAINT fk_pedidoProductoItem_pedidoId FOREIGN KEY (pedido_id) REFERENCES
 
 ALTER TABLE Comentario
 ADD CONSTRAINT fk_comentario_clienteId FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
-ADD CONSTRAINT fk_comentario_productoId FOREIGN KEY (producto_id) REFERENCES Producto(id)
+ADD CONSTRAINT fk_comentario_productoId FOREIGN KEY (producto_id) REFERENCES Producto(id) ON DELETE CASCADE
 ;
 
 ALTER TABLE Chat
@@ -142,7 +142,8 @@ ADD CONSTRAINT fk_usuario_rolId FOREIGN KEY (rol_id) REFERENCES Rol(id) ON DELET
 
 -- Vistas
 CREATE VIEW v_usuario_rol AS
-SELECT u.id AS "usuario_id", u.usuario, u.correo, u.contrasenia, r.id AS "rol_id", r.nombre AS "nombre_rol", r.color AS "color_rol", u.ruta_imagen_perfil, r.permiso_categoria, r.permiso_producto, r.permiso_marca, r.permiso_cliente, r.permiso_usuario, r.permiso_rol FROM Usuario u JOIN Rol r ON u.rol_id = r.id
+SELECT u.id AS "usuario_id", u.usuario, u.correo, u.contrasenia, r.id AS "rol_id", r.nombre AS "nombre_rol", r.color AS "color_rol", u.ruta_imagen_perfil, r.permiso_categoria, r.permiso_producto, r.permiso_marca, r.permiso_cliente, r.permiso_usuario, r.permiso_rol
+FROM Usuario u JOIN Rol r ON u.rol_id = r.id
 ;
 
 CREATE VIEW v_producto_categoria AS
@@ -161,17 +162,18 @@ FROM pedido_producto_item ppi JOIN pedido pe ON ppi.pedido_id = pe.id JOIN produ
 ;
 
 CREATE VIEW v_carrito_cliente AS
-SELECT c.cliente_id AS "cliente_id", p.id AS "producto_id", p.nombre AS "nombre_producto", p.precio AS "precio_producto", c.cantidad, p.ruta_imagen AS "ruta_imagen_producto" 
+SELECT c.cliente_id AS "cliente_id", p.id AS "producto_id", p.nombre AS "nombre_producto", p.precio AS "precio_producto", p.stock AS "stock_producto", c.cantidad, p.ruta_imagen AS "ruta_imagen_producto"
 FROM Carrito_Item c JOIN Producto p ON c.producto_id = p.id
 ;
 
 CREATE VIEW v_producto_valoracion_promedio AS
-SELECT vp.id, vp.nombre, vp.descripcion, vp.ruta_imagen, vp.precio, vp.marca, vp.valoracion_promedio
-FROM (SELECT p.id, p.nombre, p.descripcion, p.ruta_imagen, p.precio, m.marca, ROUND(AVG(c.num_estrellas), 0) AS "valoracion_promedio" FROM Producto p JOIN Comentario c ON p.id = c.producto_id JOIN Marca m ON p.marca_id = m.id UNION SELECT pr.id, pr.nombre, pr.descripcion, pr.ruta_imagen, pr.precio, m.marca, NULL FROM Producto pr JOIN Marca m ON pr.marca_id = m.id) vp GROUP BY vp.nombre
+SELECT p.id, p.nombre, p.descripcion, p.ruta_imagen, p.precio, m.marca, ROUND(AVG(c.num_estrellas)) AS "valoracion_promedio"
+FROM Producto p JOIN Marca m ON p.marca_id = m.id LEFT JOIN Comentario c ON p.id = c.producto_id GROUP BY p.id
 ;
 
 CREATE VIEW v_comentario_cliente_producto AS 
-SELECT c.producto_id, cl.nombre AS "nombre_cliente", cl.apellidos AS "apellidos_cliente", cl.ruta_imagen_perfil, c.comentario, c.num_estrellas FROM Comentario c JOIN Cliente cl ON c.cliente_id = cl.id JOIN Producto p ON c.producto_id = p.id
+SELECT c.producto_id, cl.id AS "cliente_id", cl.nombre AS "nombre_cliente", cl.apellidos AS "apellidos_cliente", cl.ruta_imagen_perfil, c.comentario, c.num_estrellas
+FROM Comentario c JOIN Cliente cl ON c.cliente_id = cl.id JOIN Producto p ON c.producto_id = p.id
 ;
 
 CREATE VIEW v_chat_cliente_imagen AS

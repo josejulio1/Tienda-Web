@@ -43,7 +43,7 @@ $guardarCambios.on('click', async () => {
     }
 
     let telefono = $telefono.val();
-    if (!telefono || !Validators.isPhone(telefono) || !Validators.isNotXss(telefono)) {
+    if (telefono && (!Validators.isPhone(telefono) || !Validators.isNotXss(telefono))) {
         $telefono.next().removeClass('hide');
         hayErrores = true;
     }
@@ -62,27 +62,36 @@ $guardarCambios.on('click', async () => {
     $telefono.next().addClass('hide');
     $contrasenia.next().addClass('hide');
 
-    const Profile = {}
-    if ($imagen.prop('files')) {
-        Profile[CLIENTE.RUTA_IMAGEN_PERFIL] = $imagen.prop('files')[0];
+    const profile = new FormData();
+    let imagenSubida = false;
+    if ($imagen.prop('files').length) {
+        profile.append(CLIENTE.RUTA_IMAGEN_PERFIL, $imagen.prop('files')[0]);
+        imagenSubida = true;
     }
     if (nombre) {
-        Profile[CLIENTE.NOMBRE] = nombre;
+        profile.append(CLIENTE.NOMBRE, nombre);
     }
     if (apellidos) {
-        Profile[CLIENTE.APELLIDOS] = apellidos;
+        profile.append(CLIENTE.APELLIDOS, apellidos);
     }
     if (telefono) {
-        Profile[CLIENTE.TELEFONO] = telefono;
+        profile.append(CLIENTE.TELEFONO, telefono);
+    }
+    if (contrasenia) {
+        profile.append(CLIENTE.CONTRASENIA, contrasenia);
     }
 
-    const response = await ajax(END_POINTS.MARKET.SAVE_PROFILE, 'POST', Profile);
+    const response = await ajax(END_POINTS.MARKET.SAVE_PROFILE, 'POST', profile, true);
     if (response.status !== HTTP_STATUS_CODES.OK) {
         InfoWindow.make('No se pudieron cambiar los datos. Inténtelo más tarde.');
         return;
     }
-    $imagenPerfilNav.attr('src', response.data[CLIENTE.RUTA_IMAGEN_PERFIL]);
-    $imagenPerfilImg.attr('src', response.data[CLIENTE.RUTA_IMAGEN_PERFIL]);
+    // Si se ha subido una imagen, cambiar frontend de la imagen
+    if (imagenSubida) {
+        const { data: { imagenNueva } } = response;
+        $imagenPerfilNav.attr('src', imagenNueva);
+        $imagenPerfilImg.attr('src', imagenNueva);
+    }
     $sinGuardarImg.addClass('hide');
     nombre = $nombre.val();
     if (nombre) {

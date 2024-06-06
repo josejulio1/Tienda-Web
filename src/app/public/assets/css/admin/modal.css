@@ -74,7 +74,8 @@
 }
 
 input[type=color] {
-    margin-top: 1.4rem;
+    width: 100%;
+    height: 50px;
 }
 
 .invalid-feedback {
@@ -87,7 +88,7 @@ input[type=color] {
     border-radius: 1rem;
 }
 
-/* Modal3 Info */
+/* Modal Info */
 #modal-info .modal-body {
     display: flex;
     flex-direction: column;
@@ -148,7 +149,7 @@ nav button {
     flex: 1 0 15%;
     color: var(--secundario);
     width: 100%;
-    border-radius: 0;
+    border-radius: 0 !important;
     border: 1px solid var(--secundario);
     transition: .4s background-color, .4s color;
 }
@@ -156,6 +157,7 @@ nav button {
 nav button:hover,
 .selected-button {
     color: var(--primario);
+    border-radius: 0 !important;
     background-color: var(--azul);
 }
 
@@ -189,4 +191,12 @@ nav button:hover,
     .permiso--header label {
         margin-bottom: .4rem;
     }
+}
+
+/* Ver Pedido */
+.estado-pago-select {
+    font-size: 1rem !important;
+    padding: 1rem .2rem !important;
+    text-align: center;
+    border: 2px solid var(--secundario);
 }

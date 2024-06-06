@@ -12,16 +12,13 @@ use Util\API\HttpStatusCode;
 use Util\API\HttpSuccessMessages;
 use Util\API\JsonHelper;
 use Util\API\Response;
-use Util\Permission\Permissions;
+use Util\Image\ImageFolder;
+use Util\Image\ImageHelper;
+use Util\Image\TypeImage;
 
 class ProductController {
     public static function getAll(): void {
-        if (!AdminHelper::validateAuth('GET')) {
-            return;
-        }
-        http_response_code(HttpStatusCode::OK);
-
-        $productos = VProductoCategoria::all([
+        AdminHelper::getAll(VProductoCategoria::class, [
             VProductoCategoria::PRODUCTO_ID,
             VProductoCategoria::NOMBRE,
             VProductoCategoria::PRECIO,
@@ -29,21 +26,7 @@ class ProductController {
             VProductoCategoria::STOCK,
             VProductoCategoria::RUTA_IMAGEN,
             VProductoCategoria::NOMBRE_CATEGORIA
-        ]);
-        if (!$productos) {
-            if (!Database::isConnected()) {
-                Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);
-            } else {
-                Response::sendResponse(HttpStatusCode::NOT_FOUND, HttpErrorMessages::NO_ROWS);
-            }
-            return;
-        }
-        $permisoUsuarioLogeado = VUsuarioRol::find($_SESSION['id'], [VUsuarioRol::PERMISO_PRODUCTO]);
-        Response::sendResponse(HttpStatusCode::OK, null, [
-            'entidades' => $productos,
-            'hasUpdatePermissions' => $permisoUsuarioLogeado -> permiso_producto & Permissions::UPDATE,
-            'hasDeletePermissions' => $permisoUsuarioLogeado -> permiso_producto & Permissions::DELETE
-        ]);
+        ], VUsuarioRol::PERMISO_PRODUCTO);
     }
 
     public static function getProductDescription() {
@@ -57,7 +40,7 @@ class ProductController {
             Response::sendResponse(HttpStatusCode::INCORRECT_DATA, HttpErrorMessages::UNKNOWN_ID);
             return;
         }
-        $producto = Producto::find($id, [Producto::DESCRIPCION]);
+        $producto = Producto::findOne($id, [Producto::DESCRIPCION]);
         if (!$producto) {
             if (!Database::isConnected()) {
                 Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);
@@ -97,7 +80,9 @@ class ProductController {
         }
         http_response_code(HttpStatusCode::OK);
 
-        $productoFormulario = new Producto(JsonHelper::getPostInJson());
+        $_POST[Producto::RUTA_IMAGEN] = ImageHelper::createImage($_FILES[Producto::RUTA_IMAGEN], new ImageFolder(Producto::NOMBRE, TypeImage::PRODUCT));
+
+        $productoFormulario = new Producto($_POST);
         if (!$productoFormulario -> create()) {
             if (!Database::isConnected()) {
                 Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);
@@ -107,7 +92,7 @@ class ProductController {
             return;
         }
         Response::sendResponse(HttpStatusCode::OK, HttpSuccessMessages::CREATED, [
-            'entidades' => Producto::last([Producto::ID])
+            'entidades' => Producto::last([Producto::ID, Producto::RUTA_IMAGEN])
         ]);
     }
 
@@ -117,11 +102,10 @@ class ProductController {
         }
         http_response_code(HttpStatusCode::OK);
 
-        $json = JsonHelper::getPostInJson();
-        $productoFormulario = Producto::find($json[Producto::ID]);
-        $productoFormulario -> nombre = $json[Producto::NOMBRE];
-        $productoFormulario -> precio = $json[Producto::PRECIO];
-        $productoFormulario -> descripcion = $json[Producto::DESCRIPCION];
+        $productoFormulario = Producto::findOne($_POST[Producto::ID]);
+        $productoFormulario -> nombre = $_POST[Producto::NOMBRE];
+        $productoFormulario -> precio = $_POST[Producto::PRECIO];
+        $productoFormulario -> descripcion = $_POST[Producto::DESCRIPCION];
         if (!$productoFormulario -> save()) {
             if (!Database::isConnected()) {
                 Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);

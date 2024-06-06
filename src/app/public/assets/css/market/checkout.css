@@ -57,6 +57,11 @@
     padding: .8rem;
 }
 
+.productos {
+    max-height: 55svh;
+    overflow-y: auto;
+}
+
 .producto {
     display: flex;
     gap: 2rem;

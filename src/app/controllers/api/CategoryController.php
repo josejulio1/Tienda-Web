@@ -3,7 +3,7 @@ namespace API;
 
 use Database\Database;
 use Model\Categoria;
-use Model\Marca;use Model\VUsuarioRol;
+use Model\VUsuarioRol;
 use Util\API\AdminHelper;
 use Util\API\HttpErrorMessages;
 use Util\API\HttpStatusCode;
@@ -22,7 +22,7 @@ class CategoryController {
         }
         http_response_code(HttpStatusCode::OK);
 
-        $marcaFormulario = new Categoria(JsonHelper::getPostInJson());
+        $marcaFormulario = new Categoria($_POST);
         if (!$marcaFormulario -> create()) {
             if (!Database::isConnected()) {
                 Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);

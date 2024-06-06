@@ -11,7 +11,9 @@
     "require": {
         "vlucas/phpdotenv": "^5.6",
         "ext-json": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "cboden/ratchet": "^0.4.4",
+        "textalk/websocket": "^1.5"
     },
     "autoload": {
         "psr-4": {
@@ -24,7 +26,8 @@
             "Util\\Auth\\": "app/utils/auth",
             "Util\\SQL\\": "app/utils/sql",
             "Util\\Permission\\": "app/utils/permissions",
-            "Util\\Constant\\": "app/utils/constants",
+            "Util\\Image\\": "app/utils/image",
+            "Util\\Chat\\": "app/utils/chat",
             "API\\": "app/controllers/api"
         }
     }

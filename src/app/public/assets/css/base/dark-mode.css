@@ -151,7 +151,7 @@
 
 .dark-mode .switcher {
     color: var(--primario);
-    border-bottom-color: var(--primario);
+    border-bottom-color: var(--primario) !important;
 }
 
 .dark-mode .switcher-item img {
@@ -226,8 +226,16 @@
 }
 
 .dark-mode .modal-column select,
-.dark-mode .modal-column textarea {
+.dark-mode textarea {
     background-color: var(--primario-dark) !important;
+}
+
+.dark-mode textarea {
+    color: var(--primario);
+}
+
+.dark-mode .btn-info:hover {
+    background-color: var(--seleccionable);
 }
 
 .dark-mode .img-container {
@@ -236,6 +244,11 @@
 
 .dark-mode .img-container img[alt=Plus] {
     filter: invert(0) !important;
+}
+
+.dark-mode .estado-pago-select {
+    background-color: var(--secundario);
+    border-color: var(--primario);
 }
 
 /* Editar perfil cliente */

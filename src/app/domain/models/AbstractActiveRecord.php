@@ -13,7 +13,7 @@ abstract class AbstractActiveRecord {
      */
     public function __construct(array $data = []) {}
 
-    public static function all(?array $columns = null, ?int $limit = null, ?array $order = null): ?array {
+    public static function all(?array $columns = null, ?int $limit = null, array $order = []): ?array {
         $db = Database::connect();
         if (!Database::isConnected()) {
             return null;

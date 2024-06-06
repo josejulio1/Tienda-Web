@@ -1,3 +1,6 @@
+<?php
+use Util\Auth\RoleAccess;
+?>
 <header>
     <?php
     require_once __DIR__ . '/market/templates/nav.php';
@@ -36,10 +39,10 @@
     </div>
 </main>
 <footer>
-    <p>Todos los derechos reservados</p>
+    <p>Todos los derechos reservados © <?php echo date('Y'); ?></p>
 </footer>
 <?php
-/*if ($_SESSION && $_SESSION['role'] == RolAccess::CUSTOMER) { */?><!--
+if ($_SESSION && $_SESSION['rol'] == RoleAccess::CUSTOMER) { ?>
     <aside class="chat-container">
         <section class="chat">
             <h2>Chat BYTEMARKET</h2>
@@ -61,6 +64,6 @@
             <img class="hide" src="/assets/img/web/svg/market/send.svg" alt="Chat" id="chat-cerrado">
         </section>
     </aside>
-    --><?php
-/*}
-*/?>
+    <?php
+}
+?>

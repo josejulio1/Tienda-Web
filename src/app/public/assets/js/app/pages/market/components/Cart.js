@@ -16,6 +16,10 @@ export class Cart {
     }
 
     async cargarCarrito() {
+        if (!(await this.tieneSesion())) {
+            return;
+        }
+
         const response = await ajax(END_POINTS.CARRITO.GET_ALL, 'GET');
         if (response.status !== HTTP_STATUS_CODES.OK) {
             InfoWindow.make(response.message);
@@ -55,5 +59,16 @@ export class Cart {
             preciosProductos.push(parseFloat($(this).find('.precio__producto').html()) * $(this).find('.cantidad').val());
         })
         this.$precioTotalSpan.html(Math.round((preciosProductos.reduce((a, b) => a + b, 0))  * 100) / 100);
+    }
+
+    async tieneSesion() {
+        return new Promise(async resolve => {
+            let response = await ajax(END_POINTS.HAS_CUSTOMER_SESSION, 'GET');
+            if (response.status !== HTTP_STATUS_CODES.OK) {
+                resolve(false);
+            }
+            const { data: { hasSession } } = response;
+            resolve(hasSession);
+        })
     }
 }

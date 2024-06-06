@@ -1,11 +1,14 @@
 import { Row } from "../Row.js";
+import {ROL} from "../../../../../api/models.js";
 
 export class RoleRow extends Row {
-    constructor(rolId, nombreRol, colorRol, puedeBorrar) {
+    constructor(data, puedeBorrar) {
         const colorRolSpan = document.createElement('span');
 
-        colorRolSpan.style.backgroundColor = `#${colorRol}`;
+        const color = data[ROL.COLOR];
+        colorRolSpan.style.backgroundColor = color.includes('#') ? color : `#${color}`;
 
-        super(puedeBorrar, 'eliminar-role', rolId, nombreRol, colorRolSpan.outerHTML);
+        data[ROL.COLOR] = colorRolSpan.outerHTML;
+        super(puedeBorrar, data);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Model;
 
+use PDO;
 use Exception;
 use Database\Database;
 
@@ -65,6 +66,23 @@ class CarritoItem extends AbstractActiveRecordCrud {
             return false;
         }
         return true;
+    }
+
+    public static function findQuantityByProductIdAndCustomer(int $productId, int $customerId, array $columns = []): ?CarritoItem {
+        $db = Database::connect();
+        if (!Database::isConnected()) {
+            return null;
+        }
+        $statement = $db -> getPdo() -> prepare(
+            'SELECT ' . ($columns ? join(',', $columns) : '*')
+            . ' FROM ' . self::$tableName . ' WHERE ' . self::PRODUCTO_ID . ' = ? AND ' . self::CLIENTE_ID . ' = ?');
+        try {
+            $statement -> execute([$productId, $customerId]);
+        } catch (Exception $e) {
+            return null;
+        }
+        $objects = self::mapResultToObject($statement -> fetchAll(PDO::FETCH_ASSOC));
+        return $objects ? $objects[0] : null;
     }
 
     public function getColumns(): array {

@@ -4,7 +4,7 @@ use Util\Permission\Permissions;
 <aside class="panel">
     <section class="panel--info">
         <section class="info-usuario">
-            <img src="<?php echo $userInfo -> ruta_imagen_perfil; ?>" alt="Imagen Perfil Usuario">
+            <img src="<?php echo $userInfo -> ruta_imagen_perfil; ?>" alt="Imagen Perfil Usuario" id="imagen-perfil-usuario">
             <p><?php echo $userInfo -> usuario; ?></p>
             <p>(<?php echo $userInfo -> nombre_rol; ?>)</p>
         </section>

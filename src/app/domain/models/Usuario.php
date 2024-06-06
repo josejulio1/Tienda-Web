@@ -1,7 +1,7 @@
 <?php
 namespace Model;
 
-class Usuario extends AbstractActiveRecordAuth {
+class Usuario extends AbstractActiveRecordAuth implements IContainsImage {
     protected static string $tableName = 'Usuario';
     protected static string $primaryKeyColumn = self::ID;
     protected static string $emailColumn = self::CORREO;
@@ -40,5 +40,9 @@ class Usuario extends AbstractActiveRecordAuth {
             self::ROL_ID => $this -> rol_id,
             self::RUTA_IMAGEN_PERFIL => $this -> ruta_imagen_perfil
         ];
+    }
+
+    function getImagePath(): string {
+        return $this -> ruta_imagen_perfil;
     }
 }

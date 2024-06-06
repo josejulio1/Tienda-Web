@@ -12,7 +12,7 @@ abstract class AbstractActiveRecordCrud extends AbstractActiveRecord {
         parent::__construct($data);
     }
 
-    public function create(bool $removePrimaryKeyColumn = false): bool {
+    public function create(bool $removePrimaryKeyColumn = true): bool {
         $db = Database::connect();
         if (!Database::isConnected()) {
             return false;
@@ -41,7 +41,9 @@ abstract class AbstractActiveRecordCrud extends AbstractActiveRecord {
             return false;
         }
         // Eliminar campos vacíos
-        $columns = array_filter($this -> getColumns());
+        $columns = array_filter($this -> getColumns(), function($column) {
+            return $column !== '';
+        });
         // Mover el ID al final para coincidirlo con el UPDATE (los ID están siempre al principio)
         $id = array_shift($columns);
         $reservedFields = '';
@@ -51,13 +53,12 @@ abstract class AbstractActiveRecordCrud extends AbstractActiveRecord {
         $columns[static::$primaryKeyColumn] = $id;
         $reservedFields = substr($reservedFields, 0, strlen($reservedFields) - 1);
         $statement = $db -> getPdo() -> prepare('UPDATE ' . static::$tableName . " SET $reservedFields WHERE " . static::$primaryKeyColumn . ' = ?');
-        $ok = true;
         try {
             $statement -> execute(array_values($columns));
         } catch (Exception $e) {
-            $ok = false;
+            return false;
         }
-        return $ok;
+        return true;
     }
 
     public function delete(): bool {

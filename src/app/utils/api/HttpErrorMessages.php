@@ -2,6 +2,9 @@
 namespace Util\API;
 
 class HttpErrorMessages {
+    public const EMPTY_DATA = 'Datos vacíos';
+    public const NO_STOCK = 'Has llegado al límite de stock';
+    public const NO_UPLOAD_IMAGE = 'No se pudo subir la imagen al servidor. Inténtelo más tarde';
     public const INCORRECT_DATA = 'Datos incorrectos';
     public const NO_DELETE_LOGGED_USER = 'No puedes eliminar el usuario con el que tienes iniciada sesión';
     public const EXISTS = 'Ya existe el registro';

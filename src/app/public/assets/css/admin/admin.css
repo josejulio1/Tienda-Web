@@ -152,6 +152,7 @@ body,
     text-align: center;
     padding: 1.5rem;
     text-transform: uppercase;
+    font-size: 1.2rem;
 }
 
 .opciones a:hover {
@@ -164,8 +165,8 @@ body,
 
 .info-usuario img {
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
 }
 
 .info-usuario p {
@@ -215,6 +216,7 @@ td span {
     width: 50%;
     height: 30px;
     border-radius: 1rem;
+    pointer-events: none;
 }
 
 .dataTables_filter {
@@ -260,7 +262,7 @@ table img {
     background-color: #e9c6b2;
     color: black;
     padding: .6rem;
-    border: 1px solid var(--secundario);
+    border: 1px solid var(--secundario) !important;
 }
 
 #modal-cliente-pedidos {

@@ -13,6 +13,7 @@ class VCarritoCliente extends AbstractActiveRecord {
     public const PRODUCTO_ID = 'producto_id';
     public const NOMBRE_PRODUCTO = 'nombre_producto';
     public const PRECIO_PRODUCTO = 'precio_producto';
+    public const STOCK_PRODUCTO = 'stock_producto';
     public const CANTIDAD = 'cantidad';
     public const RUTA_IMAGEN_PRODUCTO = 'ruta_imagen_producto';
 
@@ -20,6 +21,7 @@ class VCarritoCliente extends AbstractActiveRecord {
     public int $producto_id;
     public string $nombre_producto;
     public float $precio_producto;
+    public int $stock_producto;
     public int $cantidad;
     public string $ruta_imagen_producto;
 
@@ -29,6 +31,7 @@ class VCarritoCliente extends AbstractActiveRecord {
         $this -> producto_id = $data['producto_id'] ?? 0;
         $this -> nombre_producto = $data['nombre_producto'] ?? '';
         $this -> precio_producto = $data['precio_producto'] ?? 0.0;
+        $this -> stock_producto = $data['stock_producto'] ?? 0;
         $this -> cantidad = $data['cantidad'] ?? 0;
         $this -> ruta_imagen_producto = $data['ruta_imagen_producto'] ?? '';
     }
