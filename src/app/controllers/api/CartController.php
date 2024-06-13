@@ -3,16 +3,25 @@ namespace API;
 
 use Database\Database;
 use Model\CarritoItem;
+use Model\Cliente;
 use Model\Producto;
 use Model\VCarritoCliente;
 use Util\API\HttpErrorMessages;
 use Util\API\HttpStatusCode;
-use Util\API\JsonHelper;
 use Util\API\Response;
 use Util\Auth\AuthHelper;
 use Util\Auth\RoleAccess;
 
+/**
+ * Controlador de API que maneja el {@see CarritoItem carrito} del {@see Cliente}
+ * @author josejulio1
+ * @version 1.0
+ */
 class CartController {
+    /**
+     * Obtiene todos los {@see Producto productos} del carrito de un {@see Cliente}
+     * @return void
+     */
     public static function getAll() {
         Response::sendResponse(HttpStatusCode::OK, null, [
             'carritoItems' => AuthHelper::isAuthenticated(RoleAccess::CUSTOMER) ? VCarritoCliente::find($_SESSION['id'], [
@@ -26,12 +35,12 @@ class CartController {
         ]);
     }
 
+    /**
+     * Añade un {@see Producto} nuevo al {@see CarritoItem carrito} del {@see Cliente}
+     * @return void
+     */
     public static function add() {
-        if (!AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-            header('Location: /');
-        }
-
-        $productoId = JsonHelper::getPostInJson()[CarritoItem::PRODUCTO_ID];
+        $productoId = $_POST[CarritoItem::PRODUCTO_ID];
         $data[CarritoItem::PRODUCTO_ID] = $productoId;
         $data[CarritoItem::CLIENTE_ID] = $_SESSION['id'];
         $data[CarritoItem::CANTIDAD] = 1;
@@ -55,6 +64,10 @@ class CartController {
         ]);
     }
 
+    /**
+     * Elimina un {@see Producto} del {@see CarritoItem carrito} de un {@see Cliente}
+     * @return void
+     */
     public static function delete() {
         $productoId = $_GET[CarritoItem::PRODUCTO_ID];
         if (!filter_var($productoId, FILTER_VALIDATE_INT)) {
@@ -63,6 +76,7 @@ class CartController {
         }
 
         $data[CarritoItem::PRODUCTO_ID] = $productoId;
+        $data[CarritoItem::CLIENTE_ID] = $_SESSION['id'];
         $carritoItem = new CarritoItem($data);
         if (!$carritoItem -> deleteItem()) {
             if (!Database::isConnected()) {
@@ -75,8 +89,12 @@ class CartController {
         Response::sendResponse(HttpStatusCode::OK);
     }
 
+    /**
+     * Establece la cantidad de un {@see Producto} perteneciente al {@see CarritoItem carrito}
+     * @return void
+     */
     public static function setQuantity() {
-        $json = JsonHelper::getPostInJson();
+        $json = $_POST;
         $productoId = $json[VCarritoCliente::PRODUCTO_ID];
         if (!filter_var($productoId, FILTER_VALIDATE_INT)) {
             Response::sendResponse(HttpStatusCode::INCORRECT_DATA, HttpErrorMessages::UNKNOWN_ID);
@@ -99,24 +117,37 @@ class CartController {
         Response::sendResponse(HttpStatusCode::OK);
     }
 
+    /**
+     * Incrementa la cantidad en +1 de un {@see Producto} en un {@see CarritoItem carrito}
+     * @return void
+     */
     public static function incrementQuantity(): void {
         self::operationQuantity(true);
     }
 
+    /**
+     * Incrementa la cantidad en -1 de un {@see Producto} en un {@see CarritoItem carrito}
+     * @return void
+     */
     public static function decrementQuantity() {
         self::operationQuantity(false);
     }
 
-    private static function operationQuantity(bool $isIncrement) {
-        $productoId = JsonHelper::getPostInJson()[VCarritoCliente::PRODUCTO_ID];
+    /**
+     * Incrementa o decrementa en 1 la cantidad de un {@see Producto} en un {@see CarritoItem carrito}
+     * @param bool $isIncrement True si se desea incrementar la cantidad y false si se quiere decrementar
+     * @return void
+     */
+    private static function operationQuantity(bool $isIncrement): void {
+        $productoId = $_POST[VCarritoCliente::PRODUCTO_ID];
         if (!filter_var($productoId, FILTER_VALIDATE_INT)) {
             Response::sendResponse(HttpStatusCode::INCORRECT_DATA, HttpErrorMessages::UNKNOWN_ID);
             return;
         }
 
         $stock = Producto::findOne($productoId, [Producto::STOCK]) -> stock;
+        session_start();
         if ($isIncrement) {
-            session_start();
             if ($stock < CarritoItem::findQuantityByProductIdAndCustomer($productoId, $_SESSION['id'], [CarritoItem::CANTIDAD]) -> cantidad + 1) {
                 Response::sendResponse(HttpStatusCode::INCORRECT_DATA, HttpErrorMessages::NO_STOCK);
                 return;
@@ -136,12 +167,8 @@ class CartController {
             }
             return;
         }
-        Response::sendResponse(HttpStatusCode::OK);
-    }
-
-    private static function haveStock(int $productId, int $quantity): bool {
-
-
-        return true;
+        Response::sendResponse(HttpStatusCode::OK, null, [
+            'cantidad' => CarritoItem::findQuantityByProductIdAndCustomer($productoId, $_SESSION['id'], [CarritoItem::CANTIDAD]) -> cantidad
+        ]);
     }
 }

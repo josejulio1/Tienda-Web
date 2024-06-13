@@ -1,6 +1,13 @@
 <?php
 namespace Model;
 
+use Model\Base\AbstractActiveRecordCrud;
+
+/**
+ * Clase modelo que controla la tabla Rol de la base de datos
+ * @author josejulio1
+ * @version 1.0
+ */
 class Rol extends AbstractActiveRecordCrud {
     protected static string $tableName = 'Rol';
     protected static string $primaryKeyColumn = self::ID;

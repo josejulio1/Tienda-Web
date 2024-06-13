@@ -6,13 +6,13 @@
 <main class="perfil">
     <section class="info-perfil">
         <article id="no-guardado" class="hide">
-            <img src="/assets/img/web/svg/market/no-saved.svg" alt="Sin Guardar">
+            <img src="/assets/img/web/market/profile/no-saved.svg" alt="Sin Guardar">
             <p>Sin Guardar</p>
         </article>
         <article class="imagen-perfil">
             <img src="<?php echo $cliente -> ruta_imagen_perfil; ?>" alt="Imagen Perfil" id="imagen-perfil">
             <label for="imagen" class="editar-imagen-perfil">
-                <img src="/assets/img/web/svg/market/square-add.svg" alt="Cambiar Imagen Perfil" class="hide">
+                <img src="/assets/img/web/market/profile/square-add.svg" alt="Cambiar Imagen Perfil" class="hide">
                 <input type="file" id="imagen" class="hide">
             </label>
         </article>
@@ -47,3 +47,5 @@
 <aside class="guardar">
     <button id="guardar-cambios">Guardar Cambios</button>
 </aside>
+<?php
+require_once __DIR__ . '/../templates/chat.php';

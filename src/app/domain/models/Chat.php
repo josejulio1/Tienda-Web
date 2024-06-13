@@ -1,9 +1,18 @@
 <?php
 namespace Model;
 
+use Model\Base\AbstractActiveRecordCrud;
+
+/**
+ * Clase modelo que controla la tabla Chat de la base de datos
+ * @author josejulio1
+ * @version 1.0
+ */
 class Chat extends AbstractActiveRecordCrud {
     protected static string $tableName = 'Chat';
+    protected static string $primaryKeyColumn = self::CLIENTE_ID;
 
+    // Nombre de columnas
     public const ID = 'id';
     public const CLIENTE_ID = 'cliente_id';
     public const MENSAJE = 'mensaje';

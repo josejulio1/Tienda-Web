@@ -51,9 +51,8 @@ INSERT INTO Carrito_Item (producto_id, cliente_id, cantidad) VALUES
 
 -- Metodo_Pago
 INSERT INTO Metodo_Pago (id, nombre) VALUES
-(1, 'VISA'),
-(2, 'MasterCard'),
-(3, 'PayPal');
+(1, 'Tarjeta'),
+(2, 'PayPal');
 
 -- Estado_Pago
 INSERT INTO Estado_Pago (id, nombre) VALUES
@@ -64,7 +63,7 @@ INSERT INTO Estado_Pago (id, nombre) VALUES
 -- Pedido
 INSERT INTO Pedido (id, cliente_id, metodo_pago_id, estado_pago_id, direccion_envio) VALUES
 (1, 2, 2, 1, 'Apt 207'),
-(2, 3, 3, 2, 'Suite 72'),
+(2, 3, 1, 2, 'Suite 72'),
 (3, 9, 2, 2, '3rd Floor');
 
 -- Pedido_Producto_Item
@@ -85,8 +84,8 @@ INSERT INTO Usuario (usuario, correo, contrasenia, rol_id, ruta_imagen_perfil) V
 ('antonio', 'antonio@gmail.com', '$2y$10$G3lxPK6tte2Jvh7qneHUHOxf3PCmHPxq8Njj5.x1l88Cre1gpdfGO', 2, '/assets/img/internal/default/default-avatar.jpg');
 
 -- Comentario
-INSERT INTO Comentario (id, cliente_id, producto_id, comentario, num_estrellas) VALUES
-(1, 1, 2, 'Buen producto', 5),
-(2, 2, 2, 'Horrible producto', 1),
-(3, 3, 2, 'Producto mediocre', 2),
-(4, 6, 5, 'Me llegó defectuoso', 1);
+INSERT INTO Comentario (id, cliente_id, producto_id, comentario, num_estrellas, fecha_hora_comentario) VALUES
+(1, 1, 2, 'Buen producto', 5, '2022-02-23 12:42:36'),
+(2, 2, 2, 'Horrible producto', 1, '2023-07-28 23:12:39'),
+(3, 3, 2, 'Producto mediocre', 2, '2020-01-05 17:23:21'),
+(4, 6, 5, 'Me llegó defectuoso', 1, '2024-04-08 19:12:15');

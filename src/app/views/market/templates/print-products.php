@@ -11,9 +11,9 @@ function imprimirProductos(array $productos): void {
                     $numEstrellas = $producto -> valoracion_promedio;
                     for ($i = 1; $i <= 5; $i++) {
                         if ($numEstrellas-- > 0) {
-                            echo '<img src="/assets/img/web/svg/star-filled.svg" alt="Estrella" loading="lazy">';
+                            echo '<img src="/assets/img/web/market/comment/star-filled.svg" alt="Estrella" loading="lazy">';
                         } else {
-                            echo '<img src="/assets/img/web/svg/star-no-filled.svg" alt="Estrella" class="invert-color" loading="lazy">';
+                            echo '<img src="/assets/img/web/market/comment/star-no-filled.svg" alt="Estrella" class="invert-color" loading="lazy">';
                         }
                     }
                     ?>

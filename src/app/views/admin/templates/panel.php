@@ -10,22 +10,22 @@ use Util\Permission\Permissions;
         </section>
         <section class="opciones">
             <?php
-            if ($userInfo -> permiso_usuario != Permissions::NO_PERMISSIONS) {
+            if ($userInfo -> permiso_usuario !== Permissions::NO_PERMISSIONS) {
                 echo '<a href="/admin/user">Usuarios</a>';
             }
-            if ($userInfo -> permiso_producto != Permissions::NO_PERMISSIONS) {
+            if ($userInfo -> permiso_producto !== Permissions::NO_PERMISSIONS) {
                 echo '<a href="/admin/product">Productos</a>';
             }
-            if ($userInfo -> permiso_marca != Permissions::NO_PERMISSIONS) {
+            if ($userInfo -> permiso_marca !== Permissions::NO_PERMISSIONS) {
                 echo '<a href="/admin/brand">Marcas</a>';
             }
-            if ($userInfo -> permiso_categoria != Permissions::NO_PERMISSIONS) {
+            if ($userInfo -> permiso_categoria !== Permissions::NO_PERMISSIONS) {
                 echo '<a href="/admin/category">Categorías</a>';
             }
-            if ($userInfo -> permiso_cliente != Permissions::NO_PERMISSIONS) {
+            if ($userInfo -> permiso_cliente !== Permissions::NO_PERMISSIONS) {
                 echo '<a href="/admin/customer">Clientes</a>';
             }
-            if ($userInfo -> permiso_rol != Permissions::NO_PERMISSIONS) {
+            if ($userInfo -> permiso_rol !== Permissions::NO_PERMISSIONS) {
                 echo '<a href="/admin/role">Roles</a>';
             }
             ?>
@@ -36,6 +36,6 @@ use Util\Permission\Permissions;
         ?>
     </section>
     <section class="open-close-panel">
-        <img src="/assets/img/web/svg/arrow-left.svg" alt="Abrir-Cerrar Panel">
+        <img src="/assets/img/web/admin/panel/arrow-left.svg" alt="Abrir-Cerrar Panel">
     </section>
 </aside>

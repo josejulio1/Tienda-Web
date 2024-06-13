@@ -8,20 +8,23 @@ use Util\API\AdminHelper;
 use Util\API\HttpErrorMessages;
 use Util\API\HttpStatusCode;
 use Util\API\HttpSuccessMessages;
-use Util\API\JsonHelper;
 use Util\API\Response;
 
+/**
+ * Controlador de API para la tabla {@see Categoria}
+ * @author josejulio1
+ * @version 1.0
+ */
 class CategoryController {
     public static function getAll(): void {
         AdminHelper::getAll(Categoria::class, [Categoria::ID, Categoria::NOMBRE], VUsuarioRol::PERMISO_CATEGORIA);
     }
 
+    /**
+     * Crea una {@see Categoria} nueva en la base de datos
+     * @return void
+     */
     public static function create(): void {
-        if (!AdminHelper::validateAuth('POST')) {
-            return;
-        }
-        http_response_code(HttpStatusCode::OK);
-
         $marcaFormulario = new Categoria($_POST);
         if (!$marcaFormulario -> create()) {
             if (!Database::isConnected()) {
@@ -36,10 +39,18 @@ class CategoryController {
         ]);
     }
 
+    /**
+     * Actualiza una {@see Categoria} en la base de datos
+     * @return void
+     */
     public static function update(): void {
         AdminHelper::updateRow(Categoria::class);
     }
 
+    /**
+     * Elimina una {@see Categoria} en la base de datos
+     * @return void
+     */
     public static function delete(): void {
         AdminHelper::deleteRow(Categoria::class);
     }

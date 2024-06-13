@@ -1,136 +1,138 @@
 <?php
 namespace Core;
 
-use Util\API\AdminHelper;
-use Util\API\HttpErrorMessages;
 use Util\API\HttpStatusCode;
-use Util\API\Response;
-use Util\Auth\AuthHelper;
-use Util\Auth\RoleAccess;
 
+/**
+ * Clase que se encarga de enrutar una ruta con un controlador, para que cuando se acceda
+ * a través de una API REST o el navegador a una parte de la página, se llame a un controlador.
+ * Los controladores son los que definen la lógica de la aplicación, indicando qué hay que hacer cuando
+ * se llama a una ruta registrada y a la vez dependiendo del tipo de método HTTP usado.
+ *
+ * El enrutador principalmente registra tres tipos de llamadas HTTP:
+ * - GET: Se utiliza para obtener un recurso.
+ * - POST: Se utiliza para enviar datos a un controlador y que este realice una operación con estos datos. Usado solo con la API REST.
+ * - DELETE: Se utiliza para eliminar un recurso de la base de datos, a través de la URL (GET). Usado solo con la API REST.
+ * @author josejulio1
+ * @version 1.0
+ */
 class Router {
-    private array $mapMethodToArray;
     private array $routesGet = [];
     private array $routesPost = [];
-    private array $routesPut = [];
     private array $routesDelete = [];
+    private array $mapRoutes;
+    private array $allowedEmptyPostRoutes;
 
-    private array $restrictedCustomerRoutesGet;
-    private array $restrictedCustomerRoutesPostApi;
-
-    private array $restrictedUserRoutesGet;
-    private array $restrictedUserRoutesGetApi;
-    private array $restrictedUserRoutesPostApi;
-    private array $restrictedUserRoutesPutApi;
-    private array $restrictedUserRoutesDeleteApi;
-    private array $allRestrictedRoutes;
-    private array $allRestrictedCustomerRoutesApi;
-    private array $allRestrictedUserRoutesApi;
-
+    /**
+     * Construye un enrutador asignado un array que mapea cada método HTTP con su respectivo array
+     */
     public function __construct() {
-        $this -> prepareCustomerRoutes();
-        $this -> prepareCustomerRoutesApi();
-
-        $this -> prepareUserRoutes();
-        $this -> prepareUserRoutesApi();
-
-        // All Routes
-        $this -> allRestrictedRoutes = [
-            $this -> restrictedCustomerRoutesGet,
-            $this -> restrictedUserRoutesGet
-        ];
-
-        // All Routes - API
-        $this -> allRestrictedCustomerRoutesApi = [
-            'POST' => $this -> restrictedCustomerRoutesPostApi
-        ];
-
-        $this -> allRestrictedUserRoutesApi = [
-            'GET' => $this -> restrictedUserRoutesGetApi,
-            'POST' => $this -> restrictedUserRoutesPostApi,
-            'PUT' => $this -> restrictedUserRoutesPutApi,
-            'DELETE' => $this -> restrictedUserRoutesDeleteApi
-        ];
-
-        $this -> mapMethodToArray = [
+        $this -> mapRoutes = [
             'GET' => $this -> routesGet,
             'POST' => $this -> routesPost,
-            'PUT' => $this -> routesPut,
             'DELETE' => $this -> routesDelete
         ];
     }
 
-    public function get(string $route, array $controller) {
-        $this -> routesGet[$route] = $controller;
-        $this -> mapMethodToArray['GET'][$route] = $controller;
+    /**
+     * Registra una ruta de método HTTP de tipo GET.
+     * @param string $route Ruta que registrar
+     * @param array $controller Controlador que asignar al llamar a la ruta
+     * @param callable|null $validator Validación que aplicar antes de utilizar un controlador. Por ejemplo, si el usuario no tiene sesión, que no pueda acceder a un recurso
+     * @return void
+     */
+    public function get(string $route, array $controller, ?callable $validator = null): void {
+        $this -> routesGet[$route] = [
+            'controller' => $controller,
+            'validator' => $validator
+        ];
+        $this -> mapRoutes['GET'][$route] = [
+            'controller' => $controller,
+            'validator' => $validator
+        ];
     }
 
-    public function post(string $route, array $controller) {
-        $this -> routesPost[$route] = $controller;
-        $this -> mapMethodToArray['POST'][$route] = $controller;
+    /**
+     * Registra una ruta de método HTTP de tipo POST.
+     * @param string $route Ruta que registrar
+     * @param array $controller Controlador que asignar al llamar a la ruta
+     * @param callable|null $validator Validación que aplicar antes de utilizar un controlador. Por ejemplo, si el usuario no tiene sesión, que no pueda acceder a un recurso
+     * @param bool $allowEmpty Indica si se pueden enviar datos vacíos a esta ruta, es decir, si la superglobal $_POST está vacía. True si se permite vacía y false si no
+     * @return void
+     */
+    public function post(string $route, array $controller, ?callable $validator = null, bool $allowEmpty = false): void {
+        $this -> routesPost[$route] = [
+            'controller' => $controller,
+            'validator' => $validator
+        ];
+        $this -> mapRoutes['POST'][$route] = [
+            'controller' => $controller,
+            'validator' => $validator
+        ];
+        if ($allowEmpty) {
+            $this -> allowedEmptyPostRoutes[] = $route;
+        }
     }
 
-    public function put(string $route, array $controller) {
-        $this -> routesPut[$route] = $controller;
-        $this -> mapMethodToArray['PUT'][$route] = $controller;
+    /**
+     * Registra una ruta de método HTTP de tipo DELETE.
+     * @param string $route Ruta que registrar
+     * @param array $controller Controlador que asignar al llamar a la ruta
+     * @param callable|null $validator Validación que aplicar antes de utilizar un controlador. Por ejemplo, si el usuario no tiene sesión, que no pueda acceder a un recurso
+     * @return void
+     */
+    public function delete(string $route, array $controller, ?callable $validator = null) {
+        $this -> routesDelete[$route] = [
+            'controller' => $controller,
+            'validator' => $validator
+        ];
+        $this -> mapRoutes['DELETE'][$route] = [
+            'controller' => $controller,
+            'validator' => $validator
+        ];
     }
 
-    public function delete(string $route, array $controller) {
-        $this -> routesDelete[$route] = $controller;
-        $this -> mapMethodToArray['DELETE'][$route] = $controller;
-    }
-
+    /**
+     * Escucha la ruta usada por el navegador y ejecuta el controlador de la ruta en caso de que exista.
+     * @return bool|int|void
+     */
     public function listenRoute() {
         $route = $_SERVER['PATH_INFO'] ?? '/';
         $usedMethod = $_SERVER['REQUEST_METHOD'];
 
-        // Validar si la ruta introducida es restringida, y en caso de que lo sea, aplicar su respectiva validación
-        $restrictedRoutes = $this -> allRestrictedRoutes;
-        foreach ($restrictedRoutes as $restrictedRoute) {
-            if (array_key_exists($route, $restrictedRoute)) {
-                call_user_func($restrictedRoute[$route]);
-                /*$statusCode = call_user_func($restrictedRoute[$route]) ?? null; // Si es una función de API, que devuelve un código de estado, devolver estado HTTP
-                if ($statusCode && $statusCode !== HttpStatusCode::OK) {
-                    return http_response_code($statusCode);
-                }*/
-                break;
+        $mapRoutes = $this -> mapRoutes;
+        // En caso de que la ruta tenga un validador, ejecutarlo antes
+        if (array_key_exists($route, $mapRoutes[$usedMethod]) && $mapRoutes[$usedMethod][$route]['validator']) {
+            // En caso de que el validador devuelva un número, será un código de estado HTTP, ya que los únicos validadores que
+            // devolverán números son los de API
+            $statusCode = $mapRoutes[$usedMethod][$route]['validator']();
+            if ($statusCode && $statusCode !== HttpStatusCode::OK) {
+                return http_response_code($statusCode);
             }
         }
 
-        // Validar API - Cliente
-        $allRestrictedCustomerRoutesApi = $this -> allRestrictedCustomerRoutesApi;
-        foreach ($allRestrictedCustomerRoutesApi as $method => $restrictedCustomerRoutesApi) {
-            if (array_key_exists($route, $restrictedCustomerRoutesApi)) {
-                if ($usedMethod !== $method) {
-                    return http_response_code(HttpStatusCode::METHOD_NOT_ALLOWED);
-                }
-                $statusCode = call_user_func($restrictedCustomerRoutesApi[$route]);
-                if ($statusCode !== HttpStatusCode::OK) {
-                    return http_response_code($statusCode);
-                }
-            }
+        // Si se han enviado datos y la superglobal $_POST está vacía, es incorrecto porque $_POST
+        // siempre debe tener datos (excepto rutas que estén en el array $allowedEmptyPostRoutes)
+        if ($usedMethod === 'POST' && !$_POST && !in_array($route, $this -> allowedEmptyPostRoutes)) {
+            return http_response_code(HttpStatusCode::INCORRECT_DATA);
         }
 
-        // Validar API - Admin
-        $allRestrictedUserRoutesApi = $this -> allRestrictedUserRoutesApi;
-        foreach ($allRestrictedUserRoutesApi as $method => $restrictedUserRouteApi) {
-            if ($restrictedUserRouteApi === $route) {
-                if ($usedMethod !== $method) {
-                    return http_response_code(AdminHelper::validateAuth($method));
-                }
-            }
-        }
-
-        $controller = null;
         // Si existe la ruta, coger el controlador, si no, devolver un código de respuesta 404
-        if (array_key_exists($route, $this -> mapMethodToArray[$usedMethod])) {
-            $controller = $this -> mapMethodToArray[$usedMethod][$route];
+        if (array_key_exists($route, $this -> mapRoutes[$usedMethod])) {
+            $this -> mapRoutes[$usedMethod][$route]['controller']($this); // Pasar como parámetro al método del controlador llamado el Router, para que el controlador pueda renderizar una vista
         } else {
             return http_response_code(HttpStatusCode::NOT_FOUND);
         }
-        call_user_func($controller, $this); // Pasar como parámetro al método del controlador llamado el Router, para que el controlador pueda renderizar una vista
     }
 
+    /**
+     * Renderiza una vista en el navegador.
+     * @param string $viewPath Ruta absoluta de la vista
+     * @param array $data Datos que se quieran pasar a la vista. Debe ser un array asociativo con clave-valor, y la clave será el nombre
+     * de la variable que se usará en la vista. Por ejemplo, si se pasa por parámetro [ 'cliente' => 'Mi Cliente' ], en la vista que se
+     * envíe este parámetro se podrá realizar "echo $cliente" y el resultado será "Mi Cliente"
+     * @return void
+     */
     public function render(string $viewPath, array $data = []) {
         // Establecer todas las variables del controlador en memoria para pasárselas a la vista
         foreach ($data as $key => $value) {
@@ -145,146 +147,5 @@ class Router {
         $contenido = ob_get_clean(); // Guardar en la variable contenido todo lo que contiene el buffer, que es la vista cargada, y limpiar el buffer
         // Cargar el layout con el contenido de la variable $contenido listo para ser mostrado en el navegador
         require_once __DIR__ . '/views/templates/layout.php';
-    }
-
-    private function prepareCustomerRoutes() {
-        $this -> restrictedCustomerRoutesGet = [
-            '/' => function () {
-                if (AuthHelper::isAuthenticated(RoleAccess::USER)) {
-                    header('Location: /admin/user');
-                }
-            },
-            '/login' => function () {
-                if (AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-                    header('Location: /');
-                }
-            },
-            '/profile' => function () {
-                if (!AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-                    header('Location: /');
-                }
-            },
-            '/orders' => function () {
-                if (!AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-                    header('Location: /');
-                }
-            },
-            '/checkout' => function () {
-                if (!AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-                    header('Location: /');
-                }
-            }
-        ];
-    }
-
-    private function prepareCustomerRoutesApi() {
-        $this -> restrictedCustomerRoutesPostApi = [
-            '/api/customer/login' => function (): int {
-                if (AuthHelper::isAuthenticated()) {
-                    return HttpStatusCode::UNAUTHORIZED;
-                }
-                return HttpStatusCode::OK;
-            },
-            '/api/save-profile' => function (): int {
-                if (!AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-                    return HttpStatusCode::UNAUTHORIZED;
-                }
-                return HttpStatusCode::OK;
-            }
-        ];
-    }
-
-    private function prepareUserRoutes() {
-        $this -> restrictedUserRoutesGet = [
-            '/admin/user' => function () {
-                if (!AuthHelper::isAuthenticated(RoleAccess::USER)) {
-                    header('Location: /admin');
-                }
-            },
-            '/admin/product' => function () {
-                if (!AuthHelper::isAuthenticated(RoleAccess::USER)) {
-                    header('Location: /admin');
-                }
-            },
-            '/admin/brand' => function () {
-                if (!AuthHelper::isAuthenticated(RoleAccess::USER)) {
-                    header('Location: /admin');
-                }
-            },
-            '/admin/category' => function () {
-                if (!AuthHelper::isAuthenticated(RoleAccess::USER)) {
-                    header('Location: /admin');
-                }
-            },
-            '/admin/customer' => function () {
-                if (!AuthHelper::isAuthenticated(RoleAccess::USER)) {
-                    header('Location: /admin');
-                }
-            },
-            '/admin/role' => function () {
-                if (!AuthHelper::isAuthenticated(RoleAccess::USER)) {
-                    header('Location: /admin');
-                }
-            },
-            '/admin' => function () {
-                if (AuthHelper::isAuthenticated(RoleAccess::USER)) {
-                    header('Location: /admin/user');
-                }
-                if (AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-                    header('Location: /');
-                }
-            },
-            '/admin/login' => function () {
-                if (AuthHelper::isAuthenticated(RoleAccess::USER)) {
-                    header('Location: /admin/user');
-                }
-                if (AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
-                    header('Location: /');
-                }
-            }
-        ];
-    }
-
-    private function prepareUserRoutesApi() {
-        $this -> restrictedUserRoutesGetApi = [
-            '/api/users' => function (): int {
-                return AdminHelper::validateAuth('GET');
-            },
-            '/api/products' => function (): int {
-                return AdminHelper::validateAuth('GET');
-            },
-            '/api/brands' => function (): int {
-                return AdminHelper::validateAuth('GET');
-            },
-            '/api/categories' => function (): int {
-                return AdminHelper::validateAuth('GET');
-            },
-            '/api/customers' => function (): int {
-                return AdminHelper::validateAuth('GET');
-            },
-            '/api/roles' => function (): int {
-                return AdminHelper::validateAuth('GET');
-            }
-        ];
-
-        $this -> restrictedUserRoutesPostApi = [];
-
-        $this -> restrictedUserRoutesPutApi = [
-            '/api/user',
-            '/api/product',
-            '/api/brand',
-            '/api/category',
-            '/api/customer',
-            '/api/role'
-        ];
-
-        $this -> restrictedUserRoutesDeleteApi = [
-            '/api/user',
-            '/api/product',
-            '/api/brand',
-            '/api/category',
-            '/api/customer',
-            '/api/role'
-        ];
     }
 }

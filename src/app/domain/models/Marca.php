@@ -1,10 +1,18 @@
 <?php
 namespace Model;
 
+use Model\Base\AbstractActiveRecordCrud;
+
+/**
+ * Clase modelo que controla la tabla Marca de la base de datos
+ * @author josejulio1
+ * @version 1.0
+ */
 class Marca extends AbstractActiveRecordCrud {
     protected static string $tableName = 'Marca';
     protected static string $primaryKeyColumn = self::ID;
 
+    // Nombre de columnas
     public const ID = 'id';
     public const MARCA = 'marca';
 
@@ -13,8 +21,8 @@ class Marca extends AbstractActiveRecordCrud {
 
     public function __construct(array $data = []) {
         parent::__construct($data);
-        $this -> id = $data['id'] ?? 0;
-        $this -> marca = $data['marca'] ?? '';
+        $this -> id = $data[self::ID] ?? 0;
+        $this -> marca = $data[self::MARCA] ?? '';
     }
 
     public function getColumns(): array {

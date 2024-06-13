@@ -1,10 +1,19 @@
 <?php
 namespace Model;
 
+use Model\Base\AbstractActiveRecordCrud;
+use Model\Base\IContainsImage;
+
+/**
+ * Clase modelo que controla la tabla Producto de la base de datos
+ * @author josejulio1
+ * @version 1.0
+ */
 class Producto extends AbstractActiveRecordCrud implements IContainsImage {
     protected static string $tableName = 'Producto';
     protected static string $primaryKeyColumn = self::ID;
 
+    // Nombre de columnas
     public const ID = 'id';
     public const NOMBRE = 'nombre';
     public const DESCRIPCION = 'descripcion';
@@ -25,14 +34,14 @@ class Producto extends AbstractActiveRecordCrud implements IContainsImage {
 
     public function __construct(array $data = []) {
         parent::__construct($data);
-        $this -> id = $data['id'] ?? 0;
-        $this -> nombre = $data['nombre'] ?? '';
-        $this -> descripcion = $data['descripcion'] ?? '';
-        $this -> precio = $data['precio'] ?? 0.0;
-        $this -> stock = $data['stock'] ?? 0;
-        $this -> ruta_imagen = $data['ruta_imagen'] ?? '';
-        $this -> marca_id = $data['marca_id'] ?? 0;
-        $this -> categoria_id = $data['categoria_id'] ?? 0;
+        $this -> id = $data[self::ID] ?? 0;
+        $this -> nombre = $data[self::NOMBRE] ?? '';
+        $this -> descripcion = $data[self::DESCRIPCION] ?? '';
+        $this -> precio = $data[self::PRECIO] ?? 0.0;
+        $this -> stock = $data[self::STOCK] ?? 0;
+        $this -> ruta_imagen = $data[self::RUTA_IMAGEN] ?? '';
+        $this -> marca_id = $data[self::MARCA_ID] ?? 0;
+        $this -> categoria_id = $data[self::CATEGORIA_ID] ?? 0;
     }
 
     public function getColumns(): array {

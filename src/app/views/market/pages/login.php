@@ -1,4 +1,4 @@
-<section class="imagen"></section>
+<img src="/assets/img/web/market/carrousel/pc.jpg" class="imagen-carrusel" alt="Imagen Carrusel">
 <main>
     <a href="/">BYTEMARKET</a>
     <section class="acceso-contenedor">
@@ -17,6 +17,12 @@
                     <label for="contrasenia-login">Contraseña</label>
                     <input type="password" id="contrasenia-login" required>
                     <p class="is-invalid hide">Introduzca su contraseña</p>
+                </div>
+                <div class="form-row">
+                    <article class="form-column checkbox-column">
+                        <input type="checkbox" id="mantener-sesion">
+                        <label for="mantener-sesion">Mantener sesión iniciada</label>
+                    </article>
                 </div>
                 <!-- Componente: LoadingButton -->
                 <button class="btn-info" type="submit" id="button-iniciar-sesion">Iniciar Sesión</button>

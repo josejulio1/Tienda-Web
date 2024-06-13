@@ -14,9 +14,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src/app/domain/models" isTestSource="false" packagePrefix="Model\" />
       <sourceFolder url="file://$MODULE_DIR$/src/app/domain/services" isTestSource="false" packagePrefix="Database\" />
       <sourceFolder url="file://$MODULE_DIR$/src/app/utils/permissions" isTestSource="false" packagePrefix="Util\Permission\" />
-      <sourceFolder url="file://$MODULE_DIR$/src/app/utils/constants" isTestSource="false" packagePrefix="Util\Constant\" />
       <sourceFolder url="file://$MODULE_DIR$/src/app/utils/image" isTestSource="false" packagePrefix="Util\Image\" />
-      <sourceFolder url="file://$MODULE_DIR$/src/app/utils/chat" isTestSource="false" packagePrefix="Util\Chat\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/app/domain/models/base" isTestSource="false" packagePrefix="Model\Base\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/app/public" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/graham-campbell/result-type" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/phpoption/phpoption" />
@@ -24,25 +24,8 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-php80" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/vlucas/phpdotenv" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/cboden/ratchet" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/evenement/evenement" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/guzzlehttp/psr7" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/http-factory" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/http-message" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/log" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/ralouphie/getallheaders" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/ratchet/rfc6455" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/react/cache" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/react/dns" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/react/event-loop" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/react/promise" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/react/socket" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/react/stream" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/deprecation-contracts" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/http-foundation" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-php83" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/routing" />
-      <excludeFolder url="file://$MODULE_DIR$/src/vendor/textalk/websocket" />
+      <excludeFolder url="file://$MODULE_DIR$/src/app/public/assets/css/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/src/app/public/assets/js/lib" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

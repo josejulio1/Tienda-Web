@@ -1,16 +1,27 @@
 <?php
 namespace Util\API;
 
+use Model\Base\IContainsImage;
 use Database\Database;
-use Model\IContainsImage;
 use Model\VUsuarioRol;
-use Util\Auth\AuthHelper;
-use Util\Auth\RoleAccess;
 use Util\Image\DefaultPath;
 use Util\Image\ImageHelper;
 use Util\Permission\Permissions;
 
+/**
+ * Clase Helper para el panel de administración que unifica los métodos con código redundante
+ * en métodos para reutilización
+ * @author josejulio1
+ * @version 1.0
+ */
 class AdminHelper {
+    /**
+     * Obtiene todos las entidades de un modelo pasado por parámetro.
+     * @param mixed $model Class del modelo del que se quieren consultar los datos
+     * @param array $columns Nombre de columnas que se desean obtener
+     * @param string $permission Nombre de columna del permiso que se desea obtener para saber si lo tiene o no
+     * @return void
+     */
     public static function getAll($model, array $columns, string $permission): void {
         $models = $model::all($columns);
         if (!$models) {
@@ -30,6 +41,11 @@ class AdminHelper {
         ]);
     }
 
+    /**
+     * Actualiza la fila de un modelo pasado por parámetro
+     * @param mixed $model Class del modelo del que se quieren actualizar los datos
+     * @return void
+     */
     public static function updateRow($model): void {
         $primarKeyColumn = array_shift($_POST);
         $modeloFormulario = $model::findOne($primarKeyColumn);
@@ -46,6 +62,11 @@ class AdminHelper {
         Response::sendResponse(HttpStatusCode::OK, HttpSuccessMessages::UPDATED);
     }
 
+    /**
+     * Elimina la fila de un modelo pasado por parámetro
+     * @param mixed $model Class del modelo del que se quiere eliminar
+     * @return void
+     */
     public static function deleteRow($model): void {
         $id = $_GET['id'];
         if (!filter_var(FILTER_VALIDATE_INT)) {
@@ -80,12 +101,5 @@ class AdminHelper {
             ImageHelper::deleteImage($rutaImagenPerfil);
         }
         Response::sendResponse(HttpStatusCode::OK, HttpSuccessMessages::DELETED);
-    }
-
-    public static function validateAuth(string $typeMethodNotAllowed): int {
-        if ($_SERVER['REQUEST_METHOD'] !== $typeMethodNotAllowed || !AuthHelper::isAuthenticated(RoleAccess::USER)) {
-            return HttpStatusCode::METHOD_NOT_ALLOWED;
-        }
-        return HttpStatusCode::OK;
     }
 }

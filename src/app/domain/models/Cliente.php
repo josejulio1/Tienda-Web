@@ -1,6 +1,13 @@
 <?php
 namespace Model;
 
+use Model\Base\AbstractActiveRecordAuth;
+
+/**
+ * Clase modelo que controla la tabla Cliente de la base de datos
+ * @author josejulio1
+ * @version 1.0
+ */
 class Cliente extends AbstractActiveRecordAuth {
     protected static string $tableName = 'Cliente';
     protected static string $primaryKeyColumn = self::ID;
@@ -27,14 +34,14 @@ class Cliente extends AbstractActiveRecordAuth {
 
     public function __construct(array $data = []) {
         parent::__construct($data);
-        $this -> id = $data['id'] ?? 0;
-        $this -> nombre = $data['nombre'] ?? '';
-        $this -> apellidos = $data['apellidos'] ?? '';
-        $this -> telefono = $data['telefono'] ?? '';
-        $this -> direccion = $data['direccion'] ?? '';
-        $this -> correo = $data['correo'] ?? '';
-        $this -> contrasenia = $data['contrasenia'] ?? '';
-        $this -> ruta_imagen_perfil = $data['ruta_imagen_perfil'] ?? '';
+        $this -> id = $data[self::ID] ?? 0;
+        $this -> nombre = $data[self::NOMBRE] ?? '';
+        $this -> apellidos = $data[self::APELLIDOS] ?? '';
+        $this -> telefono = $data[self::TELEFONO] ?? '';
+        $this -> direccion = $data[self::DIRECCION] ?? '';
+        $this -> correo = $data[self::CORREO] ?? '';
+        $this -> contrasenia = $data[self::CONTRASENIA] ?? '';
+        $this -> ruta_imagen_perfil = $data[self::RUTA_IMAGEN_PERFIL] ?? '';
     }
 
     public function getColumns(): array {

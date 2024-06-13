@@ -10,7 +10,16 @@ use Util\API\HttpStatusCode;
 use Util\API\HttpSuccessMessages;
 use Util\API\Response;
 
+/**
+ * Controlador de API para la tabla {@see Rol}
+ * @author josejulio1
+ * @version 1.0
+ */
 class RoleController {
+    /**
+     * Obtiene todos los {@see Rol roles} de la base de datos
+     * @return void
+     */
     public static function getAll(): void {
         AdminHelper::getAll(Rol::class, [
             Rol::ID,
@@ -19,6 +28,10 @@ class RoleController {
         ], VUsuarioRol::PERMISO_ROL);
     }
 
+    /**
+     * Obtiene todos los permisos de de un {@see Rol} específico
+     * @return void
+     */
     public static function getAllPermissions(): void {
         $rolPermisos = Rol::findOne($_POST[Rol::ID], [
             Rol::PERMISO_USUARIO,
@@ -41,12 +54,11 @@ class RoleController {
         ]);
     }
 
+    /**
+     * Crea un {@see Rol} nuevo en la base de datos
+     * @return void
+     */
     public static function create(): void {
-        if (!AdminHelper::validateAuth('POST')) {
-            return;
-        }
-        http_response_code(HttpStatusCode::OK);
-
         // Eliminar # del hexadecimal del color
         $_POST[Rol::COLOR] = substr($_POST[Rol::COLOR], 1);
         $rolFormulario = new Rol($_POST);
@@ -59,18 +71,24 @@ class RoleController {
             return;
         }
         Response::sendResponse(HttpStatusCode::OK, HttpSuccessMessages::CREATED, [
-            'entidades' => Rol::last([
-                Rol::ID
-            ])
+            'entidades' => Rol::last([Rol::ID])
         ]);
     }
 
+    /**
+     * Actualiza un {@see Rol} en la base de datos
+     * @return void
+     */
     public static function update(): void {
         // Eliminar # del hexadecimal del color
         $_POST[Rol::COLOR] = substr($_POST[Rol::COLOR], 1);
         AdminHelper::updateRow(Rol::class);
     }
 
+    /**
+     * Elimina un {@see Rol} en la base de datos
+     * @return void
+     */
     public static function delete(): void {
         AdminHelper::deleteRow(Rol::class);
     }

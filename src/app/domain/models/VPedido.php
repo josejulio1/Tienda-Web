@@ -1,10 +1,18 @@
 <?php
 namespace Model;
 
+use Model\Base\AbstractActiveRecord;
+
+/**
+ * Clase modelo que controla la vista V_Pedido de la base de datos
+ * @author josejulio1
+ * @version 1.0
+ */
 class VPedido extends AbstractActiveRecord {
     protected static string $tableName = 'V_Pedido';
     protected static string $primaryKeyColumn = self::CLIENTE_ID;
 
+    // Nombre de columnas
     public const ID = 'id';
     public const CLIENTE_ID = 'cliente_id';
     public const NOMBRE_PRODUCTO = 'nombre_producto';
@@ -21,11 +29,11 @@ class VPedido extends AbstractActiveRecord {
 
     public function __construct(array $data = []) {
         parent::__construct($data);
-        $this -> id = $data['id'] ?? 0;
-        $this -> cliente_id = $data['cliente_id'] ?? 0;
-        $this -> nombre_producto = $data['nombre_producto'] ?? '';
-        $this -> metodo_pago = $data['metodo_pago'] ?? '';
-        $this -> estado_pago = $data['estado_pago'] ?? '';
-        $this -> direccion_envio = $data['direccion_envio'] ?? '';
+        $this -> id = $data[self::ID] ?? 0;
+        $this -> cliente_id = $data[self::CLIENTE_ID] ?? 0;
+        $this -> nombre_producto = $data[self::NOMBRE_PRODUCTO] ?? '';
+        $this -> metodo_pago = $data[self::METODO_PAGO] ?? '';
+        $this -> estado_pago = $data[self::ESTADO_PAGO] ?? '';
+        $this -> direccion_envio = $data[self::DIRECCION_ENVIO] ?? '';
     }
 }

@@ -7,7 +7,7 @@ AbstractActiveRecordCrud <|- AbstractActiveRecordCrudAuth
 AbstractActiveRecord <|-- VCarritoCliente
 AbstractActiveRecord <|-- VPedido
 AbstractActiveRecord <|-- VPedidoProductoItemDetallado
-AbstractActiveRecord <|-- VChatClienteImagen
+AbstractActiveRecord <|-- VChatClienteInfo
 AbstractActiveRecord <|-- VComentarioClienteProducto
 AbstractActiveRecord <|-- VProductoCategoria
 AbstractActiveRecord <|-- VProductoValoracionPromedio
@@ -28,17 +28,24 @@ AbstractActiveRecordCrud <|-- Comentario
 AbstractActiveRecordCrud <|-- EstadoPago
 AbstractActiveRecordCrud <|-- MetodoPago
 
+IContainsImage <.. Producto
+IContainsImage <.. Usuario
+
 abstract class AbstractActiveRecord {
     # tableName: string {static}
     # primaryKeyColumn: string {static}
 
-    + all($columns = []: array): array
-    + find($id: int, $columns = []: array): static|null
+    + all($columns = []: array, ?$limit = null: int, $order = []: array): array {static}
+    + find($id: int, $columns = []: array, ?$otherPrimaryKey = null, $order = []: array): array|null {static}
+    + findOne($id: int, $columns = []: array, ?$otherPrimaryKey = null, $order = []: array): static|null {static}
+    + last($columns = []: array): static|null {static}
+    # mapResultToObject($result: array): array {static}
 }
 
 abstract class AbstractActiveRecordCrud {
-    + create(): bool
+    + create($removePrimaryKeyColumn = true: bool): bool
     + save(): bool
+    + delete(): bool
     + getColumns(): array {abstract}
 }
 
@@ -47,13 +54,17 @@ abstract class AbstractActiveRecordCrudAuth {
     + findByEmail($id: int, $columns = []: array): static|null {static}
 }
 
+interface IContainsImage {
+    + getImagePath(): string
+}
+
 class Usuario {
-    + ID
-    + USUARIO
-    + CORREO
-    + CONTRASENIA
-    + ROL_ID
-    + RUTA_IMAGEN_PERFIL
+    + ID {static}
+    + USUARIO {static}
+    + CORREO {static}
+    + CONTRASENIA {static}
+    + ROL_ID {static}
+    + RUTA_IMAGEN_PERFIL {static}
 
     + id: int
     + usuario: string
@@ -64,14 +75,14 @@ class Usuario {
 }
 
 class Cliente {
-    + ID
-    + NOMBRE
-    + APELLIDOS
-    + TELEFONO
-    + DIRECCION
-    + CORREO
-    + CONTRASENIA
-    + RUTA_IMAGEN_PERFIL
+    + ID {static}
+    + NOMBRE {static}
+    + APELLIDOS {static}
+    + TELEFONO {static}
+    + DIRECCION {static}
+    + CORREO {static}
+    + CONTRASENIA {static}
+    + RUTA_IMAGEN_PERFIL {static}
 
     + id: int
     + nombre: string
@@ -84,15 +95,15 @@ class Cliente {
 }
 
 class Rol {
-    + ID
-    + NOMBRE
-    + COLOR
-    + PERMISO_CATEGORIA
-    + PERMISO_PRODUCTO
-    + PERMISO_MARCA
-    + PERMISO_CLIENTE
-    + PERMISO_USUARIO
-    + PERMISO_ROL
+    + ID {static}
+    + NOMBRE {static}
+    + COLOR {static}
+    + PERMISO_CATEGORIA {static}
+    + PERMISO_PRODUCTO {static}
+    + PERMISO_MARCA {static}
+    + PERMISO_CLIENTE {static}
+    + PERMISO_USUARIO {static}
+    + PERMISO_ROL {static}
 
     + id: int
     + nombre: string
@@ -106,14 +117,14 @@ class Rol {
 }
 
 class Producto {
-    + ID
-    + NOMBRE
-    + DESCRIPCION
-    + PRECIO
-    + STOCK
-    + RUTA_IMAGEN
-    + MARCA_ID
-    + CATEGORIA_ID
+    + ID {static}
+    + NOMBRE {static}
+    + DESCRIPCION {static}
+    + PRECIO {static}
+    + STOCK {static}
+    + RUTA_IMAGEN {static}
+    + MARCA_ID {static}
+    + CATEGORIA_ID {static}
 
     + id: int
     + nombre: string
@@ -126,41 +137,41 @@ class Producto {
 }
 
 class Categoria {
-    + ID
-    + NOMBRE
+    + ID {static}
+    + NOMBRE {static}
 
     + id: int
     + nombre: string
 }
 
 class Marca {
-    + ID
-    + NOMBRE
+    + ID {static}
+    + NOMBRE {static}
 
     + id: int
     + nombre: string
 }
 
 class Pedido {
-    + ID
-    + CLIENTE_ID
-    + METODO_PAGO_ID
-    + ESTADO_PAGO_ID
-    + DIRECCION_ENVIO
+    + ID {static}
+    + CLIENTE_ID {static}
+    + METODO_PAGO_ID {static}
+    + ESTADO_PAGO_ID {static}
+    + DIRECCION_ENVIO {static}
 
     + id: int
     + cliente_id: int
     + metodo_pago_id: int
     + estado_pago_id: int
-    + id: string
+    + direccion_envio: string
 }
 
 class PedidoProductoItem {
-    + ID
-    + PEDIDO_ID
-    + PRODUCTO_ID
-    + CANTIDAD_PRODUCTO
-    + PRECIO_PRODUCTO
+    + ID {static}
+    + PEDIDO_ID {static}
+    + PRODUCTO_ID {static}
+    + CANTIDAD_PRODUCTO {static}
+    + PRECIO_PRODUCTO {static}
 
     + id: int
     + pedido_id: int
@@ -170,21 +181,27 @@ class PedidoProductoItem {
 }
 
 class CarritoItem {
-    + PRODUCTO_ID
-    + CLIENTE_ID
-    + CANTIDAD
+    + PRODUCTO_ID {static}
+    + CLIENTE_ID {static}
+    + CANTIDAD {static}
 
     + producto_id: int
     + cliente_id: int
     + cantidad: int
+
+    + emptyCart($customerId: int): bool {static}
+    + setQuantity($productId: int, $quantity: int): bool {static}
+    + operationQuantity($productId: int, $increment: bool): bool {static}
+    + findQuantityByProductIdAndCustomer($productId: int, $columns = []: array): CarritoItem|null
+    + deleteItem(): bool
 }
 
 class Chat {
-    + ID
-    + CLIENTE_ID
-    + MENSAJE
-    + FECHA
-    + ES_CLIENTE
+    + ID {static}
+    + CLIENTE_ID {static}
+    + MENSAJE {static}
+    + FECHA {static}
+    + ES_CLIENTE {static}
 
     + id: int
     + cliente_id: int
@@ -194,50 +211,52 @@ class Chat {
 }
 
 class Comentario {
-    + ID
-    + CLIENTE_ID
-    + PRODUCTO_ID
-    + COMENTARIO
-    + NUM_ESTRELLAS
+    + ID {static}
+    + CLIENTE_ID {static}
+    + PRODUCTO_ID {static}
+    + COMENTARIO {static}
+    + NUM_ESTRELLAS {static}
+    + FECHA_HORA_COMENTARIO {static}
 
     + id: int
     + cliente_id: int
     + producto_id: int
     + comentario: string
     + num_estrellas: int
+    + fecha_hora_comentario: string
 }
 
 class EstadoPago {
-    + ID
-    + NOMBRE
+    + ID {static}
+    + NOMBRE {static}
 
     + id: int
     + nombre: string
 }
 
 class MetodoPago {
-    + ID
-    + NOMBRE
+    + ID {static}
+    + NOMBRE {static}
 
     + id: int
     + nombre: string
 }
 
 class VUsuarioRol {
-    + USUARIO_ID
-    + USUARIO
-    + CORREO
-    + CONTRASENIA
-    + ROL_ID
-    + NOMBRE_ROL
-    + COLOR_ROL
-    + RUTA_IMAGEN_PERFIL
-    + PERMISO_CATEGORIA
-    + PERMISO_PRODUCTO
-    + PERMISO_MARCA
-    + PERMISO_CLIENTE
-    + PERMISO_USUARIO
-    + PERMISO_ROL
+    + USUARIO_ID {static}
+    + USUARIO {static}
+    + CORREO {static}
+    + CONTRASENIA {static}
+    + ROL_ID {static}
+    + NOMBRE_ROL {static}
+    + COLOR_ROL {static}
+    + RUTA_IMAGEN_PERFIL {static}
+    + PERMISO_CATEGORIA {static}
+    + PERMISO_PRODUCTO {static}
+    + PERMISO_MARCA {static}
+    + PERMISO_CLIENTE {static}
+    + PERMISO_USUARIO {static}
+    + PERMISO_ROL {static}
 
     + usuario_id: int
     + usuario: string
@@ -256,12 +275,12 @@ class VUsuarioRol {
 }
 
 class VCarritoCliente {
-    + CLIENTE_ID
-    + PRODUCTO_ID
-    + NOMBRE_PRODUCTO
-    + PRECIO_PRODUCTO
-    + CANTIDAD
-    + RUTA_IMAGEN_PERFIL
+    + CLIENTE_ID {static}
+    + PRODUCTO_ID {static}
+    + NOMBRE_PRODUCTO {static}
+    + PRECIO_PRODUCTO {static}
+    + CANTIDAD {static}
+    + RUTA_IMAGEN_PERFIL {static}
 
     + cliente_id: int
     + producto_id: int
@@ -269,22 +288,20 @@ class VCarritoCliente {
     + precio_producto: int
     + cantidad: int
     + ruta_imagen_perfil: string
+
+    + findByProductId($productId: int, $columns = []: array): VCarritoCliente|null {static}
 }
 
 class VPedido {
-    + ID
-    + CLIENTE_ID
-    + NOMBRE_CLIENTE
-    + APELLIDOS_CLIENTE
-    + NOMBRE_PRODUCTO
-    + METODO_PAGO
-    + ESTADO_PAGO
-    + DIRECCION_ENVIO
+    + ID {static}
+    + CLIENTE_ID {static}
+    + NOMBRE_PRODUCTO {static}
+    + METODO_PAGO {static}
+    + ESTADO_PAGO {static}
+    + DIRECCION_ENVIO {static}
 
     + id: int
     + cliente_id: int
-    + nombre_cliente: string
-    + apellidos_cliente: string
     + nombre_producto: string
     + metodo_pago: string
     + estado_pago: string
@@ -292,22 +309,30 @@ class VPedido {
 }
 
 class VPedidoProductoItemDetallado {
-    + PEDIDO_ID
-    + CLIENTE_ID
-    + PRODUCTO_ID
-    + NOMBRE_PRODUCTO
-    + CANTIDAD_PRODUCTO
-    + PRECIO_PRODUCTO
-    + RUTA_IMAGEN
+    + PEDIDO_ID {static}
+    + CLIENTE_ID {static}
+    + PRODUCTO_ID {static}
+    + NOMBRE_PRODUCTO {static}
+    + CANTIDAD_PRODUCTO {static}
+    + PRECIO_PRODUCTO {static}
+    + RUTA_IMAGEN {static}
+
+    + pedido_id: int
+    + cliente_id: int
+    + producto_id: int
+    + nombre_producto: string
+    + cantidad_producto: int
+    + precio_producto: float
+    + ruta_imagen: string
 }
 
-class VChatClienteImagen {
-    + ID
-    + CLIENTE_ID
-    + RUTA_IMAGEN_PERFIL
-    + MENSAJE
-    + FECHA
-    + ES_CLIENTE
+class VChatClienteInfo {
+    + ID {static}
+    + CLIENTE_ID {static}
+    + RUTA_IMAGEN_PERFIL {static}
+    + MENSAJE {static}
+    + FECHA {static}
+    + ES_CLIENTE {static}
 
     + id: int
     + cliente_id: int
@@ -318,33 +343,64 @@ class VChatClienteImagen {
 }
 
 class VComentarioClienteProducto {
-    + PRODUCTO_ID
-    + NOMBRE_CLIENTE
-    + APELLIDOS_CLIENTE
-    + RUTA_IMAGEN_PERFIL
-    + COMENTARIO
-    + NUM_ESTRELLAS
+    + PRODUCTO_ID {static}
+    + NOMBRE_CLIENTE {static}
+    + APELLIDOS_CLIENTE {static}
+    + RUTA_IMAGEN_PERFIL {static}
+    + COMENTARIO {static}
+    + NUM_ESTRELLAS {static}
+
+    + producto_id: int
+    + cliente_id: int
+    + nombre_cliente: string
+    + apellidos_cliente: string
+    + ruta_imagen_perfil: string
+    + comentario: string
+    + num_estrellas: int
+    + fecha_hora_comentario: string
+
+    + customerHasCommentedInProduct(productId: int): bool {static}
+    + lastCustomerCommentInProduct(productId: int, columns = []: array): VComentarioClienteProducto|null {static}
 }
 
 class VProductoCategoria {
-    + PRODUCTO_ID
-    + NOMBRE
-    + DESCRIPCION
-    + PRECIO
-    + MARCA
-    + STOCK
-    + RUTA_IMAGEN
-    + NOMBRE_CATEGORIA
+    + PRODUCTO_ID {static}
+    + NOMBRE {static}
+    + DESCRIPCION {static}
+    + PRECIO {static}
+    + MARCA {static}
+    + STOCK {static}
+    + RUTA_IMAGEN {static}
+    + NOMBRE_CATEGORIA {static}
+
+    + producto_id: int
+    + nombre: string
+    + descripcion: string
+    + precio: float
+    + marca: string
+    + stock: int
+    + ruta_imagen: string
+    + nombre_categoria: string
 }
 
 class VProductoValoracionPromedio {
-    + ID
-    + NOMBRE
-    + DESCRIPCION
-    + RUTA_IMAGEN
-    + PRECIO
-    + MARCA
-    + VALORACION_PROMEDIO
+    + ID {static}
+    + NOMBRE {static}
+    + DESCRIPCION {static}
+    + RUTA_IMAGEN {static}
+    + PRECIO {static}
+    + MARCA {static}
+    + VALORACION_PROMEDIO {static}
+
+    + id: int
+    + nombre: string
+    + descripcion: string
+    + ruta_imagen: string
+    + precio: float
+    + marca: string
+    + valoracion_promedio: int
+
+    + findBeginWithName(productName: string, $columns = []: array): array|null {static}
 }
 
 @enduml

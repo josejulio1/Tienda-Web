@@ -52,7 +52,8 @@ CREATE TABLE Comentario (
     cliente_id INT NOT NULL,
     producto_id INT NOT NULL,
     comentario VARCHAR(1000) NOT NULL,
-    num_estrellas INT(1) NOT NULL
+    num_estrellas INT(1) NOT NULL,
+    fecha_hora_comentario DATETIME NOT NULL
 );
 
 CREATE TABLE Chat (
@@ -141,42 +142,42 @@ ADD CONSTRAINT fk_usuario_rolId FOREIGN KEY (rol_id) REFERENCES Rol(id) ON DELET
 ;
 
 -- Vistas
-CREATE VIEW v_usuario_rol AS
+CREATE VIEW V_Usuario_Rol AS
 SELECT u.id AS "usuario_id", u.usuario, u.correo, u.contrasenia, r.id AS "rol_id", r.nombre AS "nombre_rol", r.color AS "color_rol", u.ruta_imagen_perfil, r.permiso_categoria, r.permiso_producto, r.permiso_marca, r.permiso_cliente, r.permiso_usuario, r.permiso_rol
 FROM Usuario u JOIN Rol r ON u.rol_id = r.id
 ;
 
-CREATE VIEW v_producto_categoria AS
+CREATE VIEW V_Producto_Categoria AS
 SELECT p.id AS "producto_id", p.nombre, p.descripcion, p.precio, m.marca, p.stock, p.ruta_imagen, c.nombre AS "nombre_categoria"
 FROM Producto p JOIN Categoria c ON p.categoria_id = c.id JOIN Marca m ON p.marca_id = m.id
 ;
 
-CREATE VIEW v_pedido AS
+CREATE VIEW V_Pedido AS
 SELECT p.id, c.id AS "cliente_id", c.nombre AS "nombre_cliente", c.apellidos AS "apellidos_cliente", pr.nombre AS "nombre_producto", m.nombre AS "metodo_pago", e.nombre AS "estado_pago", p.direccion_envio
 FROM Pedido_Producto_Item pp JOIN Pedido p ON pp.pedido_id = p.id JOIN Cliente c ON p.cliente_id = c.id JOIN Producto pr ON pp.producto_id = pr.id JOIN Metodo_Pago m ON p.metodo_pago_id = m.id JOIN Estado_Pago e ON p.estado_pago_id = e.id
 ;
 
-CREATE VIEW v_pedido_producto_item_detallado AS
+CREATE VIEW V_Pedido_Producto_Item_Detallado AS
 SELECT ppi.pedido_id, pe.cliente_id, pr.id AS "producto_id", pr.nombre AS "nombre_producto", ppi.cantidad_producto, ppi.precio_producto, pr.ruta_imagen
-FROM pedido_producto_item ppi JOIN pedido pe ON ppi.pedido_id = pe.id JOIN producto pr ON ppi.producto_id = pr.id
+FROM Pedido_Producto_Item ppi JOIN Pedido pe ON ppi.pedido_id = pe.id JOIN Producto pr ON ppi.producto_id = pr.id
 ;
 
-CREATE VIEW v_carrito_cliente AS
+CREATE VIEW V_Carrito_Cliente AS
 SELECT c.cliente_id AS "cliente_id", p.id AS "producto_id", p.nombre AS "nombre_producto", p.precio AS "precio_producto", p.stock AS "stock_producto", c.cantidad, p.ruta_imagen AS "ruta_imagen_producto"
 FROM Carrito_Item c JOIN Producto p ON c.producto_id = p.id
 ;
 
-CREATE VIEW v_producto_valoracion_promedio AS
+CREATE VIEW V_Producto_Valoracion_Promedio AS
 SELECT p.id, p.nombre, p.descripcion, p.ruta_imagen, p.precio, m.marca, ROUND(AVG(c.num_estrellas)) AS "valoracion_promedio"
 FROM Producto p JOIN Marca m ON p.marca_id = m.id LEFT JOIN Comentario c ON p.id = c.producto_id GROUP BY p.id
 ;
 
-CREATE VIEW v_comentario_cliente_producto AS 
-SELECT c.producto_id, cl.id AS "cliente_id", cl.nombre AS "nombre_cliente", cl.apellidos AS "apellidos_cliente", cl.ruta_imagen_perfil, c.comentario, c.num_estrellas
+CREATE VIEW V_Comentario_Cliente_Producto AS
+SELECT c.producto_id, cl.id AS "cliente_id", cl.nombre AS "nombre_cliente", cl.apellidos AS "apellidos_cliente", cl.ruta_imagen_perfil, c.comentario, c.num_estrellas, c.fecha_hora_comentario
 FROM Comentario c JOIN Cliente cl ON c.cliente_id = cl.id JOIN Producto p ON c.producto_id = p.id
 ;
 
-CREATE VIEW v_chat_cliente_imagen AS
-SELECT ch.id, ch.cliente_id, cl.ruta_imagen_perfil, ch.mensaje, ch.fecha, ch.es_cliente
+CREATE VIEW V_Chat_Cliente_Info AS
+SELECT ch.id, ch.cliente_id, cl.correo, cl.ruta_imagen_perfil, ch.mensaje, ch.fecha, ch.es_cliente
 FROM Chat ch JOIN Cliente cl ON ch.cliente_id = cl.id
 ;

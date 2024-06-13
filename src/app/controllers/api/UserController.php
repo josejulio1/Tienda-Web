@@ -8,7 +8,6 @@ use Util\API\AdminHelper;
 use Util\API\HttpErrorMessages;
 use Util\API\HttpStatusCode;
 use Util\API\HttpSuccessMessages;
-use Util\API\JsonHelper;
 use Util\API\Response;
 use Util\Auth\AuthHelper;
 use Util\Auth\RoleAccess;
@@ -17,7 +16,16 @@ use Util\Image\ImageFolder;
 use Util\Image\ImageHelper;
 use Util\Image\TypeImage;
 
+/**
+ * Controlador de API para la tabla {@see Usuario}
+ * @author josejulio1
+ * @version 1.0
+ */
 class UserController {
+    /**
+     * Obtiene todos los {@see Usuario usuarios} de la base de datos
+     * @return void
+     */
     public static function getAll(): void {
         AdminHelper::getAll(VUsuarioRol::class, [
             VUsuarioRol::USUARIO_ID,
@@ -29,12 +37,11 @@ class UserController {
             ], VUsuarioRol::PERMISO_USUARIO);
     }
 
+    /**
+     * Crea un {@see Usuario} nueva en la base de datos
+     * @return void
+     */
     public static function create(): void {
-        if (!AdminHelper::validateAuth('POST')) {
-            return;
-        }
-        http_response_code(HttpStatusCode::OK);
-
         $_POST[Usuario::CONTRASENIA] = password_hash($_POST[Usuario::CONTRASENIA], PASSWORD_DEFAULT);
         if ($_FILES) {
             $_POST[Usuario::RUTA_IMAGEN_PERFIL] = ImageHelper::createImage($_FILES[Usuario::RUTA_IMAGEN_PERFIL], new ImageFolder($_POST[Usuario::CORREO], TypeImage::PROFILE_USER));
@@ -59,17 +66,28 @@ class UserController {
         ]);
     }
 
+    /**
+     * Actualiza un {@see Usuario} en la base de datos
+     * @return void
+     */
     public static function update(): void {
         AdminHelper::updateRow(Usuario::class);
     }
 
+    /**
+     * Elimina un {@see Usuario} en la base de datos
+     * @return void
+     */
     public static function delete(): void {
         AdminHelper::deleteRow(Usuario::class);
     }
 
+    /**
+     * Inicia sesión con un {@see Usuario} en el panel de administración
+     * @return void
+     */
     public static function login(): void {
-        $json = JsonHelper::getPostInJson();
-        $usuarioDb = Usuario::findByEmail($json[Usuario::CORREO], [
+        $usuarioDb = Usuario::findByEmail($_POST[Usuario::CORREO], [
             Usuario::ID,
             Usuario::CONTRASENIA
         ]);
@@ -82,14 +100,14 @@ class UserController {
             }
             return;
         }
-        $usuarioFormulario = new Usuario($json);
+        $usuarioFormulario = new Usuario($_POST);
         // Verificar si la contraseña es incorrecta
         if (!password_verify($usuarioFormulario -> contrasenia, $usuarioDb -> contrasenia)) {
             Response::sendResponse(HttpStatusCode::INCORRECT_DATA, HttpErrorMessages::INCORRECT_USER_OR_PASSWORD);
             return;
         }
         // En caso de que el usuario sea correcto, ofrecer sesión
-        AuthHelper::startSession($usuarioDb -> id, RoleAccess::USER, $json['mantener-sesion']);
+        AuthHelper::startSession($usuarioDb -> id, RoleAccess::USER, $_POST['mantener-sesion'] === 'true');
         Response::sendResponse(HttpStatusCode::OK);
     }
 }

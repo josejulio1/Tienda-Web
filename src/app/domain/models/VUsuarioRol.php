@@ -1,6 +1,13 @@
 <?php
 namespace Model;
 
+use Model\Base\AbstractActiveRecordAuth;
+
+/**
+ * Clase modelo que controla la vista V_Usuario_Rol de la base de datos
+ * @author josejulio1
+ * @version 1.0
+ */
 class VUsuarioRol extends AbstractActiveRecordAuth {
     protected static string $tableName = 'V_Usuario_Rol';
     protected static string $primaryKeyColumn = self::USUARIO_ID;
@@ -55,7 +62,7 @@ class VUsuarioRol extends AbstractActiveRecordAuth {
         $this -> permiso_rol = $data[VUsuarioRol::PERMISO_ROL] ?? 0;
     }
 
-    public function getColumns(): array {
+    function getColumns(): array {
         return [];
     }
 }

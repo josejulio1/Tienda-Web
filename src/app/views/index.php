@@ -1,6 +1,3 @@
-<?php
-use Util\Auth\RoleAccess;
-?>
 <header>
     <?php
     require_once __DIR__ . '/market/templates/nav.php';
@@ -42,28 +39,4 @@ use Util\Auth\RoleAccess;
     <p>Todos los derechos reservados © <?php echo date('Y'); ?></p>
 </footer>
 <?php
-if ($_SESSION && $_SESSION['rol'] == RoleAccess::CUSTOMER) { ?>
-    <aside class="chat-container">
-        <section class="chat">
-            <h2>Chat BYTEMARKET</h2>
-            <section class="chat__detalles">
-                <article id="chat__mensajes">
-                    <div class="mensaje mensaje-usuario">
-                        <img src="/assets/img/internal/default/default-avatar.jpg" alt="Imagen">
-                        <p>¡Buenas! ¿En qué podemos ayudarte?</p>
-                    </div>
-                </article>
-                <article class="enviar-mensaje">
-                    <input type="text" id="enviar-mensaje" placeholder="Introduzca su mensaje...">
-                    <img src="/assets/img/web/svg/market/send.svg" alt="Enviar Mensaje" id="enviar-mensaje-button">
-                </article>
-            </section>
-        </section>
-        <section class="chat-container__open-close">
-            <img src="/assets/img/web/svg/market/chat.svg" alt="Chat" id="chat-abierto">
-            <img class="hide" src="/assets/img/web/svg/market/send.svg" alt="Chat" id="chat-cerrado">
-        </section>
-    </aside>
-    <?php
-}
-?>
+require_once __DIR__ . '/market/templates/chat.php';

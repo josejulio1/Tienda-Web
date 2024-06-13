@@ -11,15 +11,14 @@
     "require": {
         "vlucas/phpdotenv": "^5.6",
         "ext-json": "*",
-        "ext-pdo": "*",
-        "cboden/ratchet": "^0.4.4",
-        "textalk/websocket": "^1.5"
+        "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {
             "Core\\": "app",
             "View\\": "app/views",
             "Model\\": "app/domain/models",
+            "Model\\Base\\": "app/domain/models/base",
             "Controller\\": "app/controllers",
             "Database\\": "app/domain/services",
             "Util\\API\\": "app/utils/api",
@@ -27,7 +26,6 @@
             "Util\\SQL\\": "app/utils/sql",
             "Util\\Permission\\": "app/utils/permissions",
             "Util\\Image\\": "app/utils/image",
-            "Util\\Chat\\": "app/utils/chat",
             "API\\": "app/controllers/api"
         }
     }

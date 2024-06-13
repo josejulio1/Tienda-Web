@@ -33,17 +33,22 @@
         </div>
     </section>
     <section class="pagos">
-        <!--<article class="pagos__titles">
-            <button class="pago__button seleccionado">Tarjeta</button>
-            <button class="pago__button seleccionado">Tarjeta</button>
-        </article>-->
-        <article class="pagos__tarjeta">
-            <article class="columna container__num-tarjeta">
+        <h2>Tipo de Pago</h2>
+        <article class="pagos__titles">
+            <div class="pago__container pago__button pago__seleccionado" id="pagos__tarjeta" pago-id="1">
+                <img src="/assets/img/web/market/payments/card.svg" id="pagos__paypal" alt="Pago con tarjeta">
+            </div>
+            <div class="pago__container pago__button" id="pagos__paypal" pago-id="2">
+                <img src="/assets/img/web/market/payments/paypal.svg" alt="Pago con Bizum">
+            </div>
+        </article>
+        <article class="tipo__pago pagos__tarjeta">
+            <div class="columna container__num-tarjeta">
                 <label for="num-tarjeta">Número de tarjeta</label>
                 <input type="text" id="num-tarjeta" maxlength="16">
                 <div class="invalid-feedback hide">Introduzca un número de tarjeta</div>
-            </article>
-            <article class="columna">
+            </div>
+            <div class="columna">
                 <label for="fecha-caducidad">Fecha Caducidad</label>
                 <div class="fila">
                     <div class="columna">
@@ -56,21 +61,27 @@
                         <div class="invalid-feedback hide">Introduzca un número de año</div>
                     </div>
                 </div>
-            </article>
-            <article class="columna">
+            </div>
+            <div class="columna">
                 <label for="codigo-seguridad">CVV</label>
                 <input type="text" id="codigo-seguridad" placeholder="1234" maxlength="4">
                 <div class="invalid-feedback hide">Introduzca el código de seguridad de la tarjeta</div>
-            </article>
+            </div>
         </article>
-        <h2>Pago con tarjeta</h2>
+        <article class="tipo__pago pagos__paypal hide">
+            <div class="columna">
+                <label for="correo">Correo</label>
+                <input type="email" id="correo">
+                <div class="invalid-feedback hide">Introduzca un correo electrónico</div>
+            </div>
+        </article>
     </section>
     <section class="facturacion">
         <h2>Facturación</h2>
         <div class="facturacion-container">
             <article class="columna">
                 <label for="direccion">Dirección</label>
-                <input type="text" id="direccion">
+                <input type="text" id="direccion" value="<?php echo $direccionCliente; ?>">
                 <div class="invalid-feedback hide">Introduzca la dirección donde se desea recibir los productos</div>
             </article>
         </div>
@@ -79,3 +90,5 @@
 <aside class="pago">
     <button id="pagar">Pagar</button>
 </aside>
+<?php
+require_once __DIR__ . '/../templates/chat.php';

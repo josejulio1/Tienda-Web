@@ -1,7 +1,7 @@
 <main class="no-overflow">
     <form id="login-form">
         <section class="security">
-            <img src="/assets/img/web/svg/lock.svg" alt="Candado">
+            <img src="/assets/img/web/admin/auth/lock.svg" alt="Candado">
         </section>
         <section class="form-row">
             <article class="form-column">

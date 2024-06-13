@@ -1,6 +1,14 @@
 <?php
 namespace Model;
 
+use Model\Base\AbstractActiveRecordAuth;
+use Model\Base\IContainsImage;
+
+/**
+ * Clase modelo que controla la tabla Usuario de la base de datos
+ * @author josejulio1
+ * @version 1.0
+ */
 class Usuario extends AbstractActiveRecordAuth implements IContainsImage {
     protected static string $tableName = 'Usuario';
     protected static string $primaryKeyColumn = self::ID;
@@ -23,12 +31,12 @@ class Usuario extends AbstractActiveRecordAuth implements IContainsImage {
 
     public function __construct(array $data = []) {
         parent::__construct($data);
-        $this -> id = $data['id'] ?? 0;
-        $this -> usuario = $data['usuario'] ?? '';
-        $this -> correo = $data['correo'] ?? '';
-        $this -> contrasenia = $data['contrasenia'] ?? '';
-        $this -> rol_id = $data['rol_id'] ?? 0;
-        $this -> ruta_imagen_perfil = $data['ruta_imagen_perfil'] ?? '';
+        $this -> id = $data[self::ID] ?? 0;
+        $this -> usuario = $data[self::USUARIO] ?? '';
+        $this -> correo = $data[self::CORREO] ?? '';
+        $this -> contrasenia = $data[self::CONTRASENIA] ?? '';
+        $this -> rol_id = $data[self::ROL_ID] ?? 0;
+        $this -> ruta_imagen_perfil = $data[self::RUTA_IMAGEN_PERFIL] ?? '';
     }
 
     public function getColumns(): array {

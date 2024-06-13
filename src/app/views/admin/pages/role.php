@@ -6,14 +6,16 @@ require_once __DIR__ . '/../templates/panel.php';
     <div class="info" id="rol">
         <table class="row-border hover" id="tabla">
           <thead>
-           <th>ID</th>
-           <th>Nombre</th>
-           <th>Color</th>
-           <?php
-           if ($userInfo -> permiso_rol & PERMISSIONS::DELETE) {
-             echo '<th>Borrar</th>';
-           }
-           ?>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Color</th>
+                <?php
+                if ($userInfo -> permiso_rol & PERMISSIONS::DELETE) {
+                    echo '<th>Borrar</th>';
+                }
+                ?>
+            </tr>
           </thead>
         </table>
         <?php
@@ -406,4 +408,4 @@ require_once __DIR__ . '/../templates/panel.php';
   </main>
 <?php
 require_once __DIR__ . '/../templates/modal-choice-info.php';
-?>
+require_once __DIR__ . '/../templates/chat.php';

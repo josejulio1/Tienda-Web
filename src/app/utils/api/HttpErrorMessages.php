@@ -1,8 +1,12 @@
 <?php
 namespace Util\API;
 
+/**
+ * Clase con constantes donde se reúnen todos los mensajes de error posibles que pueden haber en el backend
+ * @author josejulio1
+ * @version 1.0
+ */
 class HttpErrorMessages {
-    public const EMPTY_DATA = 'Datos vacíos';
     public const NO_STOCK = 'Has llegado al límite de stock';
     public const NO_UPLOAD_IMAGE = 'No se pudo subir la imagen al servidor. Inténtelo más tarde';
     public const INCORRECT_DATA = 'Datos incorrectos';

@@ -1,6 +1,13 @@
 <?php
 namespace Model;
 
+use Model\Base\AbstractActiveRecord;
+
+/**
+ * Clase modelo que controla la vista V_Producto_Categoria de la base de datos
+ * @author josejulio1
+ * @version 1.0
+ */
 class VProductoCategoria extends AbstractActiveRecord {
     protected static string $tableName = 'V_Producto_Categoria';
     protected static string $primaryKeyColumn = self::PRODUCTO_ID;
@@ -34,9 +41,5 @@ class VProductoCategoria extends AbstractActiveRecord {
         $this -> stock = $data[VProductoCategoria::STOCK] ?? 0;
         $this -> ruta_imagen = $data[VProductoCategoria::RUTA_IMAGEN] ?? '';
         $this -> nombre_categoria = $data[VProductoCategoria::NOMBRE_CATEGORIA] ?? '';
-    }
-
-    public function getColumns(): array {
-        return [];
     }
 }
