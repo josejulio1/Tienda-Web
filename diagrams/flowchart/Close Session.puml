@@ -1,0 +1,11 @@
+@startuml
+title Cerrar Sesión en Cliente / Administrador
+start
+
+:Pulsa al botón de Cerrar Sesión;
+:Se manda la orden a la API REST;
+:El backend destruye la sesión;
+#greenyellow:Código de éxito HTTP 200 (OK);
+
+stop
+@enduml

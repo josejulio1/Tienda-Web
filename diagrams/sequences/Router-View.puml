@@ -1,0 +1,24 @@
+@startuml
+title Conexión de un navegador con la tienda
+skinparam sequenceMessageAlign center
+
+Cliente -> Router: GET /
+Router -> Router: Comprueba si la ruta está registrada
+group Si la ruta está registrada
+    group La ruta tiene validación asociada
+        Router -> Router: Aplica la validación asociada
+        group Pasa la validación
+            Router -> Controlador: Ejecuta el controlador asociado a la ruta
+            Controlador -> Cliente: Carga en el navegador el fichero PHP con la vista
+        else No pasa la validación
+            Router -> Cliente: HTTP 401 - NO AUTORIZADO
+        end
+    else No tiene validación asociada
+        Router -> Controlador: Ejecuta el controlador asociado a la ruta
+        Controlador -> Cliente: Carga en el navegador el fichero PHP con la vista
+    end
+else Si no está registrada
+    Router -> Cliente: HTTP 404 - NO ENCONTRADO
+end
+
+@enduml

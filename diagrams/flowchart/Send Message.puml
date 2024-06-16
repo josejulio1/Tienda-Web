@@ -1,0 +1,20 @@
+@startuml
+title Envío de un mensaje de Cliente / Administrador
+start
+
+:Pulsa el botón del Chat y lo abre;
+repeat :Escribe un mensaje y pulsa Intro o el botón de enviar mensaje;
+repeat while (¿Mensaje vacío?) is (Si)
+:Envía el mensaje a la API REST;
+:La API REST gestiona los datos cogiendo el ID de sesión del cliente y estableciendo fecha de creación (Si es un usuario, cogerá el ID del cliente enviado por POST);
+:Crea el mensaje en la base de datos;
+if (¿Mensaje guardado?) then (Sí)
+    #greenyellow:Código de éxito HTTP 200 (OK);
+else (No)
+    if (¿Base de datos caída?) then (Sí)
+        #salmon:Código de error HTTP 503 (SERVICIO NO DISPONIBLE);
+    endif
+endif
+
+stop
+@enduml

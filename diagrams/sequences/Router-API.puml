@@ -1,0 +1,54 @@
+@startuml
+title Conexión una llamada HTTP con la API REST de la tienda
+skinparam sequenceMessageAlign center
+
+Cliente -> Router: POST /api/user
+Router -> Router: Comprueba si la ruta está registrada
+group Si la ruta está registrada
+    group La ruta tiene validación asociada
+        Router -> Router: Aplica la validación asociada
+        group Pasa la validación
+            Router -> Controlador: Ejecuta el controlador asociado a la ruta
+            Controlador -> Controlador: Gestiona la información que llega
+            group Si la información es correcta
+                Controlador -> Modelo: Crear Usuario
+                   Modelo -> Controlador: Informa al controlador
+                group Si el usuario se crea correctamente
+                    Controlador -> Cliente: HTTP 200 - OK y según el end-point, datos al frontend
+                else No se creó correctamente
+                    group Si fue problema de la base de datos
+                        Controlador -> Cliente: HTTP 503 - SERVICIO NO DISPONIBLE
+                    else Si fue por datos incorrectos
+                        Controlador -> Cliente: HTTP 400 - DATOS INCORRECTOS
+                    end
+                end
+            else No es correcta
+                Controlador -> Cliente: Código de estado HTTP de error
+            end
+        else No pasa la validación
+            Router -> Cliente: HTTP 401 - NO AUTORIZADO
+        end
+    else No tiene validación asociada
+        Router -> Controlador: Ejecuta el controlador asociado a la ruta
+                    Controlador -> Controlador: Gestiona la información que llega
+                    group Si la información es correcta
+                        Controlador -> Modelo: Crear Usuario
+                           Modelo -> Controlador: Informa al controlador
+                        group Si el usuario se crea correctamente
+                            Controlador -> Cliente: HTTP 200 - OK y según el end-point, datos al frontend
+                        else No se creó correctamente
+                            group Si fue problema de la base de datos
+                                Controlador -> Cliente: HTTP 503 - SERVICIO NO DISPONIBLE
+                            else Si fue por datos incorrectos
+                                Controlador -> Cliente: HTTP 400 - DATOS INCORRECTOS
+                            end
+                        end
+                    else No es correcta
+                        Controlador -> Cliente: Código de estado HTTP de error
+                    end
+    end
+else Si no está registrada
+    Router -> Cliente: HTTP 404 - NO ENCONTRADO
+end
+
+@enduml

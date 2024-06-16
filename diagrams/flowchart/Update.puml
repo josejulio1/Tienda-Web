@@ -1,0 +1,26 @@
+@startuml
+title Actualización de una entidad (Producto de ejemplo) en el panel de Administración
+
+start
+
+:Pulsa el botón de Actualizar;
+:Se abre el modal de Actualizar;
+repeat :Introduce los datos en los campos;
+    :Pulsa en el botón Actualizar;
+    backward:Informar de los errores de cada campo;
+repeat while (¿Datos correctos?) is (No)
+:Enviar datos a la API REST;
+:Buscar producto en el ORM y asignarle los datos a actualizar;
+:Actualizar el Producto;
+if (¿Producto actualizado?) then (Sí)
+    #greenyellow:Código de éxito HTTP 200 (OK);
+else (No)
+    if (¿Base de datos caída?) then (Sí)
+        #salmon:Código de error HTTP 503 (SERVICIO NO DISPONIBLE);
+    else (No)
+        #salmon:Código de error HTTP 400 (DATOS INCORRECTOS);
+    endif
+endif
+
+stop
+@enduml

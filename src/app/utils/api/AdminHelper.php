@@ -56,8 +56,10 @@ class AdminHelper {
         if (!$modeloFormulario -> save()) {
             if (!Database::isConnected()) {
                 Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);
-                return;
+            } else {
+                Response::sendResponse(HttpStatusCode::INCORRECT_DATA, HttpErrorMessages::UNKNOWN_ID);
             }
+            return;
         }
         Response::sendResponse(HttpStatusCode::OK, HttpSuccessMessages::UPDATED);
     }

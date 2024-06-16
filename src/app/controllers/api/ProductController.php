@@ -100,6 +100,45 @@ class ProductController {
     }
 
     /**
+     * Filtra los {@see Producto productos} en la página de búsqueda de productos
+     * @return void
+     */
+    public static function searchProducts(): void {
+        $filtros = $_GET;
+        if ($filtros) {
+            if (array_key_exists('precio_min', $filtros)) {
+                $filtros['precio'] = [$filtros['precio_min'], $filtros['precio_max']];
+                unset($filtros['precio_min']);
+                unset($filtros['precio_max']);
+            }
+            $productos = VProductoValoracionPromedio::findWithQueryString($filtros, [
+                VProductoValoracionPromedio::ID,
+                VProductoValoracionPromedio::NOMBRE,
+                VProductoValoracionPromedio::PRECIO,
+                VProductoValoracionPromedio::RUTA_IMAGEN,
+                VProductoValoracionPromedio::VALORACION_PROMEDIO
+            ]);
+        } else {
+            $productos = VProductoValoracionPromedio::all([
+                VProductoValoracionPromedio::ID,
+                VProductoValoracionPromedio::NOMBRE,
+                VProductoValoracionPromedio::PRECIO,
+                VProductoValoracionPromedio::RUTA_IMAGEN,
+                VProductoValoracionPromedio::VALORACION_PROMEDIO
+            ]);
+        }
+        if (!$productos) {
+            if (!Database::isConnected()) {
+                Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);
+                return;
+            }
+        }
+        Response::sendResponse(HttpStatusCode::OK, null, [
+            'productos' => $productos
+        ]);
+    }
+
+    /**
      * Crea un {@see Producto} nuevo en la base de datos
      * @return void
      */
@@ -125,17 +164,7 @@ class ProductController {
      * @return void
      */
     public static function update(): void {
-        $productoFormulario = Producto::findOne($_POST[Producto::ID]);
-        $productoFormulario -> nombre = $_POST[Producto::NOMBRE];
-        $productoFormulario -> precio = $_POST[Producto::PRECIO];
-        $productoFormulario -> descripcion = $_POST[Producto::DESCRIPCION];
-        if (!$productoFormulario -> save()) {
-            if (!Database::isConnected()) {
-                Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);
-                return;
-            }
-        }
-        Response::sendResponse(HttpStatusCode::OK, HttpSuccessMessages::UPDATED);
+        AdminHelper::updateRow(Producto::class);
     }
 
     /**

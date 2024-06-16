@@ -6,7 +6,7 @@
   "scripts": {
     "create_db": "cd db && mysql -uroot < schema.sql && mysql -uroot < data.sql",
     "host": "php -t src/app/public -S localhost:80",
-    "deploy": "docker compose -f deploy/docker-compose.yml up -d"
+    "deploy": "docker compose -f docker-compose.yml up -d"
   },
   "repository": {
     "type": "git",

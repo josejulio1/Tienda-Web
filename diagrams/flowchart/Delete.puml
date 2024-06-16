@@ -1,0 +1,34 @@
+@startuml
+title Eliminación de una entidad (Producto de ejemplo) en el panel de Administración
+
+start
+
+:Pulsa el botón de Eliminar;
+:Se abre un modal de confirmación;
+:Enviar ID del Producto a la API REST;
+:Recoger ID del Producto;
+if (¿Es un número?) then (Sí)
+    :Buscar producto en el ORM;
+    if (¿Se ha encontrado?) then (Sí)
+        :Eliminar;
+        if (¿Se ha eliminado?) then (Sí)
+            :Eliminar imagen del servidor;
+            #greenyellow:Código de éxito HTTP 200 (OK);
+        else (No)
+            #salmon:Código de error HTTP 503 (SERVICIO NO DISPONIBLE);
+        endif
+    else (No)
+        #salmon:Código de error HTTP 400 (DATOS INCORRECTOS);
+    endif
+endif
+:Actualizar el Producto;
+if (¿Producto actualizado?) then (Sí)
+    #greenyellow:Código de éxito HTTP 200 (OK);
+else (No)
+    if (¿Base de datos caída?) then (Sí)
+        #salmon:Código de error HTTP 503 (SERVICIO NO DISPONIBLE);
+    endif
+endif
+
+stop
+@enduml

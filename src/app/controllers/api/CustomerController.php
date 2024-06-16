@@ -67,6 +67,13 @@ class CustomerController {
         } else {
             $_POST[Cliente::RUTA_IMAGEN_PERFIL] = DefaultPath::DEFAULT_IMAGE_PROFILE;
         }
+        // Verificar si el cliente ya existe
+        $clienteDb = Cliente::findByEmail($_POST[Cliente::CORREO], [Cliente::ID]);
+        if ($clienteDb) {
+            Response::sendResponse(HttpStatusCode::INCORRECT_DATA, HttpErrorMessages::CUSTOMER_EXISTS);
+            return;
+        }
+
         $clienteFormulario = new Cliente($_POST);
         if (!$clienteFormulario -> create()) {
             if (!Database::isConnected()) {

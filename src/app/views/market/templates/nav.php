@@ -5,6 +5,7 @@
         <img src="/assets/img/web/market/search-bar/search.svg" alt="Buscar" id="search-bar--img">
         <article id="search-bar--items"></article>
     </section>
+    <a href="/search-products" class="buscar__productos">Buscar Productos</a>
     <?php
     if ($isAuthenticated) {
         ?>

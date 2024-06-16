@@ -1,0 +1,24 @@
+@startuml
+title Registro de Cliente
+start
+
+repeat :Introduce la información necesaria en los campos;
+    :Pulsa al botón de Registrarse;
+    backward:Mensajes de error programado en los campos;
+repeat while (¿Datos incorrectos?) is (Sí)
+
+:Envía los datos a la API REST;
+if (¿Existe el cliente en la base de datos?) then (Sí)
+    #salmon:Ese cliente ya existe. Elija otro correo;
+else (No)
+    if (¿Contraseña coincide con la de la base de datos?) then (Sí)
+        :Crear una Sesión;
+        #greenyellow:Código de éxito HTTP 200 (OK);
+        :Redirigir al cliente a la página principal;
+    else (No)
+        #salmon:Usuario o contraseña incorrecta;
+    endif
+    #salmon:Usuario o contraseña incorrecta;
+endif
+stop
+@enduml

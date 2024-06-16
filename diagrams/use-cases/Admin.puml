@@ -1,0 +1,41 @@
+@startuml
+title Casos de uso del Panel de administración
+skinparam actorStyle awesome
+left to right direction
+
+package "Módulos Admin" {
+    usecase Usuarios
+    usecase Productos
+    usecase Marcas
+    usecase Categorías
+    usecase Clientes
+    usecase Roles
+}
+:Administrador: --> (Inicia Sesión en /admin o /admin/login)
+(Inicia Sesión en /admin o /admin/login) -> (Usuarios)
+
+(Usuarios) ---> (Crea)
+(Usuarios) ---> (Actualiza)
+(Usuarios) ---> (Elimina)
+
+(Productos) ---> (Crea)
+(Productos) ---> (Actualiza)
+(Productos) ---> (Elimina)
+
+(Marcas) ---> (Crea)
+(Marcas) ---> (Actualiza)
+(Marcas) ---> (Elimina)
+
+(Categorías) ---> (Crea)
+(Categorías) ---> (Actualiza)
+(Categorías) ---> (Elimina)
+
+(Clientes) ---> (Crea)
+(Clientes) ---> (Actualiza)
+(Clientes) ---> (Elimina)
+
+(Roles) ---> (Crea)
+(Roles) ---> (Actualiza)
+(Roles) ---> (Elimina)
+
+@enduml

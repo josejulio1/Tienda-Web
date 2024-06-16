@@ -63,8 +63,8 @@ class ChatController {
         if (!$chat -> create(false)) {
             if (!Database::isConnected()) {
                 Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);
+                return;
             }
-            return;
         }
         Response::sendResponse(HttpStatusCode::OK);
     }

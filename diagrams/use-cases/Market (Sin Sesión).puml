@@ -1,0 +1,17 @@
+@startuml
+title Casos de uso de la tienda (Sin Sesión)
+skinparam actorStyle awesome
+
+:Cliente: --> (Busca un producto por nombre)
+(Busca un producto por nombre) --> (Visualiza la página del producto)
+(Visualiza la página del producto) --> (Cambia a la pestaña de Comentarios)
+(Visualiza la página del producto) --> (Añadir al carrito)
+(Añadir al carrito) --> (Informa de que debe tener iniciada sesión)
+:Cliente: --> (Pulsa el producto)
+(Pulsa el producto) --> (Visualiza la página del producto)
+:Cliente: --> (Pulsa el botón de modo oscuro y se cambia la paleta de colores)
+:Cliente: --> (Pulsa el botón de ir a la página de autenticación)
+(Pulsa el botón de ir a la página de autenticación) --> (Inicia Sesión)
+(Pulsa el botón de ir a la página de autenticación) --> (Se registra)
+
+@enduml

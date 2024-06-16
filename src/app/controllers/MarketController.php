@@ -2,7 +2,9 @@
 namespace Controller;
 
 use Model\CarritoItem;
+use Model\Categoria;
 use Model\Cliente;
+use Model\Marca;
 use Model\Pedido;
 use Model\Producto;
 use Model\VCarritoCliente;
@@ -29,6 +31,7 @@ class MarketController {
         $router -> render('index', [
             'css' => self::getCssImports(),
             'js' => self::getJsImports(),
+            'title' => 'Inicio',
             ...self::loadNav(),
             'productos' => VProductoValoracionPromedio::all([
                 VProductoValoracionPromedio::ID,
@@ -67,7 +70,8 @@ class MarketController {
         $router -> render('market/pages/login', [
             'css' => '<link rel="stylesheet" href="/assets/css/market/auth.css">',
             'js' => '<script src="/assets/js/app/pages/market/auth/auth.js" defer type="module"></script>
-                     <script src="/assets/js/app/pages/market/auth/carrousel.js" defer type="module"></script>'
+                     <script src="/assets/js/app/pages/market/auth/carrousel.js" defer type="module"></script>',
+            'title' => 'Autenticación',
         ]);
     }
 
@@ -90,6 +94,7 @@ class MarketController {
         $router -> render('market/pages/product', [
             'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/product.css">',
             'js' => self::getJsImports() . '<script src="/assets/js/app/pages/market/product.js" type="module" defer></script>',
+            'title' => 'Producto',
             'puedeComentar' => $isAuthenticated
                 ? VComentarioClienteProducto::customerHasCommentedInProduct($productId)
                 : null,
@@ -115,6 +120,18 @@ class MarketController {
         ]);
     }
 
+    public static function searchProducts(Router $router) {
+        $router -> render('market/pages/search-products', [
+            'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/search-products.css">',
+            'js' => self::getJsImports() . '<script src="/assets/js/app/pages/market/search/search-products.js" type="module" defer></script>',
+            'title' => 'Producto',
+            'categorias' => Categoria::all(),
+            'marcas' => Marca::all(),
+            'productos' => VProductoValoracionPromedio::all(),
+            ...self::loadNav()
+        ]);
+    }
+
     /**
      * Renderiza la vista de la página de perfil (/profile)
      * @param Router $router Enrutador que carga la vista
@@ -124,6 +141,7 @@ class MarketController {
         $router -> render('market/pages/profile', [
             'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/profile.css">',
             'js' => self::getJsImports() . '<script src="/assets/js/app/pages/market/profile.js" type="module" defer></script>',
+            'title' => 'Perfil',
             'cliente' => Cliente::findOne($_SESSION['id'], [
                 Cliente::NOMBRE,
                 Cliente::APELLIDOS,
@@ -144,6 +162,7 @@ class MarketController {
         $router -> render('market/pages/orders', [
             'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/orders.css">',
             'js' => self::getJsImports(),
+            'title' => 'Pedidos',
             'pedidosCliente' => VPedidoProductoItemDetallado::find($_SESSION['id'], [
                 VPedidoProductoItemDetallado::PEDIDO_ID,
                 VPedidoProductoItemDetallado::CLIENTE_ID,
@@ -174,6 +193,7 @@ class MarketController {
         $router -> render('market/pages/checkout', [
             'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/checkout.css">',
             'js' => self::getJsImports() . '<script src="/assets/js/app/pages/market/checkout.js" defer type="module"></script>',
+            'title' => 'Realizar pedido',
             'cartItems' => VCarritoCliente::find($_SESSION['id'], [
                 VCarritoCliente::NOMBRE_PRODUCTO,
                 VCarritoCliente::PRECIO_PRODUCTO,
@@ -194,6 +214,7 @@ class MarketController {
         $router -> render('market/pages/done-checkout', [
             'css' => self::getCssImports() . '<link rel="stylesheet" href="/assets/css/market/checkout.css">',
             'js' => self::getJsImports(),
+            'title' => 'Pedido realizado',
             ...self::loadNav()
         ]);
     }
@@ -212,7 +233,7 @@ class MarketController {
      * @return string Devuelve un string con la importación de los JS
      */
     public static function getJsImports(): string {
-        $js = '<script src="/assets/js/app/pages/market/search-bar.js" type="module" defer></script>
+        $js = '<script src="/assets/js/app/pages/market/search/search-bar.js" type="module" defer></script>
         <script src="/assets/js/app/pages/market/cart.js" type="module" defer></script>';
         if (AuthHelper::isAuthenticated(RoleAccess::CUSTOMER)) {
             $js .= '<script src="/assets/js/app/pages/close-session.js" type="module" defer></script>

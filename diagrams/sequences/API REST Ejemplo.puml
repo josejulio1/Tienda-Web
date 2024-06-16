@@ -1,0 +1,36 @@
+@startuml
+title Ejemplo de una llamada a la API REST para obtener todos los clientes
+skinparam sequenceMessageAlign center
+
+Cliente -> Router: GET /api/customers
+Router -> Router: Comprueba si la ruta está registrada
+group Si la ruta está registrada
+    group La ruta tiene validación asociada
+        Router -> Router: Aplica la validación asociada
+        group Pasa la validación
+            Router -> Controlador: Ejecuta el controlador asociado a la ruta
+            Controlador -> Modelo: Consulta al modelo para obtener lo solicitado
+            Modelo -> Controlador: El modelo le devuelve los datos solicitados
+            group Hay clientes
+                Controlador -> Cliente: HTTP 200 - OK y ofrece los clientes al frontend
+            else No hay clientes
+                Controlador -> Cliente: HTTP 404 - NO ENCONTRADO
+            end
+        else No pasa la validación
+            Router -> Cliente: HTTP 401 - NO AUTORIZADO
+        end
+    else No tiene validación asociada
+        Router -> Controlador: Ejecuta el controlador asociado a la ruta
+        Controlador -> Modelo: Consulta al modelo para obtener lo solicitado
+        Modelo -> Controlador: El modelo le devuelve los datos solicitados
+        group Hay clientes
+            Controlador -> Cliente: HTTP 200 - OK y ofrece los clientes al frontend
+        else No hay clientes
+            Controlador -> Cliente: HTTP 404 - NO ENCONTRADO
+        end
+    end
+else Si no está registrada
+    Router -> Cliente: HTTP 404 - NO ENCONTRADO
+end
+
+@enduml

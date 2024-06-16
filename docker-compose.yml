@@ -5,8 +5,8 @@ services:
     ports:
       - 80:80
     volumes:
-      - ../src:/web
-      - ./.env:/web/app/.env
+      - ./src:/web
+      - ./deploy/.env:/web/app/.env
     command: bash -c "docker-php-ext-install pdo_mysql; php -t /web/app/public -S 0.0.0.0:80"
     networks:
       web-db:
@@ -20,7 +20,7 @@ services:
     environment:
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
     volumes:
-      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - ./deploy/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:
       web-db:
         ipv4_address: 172.16.0.101

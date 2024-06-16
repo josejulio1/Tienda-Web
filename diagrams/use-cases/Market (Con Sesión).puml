@@ -1,0 +1,26 @@
+@startuml
+title Casos de uso de la tienda (Con Sesión)
+skinparam actorStyle awesome
+
+:Cliente: --> (Busca un producto por nombre)
+(Busca un producto por nombre) --> (Visualiza la página del producto)
+(Visualiza la página del producto) --> (Cambia a la pestaña de Comentarios)
+(Cambia a la pestaña de Comentarios) --> (Realiza un comentario)
+(Visualiza la página del producto) --> (Añadir al carrito)
+:Cliente: --> (Pulsa el producto)
+(Pulsa el producto) --> (Visualiza la página del producto)
+:Cliente: --> (Pulsa el botón de modo oscuro y se cambia la paleta de colores)
+:Cliente: --> (Pulsa el botón para abrir el chat)
+(Pulsa el botón para abrir el chat) --> (Escribe en el chat y envía el mensaje)
+:Cliente: --> (Abre las opciones)
+(Abre las opciones) --> (Visita la página de cambiar perfil)
+(Abre las opciones) --> (Visita la página de Pedidos)
+(Abre las opciones) --> (Cierra Sesión)
+:Cliente: ---> (Abre el carrito)
+(Abre el carrito) --> (Cambia la cantidad de un producto en el carrito)
+(Abre el carrito) --> (Elimina un producto)
+(Abre el carrito) --> (Visita la página de compra)
+(Visita la página de compra) --> (Realiza la compra)
+(Realiza la compra) --> (Visita la página de compra realizada)
+
+@enduml

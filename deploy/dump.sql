@@ -168,8 +168,8 @@ FROM Carrito_Item c JOIN Producto p ON c.producto_id = p.id
 ;
 
 CREATE VIEW V_Producto_Valoracion_Promedio AS
-SELECT p.id, p.nombre, p.descripcion, p.ruta_imagen, p.precio, m.marca, ROUND(AVG(c.num_estrellas)) AS "valoracion_promedio"
-FROM Producto p JOIN Marca m ON p.marca_id = m.id LEFT JOIN Comentario c ON p.id = c.producto_id GROUP BY p.id
+SELECT p.id, p.nombre, p.descripcion, p.ruta_imagen, p.precio, m.id AS "marca_id", m.marca, ca.id AS "categoria_id", ca.nombre AS "nombre_categoria", ROUND(AVG(c.num_estrellas)) AS "valoracion_promedio"
+FROM Producto p JOIN Marca m ON p.marca_id = m.id JOIN Categoria ca ON p.categoria_id = ca.id LEFT JOIN Comentario c ON p.id = c.producto_id GROUP BY p.id
 ;
 
 CREATE VIEW V_Comentario_Cliente_Producto AS

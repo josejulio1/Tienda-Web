@@ -8,6 +8,7 @@ use Model\Pedido;
 use Model\Pedido_Producto_Item;
 use Model\Producto;
 use Model\VPedido;
+use Util\API\AdminHelper;
 use Util\API\HttpErrorMessages;
 use Util\API\HttpStatusCode;
 use Util\API\Response;
@@ -40,6 +41,7 @@ class OrderController {
      */
     public static function create(): void {
         $_POST[Pedido::CLIENTE_ID] = $_SESSION['id'];
+        // El estado de pago con ID 3 es Pendiente
         $_POST[Pedido::ESTADO_PAGO_ID] = 3;
         $pedidoFormulario = new Pedido($_POST);
         if (!$pedidoFormulario -> create()) {
@@ -88,15 +90,6 @@ class OrderController {
      * @return void
      */
     public static function update(): void {
-        $pedido = new Pedido($_POST);
-        if (!$pedido -> save()) {
-            if (!Database::isConnected()) {
-                Response::sendResponse(HttpStatusCode::SERVICE_UNAVAILABLE, HttpErrorMessages::SERVICE_UNAVAILABLE);
-            } else {
-                Response::sendResponse(HttpStatusCode::INCORRECT_DATA, HttpErrorMessages::UNKNOWN_ID);
-            }
-            return;
-        }
-        Response::sendResponse(HttpStatusCode::OK);
+        AdminHelper::updateRow(Pedido::class);
     }
 }

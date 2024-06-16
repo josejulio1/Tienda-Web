@@ -32,6 +32,7 @@ class AdminController {
         $router -> render('admin/pages/user', [
             'css' => self::getCssImports(),
             'js' => self::getJsImports() . '<script src="/assets/js/app/pages/admin/sections/user/user.js" type="module" defer></script>',
+            'title' => 'Usuario',
             'userInfo' => $userInfo,
             'roles' => Rol::all([
                 Rol::ID,
@@ -55,6 +56,7 @@ class AdminController {
         $router -> render('admin/pages/product', [
             'css' => self::getCssImports(),
             'js' => self::getJsImports() . '<script src="/assets/js/app/pages/admin/sections/product/product.js" type="module" defer></script>',
+            'title' => 'Producto',
             'userInfo' => self::getUserInfo(),
             'marcas' => Marca::all([Marca::ID, Marca::MARCA]),
             'categorias' => Categoria::all([Categoria::ID, Categoria::NOMBRE])
@@ -75,6 +77,7 @@ class AdminController {
         $router -> render('admin/pages/brand', [
             'css' => self::getCssImports(),
             'js' => self::getJsImports() . '<script src="/assets/js/app/pages/admin/sections/brand/brand.js" type="module" defer></script>',
+            'title' => 'Marca',
             'userInfo' => self::getUserInfo()
         ]);
     }
@@ -93,6 +96,7 @@ class AdminController {
         $router -> render('admin/pages/category', [
             'css' => self::getCssImports(),
             'js' => self::getJsImports() . '<script src="/assets/js/app/pages/admin/sections/category/category.js" type="module" defer></script>',
+            'title' => 'Categoría',
             'userInfo' => self::getUserInfo()
         ]);
     }
@@ -114,6 +118,7 @@ class AdminController {
         $router -> render('admin/pages/customer', [
             'css' => self::getCssImports(),
             'js' => $js,
+            'title' => 'Cliente',
             'userInfo' => self::getUserInfo()
         ]);
     }
@@ -133,6 +138,7 @@ class AdminController {
             'css' => self::getCssImports(),
             'js' => self::getJsImports() . '<script src="/assets/js/app/pages/admin/sections/role/role.js" type="module" defer></script>
                                             <script src="/assets/js/app/pages/admin/sections/role/role-system.js" type="module" defer></script>',
+            'title' => 'Rol',
             'userInfo' => self::getUserInfo()
         ]);
     }
@@ -145,7 +151,8 @@ class AdminController {
     public static function login(Router $router) {
         $router -> render('admin/pages/auth', [
             'css' => '<link rel="stylesheet" href="/assets/css/admin/auth.css">',
-            'js' => '<script src="/assets/js/app/pages/admin/auth/auth.js" type="module" defer></script>'
+            'js' => '<script src="/assets/js/app/pages/admin/auth/auth.js" type="module" defer></script>',
+            'title' => 'Inicio de Sesión',
         ]);
     }
 

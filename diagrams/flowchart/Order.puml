@@ -1,0 +1,35 @@
+@startuml
+title Creación de un Pedido
+
+start
+
+repeat :Introduce los datos de pago en los campos;
+    :Pulsa en el botón Pagar;
+    backward:Informar de los errores de cada campo;
+repeat while (¿Datos correctos?) is (No)
+:Enviar datos a la API REST;
+:Gestionar los datos;
+:Crear el Pedido;
+if (¿Pedido creado?) then (Sí)
+    :Buscar Carrito del cliente;
+    :Guardar productos del Carrito en el Pedido;
+    if (¿Guardado Correctamente?) then (Sí)
+        :Vaciar Carrito del Cliente;
+        if (¿Carrito vaciado correctamente?) then (Sí)
+            #greenyellow:Código de éxito HTTP 200 (OK);
+        else (No)
+            #salmon:Código de error HTTP 503 (SERVICIO NO DISPONIBLE);
+        endif
+    else (No)
+        #salmon:Código de error HTTP 503 (SERVICIO NO DISPONIBLE);
+    endif
+else (No)
+    if (¿Base de datos caída?) then (Sí)
+        #salmon:Código de error HTTP 503 (SERVICIO NO DISPONIBLE);
+    else (No)
+        #salmon:Código de error HTTP 400 (DATOS INCORRECTOS);
+    endif
+endif
+
+stop
+@enduml

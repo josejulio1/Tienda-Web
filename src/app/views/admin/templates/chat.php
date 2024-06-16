@@ -1,5 +1,4 @@
 <aside class="open-close-chat">
-    <p id="notifications">0</p>
     <audio id="audio-notification">
         <source type="audio/mp3" src="/assets/audio/notification.mp3">
     </audio>
