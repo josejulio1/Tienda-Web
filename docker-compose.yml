@@ -9,8 +9,7 @@ services:
       - ./deploy/.env:/web/app/.env
     command: bash -c "docker-php-ext-install pdo_mysql; php -t /web/app/public -S 0.0.0.0:80"
     networks:
-      web-db:
-        ipv4_address: 172.16.0.100
+      - bytemarket-network
     depends_on:
       - db
 
@@ -22,13 +21,8 @@ services:
     volumes:
       - ./deploy/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:
-      web-db:
-        ipv4_address: 172.16.0.101
+      - bytemarket-network
 
 networks:
-  web-db:
+  bytemarket-network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.16.0.0/24
-          gateway: 172.16.0.1

@@ -62,7 +62,7 @@ class CustomerController {
         if ($_FILES) {
             $_POST[Cliente::RUTA_IMAGEN_PERFIL] = ImageHelper::createImage(
                 $_FILES[Cliente::RUTA_IMAGEN_PERFIL],
-                new ImageFolder(Cliente::NOMBRE, TypeImage::PROFILE_CUSTOMER)
+                new ImageFolder($_POST[Cliente::CORREO], TypeImage::PROFILE_CUSTOMER)
             );
         } else {
             $_POST[Cliente::RUTA_IMAGEN_PERFIL] = DefaultPath::DEFAULT_IMAGE_PROFILE;
