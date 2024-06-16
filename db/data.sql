@@ -41,13 +41,13 @@ INSERT INTO Producto (id, nombre, descripcion, precio, stock, ruta_imagen, marca
 INSERT INTO Carrito_Item (producto_id, cliente_id, cantidad) VALUES
 (4, 9, 1),
 (3, 1, 10),
-(2, 9, 48),
-(4, 4, 59),
-(5, 9, 81),
-(5, 7, 77),
-(1, 6, 37),
-(2, 1, 51),
-(3, 2, 50);
+(2, 9, 2),
+(4, 4, 3),
+(5, 9, 1),
+(5, 7, 6),
+(1, 6, 2),
+(2, 1, 16),
+(3, 2, 4);
 
 -- Metodo_Pago
 INSERT INTO Metodo_Pago (id, nombre) VALUES
