@@ -11,14 +11,18 @@ repeat while (¿Datos incorrectos?) is (Sí)
 if (¿Existe el cliente en la base de datos?) then (Sí)
     #salmon:Ese cliente ya existe. Elija otro correo;
 else (No)
-    if (¿Contraseña coincide con la de la base de datos?) then (Sí)
+    :Guarda el cliente en la base de datos;
+    if (¿Cliente registrado correctamente?) then (Sí)
         :Crear una Sesión;
         #greenyellow:Código de éxito HTTP 200 (OK);
         :Redirigir al cliente a la página principal;
     else (No)
-        #salmon:Usuario o contraseña incorrecta;
+        if (¿Base de datos caída?) then (Sí)
+            #salmon:Código de error HTTP 503 (SERVICIO NO DISPONIBLE);
+        else (No)
+            #salmon:Código de error HTTP 400 (DATOS INCORRECTOS);
+        endif
     endif
-    #salmon:Usuario o contraseña incorrecta;
 endif
 stop
 @enduml
