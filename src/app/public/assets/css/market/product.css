@@ -175,7 +175,7 @@ main {
     height: 30px;
 }
 
-.comentario__item--estrella[src="/assets/img/web/svg/star-no-filled.svg"] {
+.comentario__item--estrella[src="/assets/img/web/market/comment/star-no-filled.svg"] {
     filter: invert(1);
 }
 

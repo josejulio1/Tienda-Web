@@ -1,7 +1,8 @@
 import { Row } from "../Row.js";
 
-export class CategoryRow extends Row {
-    constructor(data, permisoBorrar) {
-        super(permisoBorrar, data);
-    }
-}
+/**
+ * Crea una fila para mostrar los datos de una Categoría
+ * @author josejulio1
+ * @version 1.0
+ */
+export class CategoryRow extends Row {}

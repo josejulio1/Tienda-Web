@@ -1,48 +1,22 @@
-import {WEBSOCKET_CONNECTION} from "../../../config/config.js";
 import {ajax} from "../../../api/ajax.js";
 import {END_POINTS} from "../../../api/end-points.js";
 import {HTTP_STATUS_CODES} from "../../../api/http-status-codes.js";
 import {InfoWindow} from "../../../components/InfoWindow.js";
-import {ChatMessage} from "./components/ChatMessage.js";
+import {ChatMessage} from "../../../chat/components/ChatMessage.js";
+import {CHAT, V_CHAT_CLIENTE_INFO} from "../../../api/models.js";
 import {ChatItem} from "./components/ChatItem.js";
+import {scrollDown} from "../../../chat/scroll-down.js";
 
-const webSocket = new WebSocket(WEBSOCKET_CONNECTION);
-const $notifications = $('#notifications');
 const $notificationSound = document.getElementById('audio-notification');
 const $chats = $('#chats');
 const $chatMensajes= $('#chat__mensajes');
 const $enviarMensaje = $('#enviar-mensaje');
 const $enviarMensajeButton = $('#enviar-mensaje-button');
-let sessionId, numMessages = 0;
+let clientesRegistrados = [];
 
-window.addEventListener('load', async () => {
-    const response = await ajax(END_POINTS.GET_SESSION_ID, 'GET');
-    if (response.status !== HTTP_STATUS_CODES.OK) {
-        InfoWindow.make(response.message);
-        return;
-    }
-    sessionId = response.data.sessionId;
-})
-
-webSocket.addEventListener('message', message => {
-    $notifications.html(++numMessages);
-    // Si el chat está cerrado, notificar con un sonido
-    if (!$('#chat-container.open-chat').length) {
-        $notificationSound.play();
-    }
-    let { data } = message;
-    data = JSON.parse(data);
-    // Si el cliente no existe en la lista de clientes, añadirlo
-    console.log(data)
-    if (!$(`.chat__item[cliente-id=${data['id']}]`).length) {
-        $chats.append(
-            new ChatItem(data).getChatItem()
-        );
-    }
-
-    $chatMensajes.append(
-        new ChatMessage(data).getChatMessage()
-    );
+window.addEventListener('load', () => {
+    listenCustomers();
+    listenMessages();
 })
 
 $enviarMensaje.on('keydown', e => {
@@ -53,21 +27,86 @@ $enviarMensaje.on('keydown', e => {
 })
 $enviarMensajeButton.on('click', sendMessage);
 
-function sendMessage() {
-    webSocket.send(JSON.stringify({
-        'sessionId': sessionId,
-        'sessionType': 1,
-        'message': $enviarMensaje.val()
-    }));
+/**
+ * Realiza una petición al backend cada 5 segundos consultando si existe algún mensaje nuevo de algún cliente,
+ * y en caso de que lo haya, crea un DOM de ChatItem para adjuntar el cliente a la lista de clientes
+ */
+function listenCustomers() {
+    // Cargar chat cada 5 segundos
+    setInterval(async () => {
+        const response = await ajax(END_POINTS.CHAT.GET_CUSTOMERS, 'GET');
+        let { data: { clientes } } = response;
+        // Eliminar clientes que ya estén en la parte izquierda del chat
+        for (const cliente of clientes) {
+            if (!clientesRegistrados.includes(cliente[V_CHAT_CLIENTE_INFO.CLIENTE_ID])) {
+                $notificationSound.play();
+                $chats.append(
+                    new ChatItem(cliente).getChatItem()
+                );
+                clientesRegistrados.push(cliente[V_CHAT_CLIENTE_INFO.CLIENTE_ID]);
+            }
+        }
+    }, 5000)
+}
+
+/**
+ * Realiza una petición cada 5 segundos consultando los mensajes con el cliente que se está hablando. En
+ * caso de que el administrador no esté hablando con ningún cliente, no hará nada
+ */
+function listenMessages() {
+    setInterval(async () => {
+        const $chatSelectedItem = $('.chat__item[selected-chat-item]');
+        if (!$chatSelectedItem.length) {
+            return;
+        }
+        const response = await ajax(`${END_POINTS.CHAT.GET_CUSTOMER_MESSAGES}?id=${$chatSelectedItem.attr('cliente-id')}`, 'GET');
+        let { data: { mensajes } } = response;
+        $chatMensajes.html('');
+        const documentFragment = document.createDocumentFragment();
+        for (const mensaje of mensajes) {
+            documentFragment.appendChild(
+                new ChatMessage(mensaje).getChatMessage()
+            );
+        }
+        $chatMensajes.append(documentFragment);
+        scrollDown();
+    }, 5000)
+}
+
+/**
+ * Envía un mensaje a un cliente en el chat
+ * @returns {Promise<void>} Promesa que no es necesario obtenerla
+ */
+async function sendMessage() {
+    const mensaje = $enviarMensaje.val();
+    if (!mensaje) {
+        return;
+    }
+    // Si no hay ningún cliente seleccionado, enviar mensaje de error
+    const $chatSelectedItem = $('.chat__item[selected-chat-item]');
+    if (!$chatSelectedItem.length) {
+        InfoWindow.make('Debes de tener seleccionado un cliente');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append(CHAT.CLIENTE_ID, $chatSelectedItem.attr('cliente-id'));
+    formData.append(CHAT.MENSAJE, mensaje);
+    formData.append(CHAT.ES_CLIENTE, '0');
+    const response = await ajax(END_POINTS.CHAT.SEND_MESSAGE, 'POST', formData);
+    if (response.status !== HTTP_STATUS_CODES.OK) {
+        InfoWindow.make(response.message);
+        return;
+    }
+    // Adjuntar mensaje escrito
     const data = {
-        'ruta-imagen-perfil': $('#imagen-perfil-usuario').attr('src'),
-        'message': $enviarMensaje.val(),
-        'es-admin': true
+        [V_CHAT_CLIENTE_INFO.RUTA_IMAGEN_PERFIL]: $('#imagen-perfil-usuario').attr('src'),
+        [V_CHAT_CLIENTE_INFO.MENSAJE]: mensaje,
+        [V_CHAT_CLIENTE_INFO.ES_CLIENTE]: false
     }
     $chatMensajes.append(
         new ChatMessage(data).getChatMessage()
     );
-    const $chatMensajesJs = document.getElementById('chat__mensajes');
-    $chatMensajesJs.scrollTo(0, $chatMensajesJs.scrollHeight);
+    scrollDown();
     $enviarMensaje.val('');
 }

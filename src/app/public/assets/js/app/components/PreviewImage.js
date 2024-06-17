@@ -1,7 +1,17 @@
+/**
+ * Crea un componente DOM que se utiliza para subir una imagen en un formulario y previsualizar la imagen subida
+ * antes de subirla al servidor
+ * @author josejulio1
+ * @version 1.0
+ */
 export class PreviewImage {
+    /**
+     * Constructor de PreviewImage.
+     * @param htmlSelector {string} Selector del DOM donde se encuentra la etiqueta a situar el componente
+     * @param inputId {string} ID que tendrá el input de la imagen
+     */
     constructor(htmlSelector, inputId) {
         this.$label = $(htmlSelector);
-        this.htmlSelector = htmlSelector;
         const input = document.createElement('input');
         const imgPlus = document.createElement('img');
         const imgPreview = document.createElement('img');
@@ -10,7 +20,7 @@ export class PreviewImage {
         input.classList.add('image');
         input.hidden = true;
         input.id = inputId;
-        imgPlus.src = '/assets/img/web/svg/add.svg';
+        imgPlus.src = '/assets/img/web/components/preview-image/add.svg';
         imgPlus.alt = 'Plus';
         imgPreview.classList.add('photo-preview', 'hide');
         imgPreview.alt = 'Photo Preview';
@@ -19,6 +29,10 @@ export class PreviewImage {
         this.initEvents();
     }
 
+    /**
+     * Inicia el evento de la imagen. Al subir la imagen al formulario, se accionará un evento que permitirá
+     * previsualizar la imagen en el navegador
+     */
     initEvents() {
         this.$label.on('change', e => {
             const target = e.target;

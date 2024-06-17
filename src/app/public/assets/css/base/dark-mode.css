@@ -133,10 +133,20 @@
     border: 1px solid var(--primario);
 }
 
+/* Búsqueda de productos */
+.dark-mode .busqueda__precio span {
+    color: var(--primario);
+}
+
+.dark-mode .busqueda__checkbox label {
+    color: var(--primario);
+}
+
 /* Producto */
 .dark-mode .producto__detalles,
 .dark-mode .descripcion-comentarios {
     color: var(--primario);
+    border-radius: 1rem;
 }
 
 .dark-mode .producto__detalles__valoracion img {
@@ -156,6 +166,48 @@
 
 .dark-mode .switcher-item img {
     filter: invert(0);
+}
+
+/* Pago */
+.dark-mode .producto__total {
+    background-color: var(--secundario);
+    padding-bottom: 1rem;
+    color: var(--primario);
+}
+
+.dark-mode .tipo__pago,
+.dark-mode .facturacion-container {
+    background-color: var(--secundario);
+}
+
+.dark-mode .pago__button {
+    background-color: var(--secundario);
+    border-bottom: 2px solid var(--primario-dark);
+}
+
+.dark-mode .pago__button:hover,
+.dark-mode .pago__seleccionado {
+    background-color: var(--azul);
+}
+
+.dark-mode .pago__button img {
+    filter: invert(1);
+}
+
+.dark-mode .fila p {
+    color: var(--primario);
+}
+
+.dark-mode .columna label {
+    color: var(--primario);
+}
+
+.dark-mode .pedido-container legend {
+    color: var(--primario);
+}
+
+.dark-mode .nombre__producto {
+    color: var(--azul);
 }
 
 /* Admin */
@@ -205,6 +257,10 @@
     border-radius: 1rem;
 }
 
+.dark-mode table.dataTable > thead > tr > th {
+    border-bottom: 1px solid var(--primario) !important;
+}
+
 .dark-mode .eliminar:hover {
     background-color: var(--primario);
 }
@@ -239,7 +295,7 @@
 }
 
 .dark-mode .img-container {
-    border: 1px solid var(--primario);
+    border: 1px solid var(--primario) !important;
 }
 
 .dark-mode .img-container img[alt=Plus] {
@@ -251,6 +307,21 @@
     border-color: var(--primario);
 }
 
+/* Rol */
+.dark-mode nav {
+    border-color: var(--primario);
+}
+
+.dark-mode .btn-permiso:hover,
+.dark-mode .btn-permiso.selected-button {
+    background-color: var(--azul);
+    color: var(--primario);
+}
+
+.dark-mode .contenedor-permisos {
+    border-color: var(--primario);
+}
+
 /* Editar perfil cliente */
 .dark-mode .campos-perfil {
     background-color: var(--secundario);
@@ -258,4 +329,43 @@
 
 .dark-mode .datos label {
     color: var(--primario) !important;
+}
+
+/* Chat Admin */
+.dark-mode #chat-container,
+.dark-mode .chats__container,
+.dark-mode .chat-mensajes__container {
+    background-color: var(--secundario);
+}
+
+.dark-mode #chat-container {
+    border: 2px solid var(--primario);
+    overflow: hidden;
+}
+
+.dark-mode .chat__item,
+.dark-mode #info-cliente-chat {
+    color: var(--primario);
+}
+
+.dark-mode .chats__cabecera,
+.dark-mode .chat__cabecera {
+    border-color: var(--primario);
+}
+
+.dark-mode .chat__item:hover {
+    background-color: var(--azul);
+}
+
+.dark-mode #chat__mensajes,
+.dark-mode #chats {
+    background-color: var(--primario-dark);
+}
+
+.dark-mode #chats {
+    border-right: 2px solid var(--primario);
+}
+
+.dark-mode #enviar-mensaje {
+    background-color: var(--primario-dark);
 }

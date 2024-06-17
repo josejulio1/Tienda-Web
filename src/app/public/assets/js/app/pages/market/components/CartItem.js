@@ -3,8 +3,19 @@ import {ajax} from "../../../api/ajax.js";
 import {HTTP_STATUS_CODES} from "../../../api/http-status-codes.js";
 import {END_POINTS} from "../../../api/end-points.js";
 import {InfoWindow} from "../../../components/InfoWindow.js";
+import {Cart} from "./Cart.js";
 
+/**
+ * Crea un elemento DOM de un artículo individual del carrito de un cliente
+ * @author josejulio1
+ * @version 1.0
+ */
 export class CartItem {
+    /**
+     * Constructor de CartItem
+     * @param cart {Cart} Clase del carrito donde se desea insertar el artículo
+     * @param data {JSON} Datos necesarios para crear el artículo. Estos datos se recogen en el backend
+     */
     constructor(cart, data) {
         this.cart = cart;
         this.cartItem = document.createElement('article');
@@ -24,7 +35,6 @@ export class CartItem {
         const unidadesProductoCantidadInput = document.createElement('input');
         const unidadesProductoCantidadSumarButton = document.createElement('button');
         const unidadesProductoCantidadSumarButtonImg = document.createElement('img');
-        /*const unidadesProductoSpan = document.createElement('span');*/
         const eliminarItemImg = document.createElement('img');
 
         this.cartItem.classList.add('carrito__item');
@@ -42,7 +52,7 @@ export class CartItem {
         unidadesProductoContenedorCantidad.classList.add('cantidad__contenedor');
         unidadesProductoCantidadRestarButton.classList.add('restar-cantidad');
         unidadesProductoCantidadRestarButton.addEventListener('click', e => this.operacionCantidad(e, false));
-        unidadesProductoCantidadRestarButtonImg.src = '/assets/img/web/svg/minus.svg';
+        unidadesProductoCantidadRestarButtonImg.src = '/assets/img/web/market/cart/minus.svg';
         unidadesProductoCantidadRestarButtonImg.loading = 'lazy';
         unidadesProductoCantidadInput.classList.add('cantidad');
         unidadesProductoCantidadInput.type = 'text';
@@ -51,31 +61,11 @@ export class CartItem {
             // Guardar la cantidad actual por si el usuario cuando establezca una cantidad incorrecta, se ponga la cantidad antigua
             this.ultimaCantidad = e.target.value;
         })
-        unidadesProductoCantidadInput.addEventListener('change', async e => {
-            const { target, target: { value: cantidad } } = e;
-            if (parseInt(cantidad) < 1) {
-                target.value = this.ultimaCantidad;
-                return;
-            }
-            const Producto = {
-                [V_CARRITO_CLIENTE.PRODUCTO_ID]: target.closest('article.carrito__item').getAttribute('item-id'),
-                [V_CARRITO_CLIENTE.CANTIDAD]: cantidad
-            }
-            const response = await ajax(END_POINTS.CARRITO.SET_QUANTITY, 'POST', Producto);
-            if (response.status !== HTTP_STATUS_CODES.OK) {
-                InfoWindow.make(response.message);
-                target.value = this.ultimaCantidad;
-                return;
-            }
-            this.cart.actualizarCarrito();
-            target.value = cantidad;
-        })
+        unidadesProductoCantidadInput.addEventListener('change', e => this.cambiarCantidad(e));
         unidadesProductoCantidadSumarButton.addEventListener('click', e => this.operacionCantidad(e, true));
         unidadesProductoCantidadSumarButton.classList.add('sumar-cantidad');
-        unidadesProductoCantidadSumarButtonImg.src = '/assets/img/web/svg/add.svg';
+        unidadesProductoCantidadSumarButtonImg.src = '/assets/img/web/components/preview-image/add.svg';
         unidadesProductoCantidadSumarButtonImg.loading = 'lazy';
-        /*unidadesProductoSpan.classList.add('item__precio');
-        unidadesProductoSpan.textContent = '1';*/
         eliminarItemImg.id = 'eliminar-item';
         eliminarItemImg.src = '/assets/img/web/svg/delete.svg';
         eliminarItemImg.alt = 'Eliminar';
@@ -98,6 +88,38 @@ export class CartItem {
         this.cartItem.appendChild(eliminarItemImg);
     }
 
+    /**
+     * Cambia la cantidad que escriba un usuario en el campo input y la almacena en la base de datos
+     * @param e {Event} DOM que accionó el evento. En este caso se acciona al realizar focus
+     * @returns {Promise<void>} Devuelve una promesa que no es necesario recogerla
+     */
+    async cambiarCantidad(e) {
+        const { target, target: { value: cantidad } } = e;
+        if (parseInt(cantidad) < 1) {
+            target.value = this.ultimaCantidad;
+            return;
+        }
+        const formData = new FormData();
+        formData.append(V_CARRITO_CLIENTE.PRODUCTO_ID, target.closest('article.carrito__item').getAttribute('item-id'));
+        formData.append(V_CARRITO_CLIENTE.CANTIDAD, cantidad);
+        const response = await ajax(END_POINTS.CARRITO.SET_QUANTITY, 'POST', formData);
+        if (response.status !== HTTP_STATUS_CODES.OK) {
+            InfoWindow.make(response.message);
+            target.value = this.ultimaCantidad;
+            return;
+        }
+        this.cart.actualizarCarrito();
+        target.value = cantidad;
+        this.ultimaCantidad = cantidad;
+    }
+
+    /**
+     * Realiza una operación con la cantidad de un artículo en el carrito.
+     * Este método puede decrementar o incrementar en 1 la cantidad de un artículo
+     * @param e {MouseEvent} DOM que accionó el evento
+     * @param isIncrementar {boolean} Si se quiere incrementar, usar true, si se quiere decrementar, usar false
+     * @returns {Promise<void>} Devuelve una promesa que no es necesario recogerla
+     */
     async operacionCantidad(e, isIncrementar) {
         const { target } = e;
         // Coger input de la cantidad
@@ -106,21 +128,28 @@ export class CartItem {
             return;
         }
 
-        const Producto = {
-            [V_CARRITO_CLIENTE.PRODUCTO_ID]: target.closest('article.carrito__item').getAttribute('item-id')
-        }
+        const formData = new FormData();
+        formData.append(V_CARRITO_CLIENTE.PRODUCTO_ID, target.closest('article.carrito__item').getAttribute('item-id'));
         // Ordenar al backend que decrement el ID del
         const response = await ajax(isIncrementar
             ? END_POINTS.CARRITO.INCREMENT_QUANTITY
-            : END_POINTS.CARRITO.DECREMENT_QUANTITY, isIncrementar ? 'POST': 'DELETE', Producto);
+            : END_POINTS.CARRITO.DECREMENT_QUANTITY, 'POST', formData);
         if (response.status !== HTTP_STATUS_CODES.OK) {
             InfoWindow.make(response.message);
             return;
         }
-        $input.value = isIncrementar ? ++this.ultimaCantidad : --this.ultimaCantidad;
+        const { data: { cantidad } } = response;
+        $input.value = cantidad;
+        this.ultimaCantidad = cantidad;
         this.cart.actualizarCarrito();
     }
 
+    /**
+     * Elimina un artículo del carrito al pulsar la imagen de eliminar
+     * @param e {MouseEvent} DOM donde se accionó el evento
+     * @param cart {Cart} Clase carrito donde eliminar el artículo
+     * @returns {Promise<void>} Devuelve una promesa que no es necesario recogerla
+     */
     async eliminarItem(e, cart) {
         const { target } = e;
         const $carritoItem = target.closest('.carrito__item');
@@ -132,22 +161,12 @@ export class CartItem {
         }
         $carritoItem.remove();
         cart.actualizarCarrito();
-        /*actualizarCarrito();*/
-               /* if (response.status !== HTTP_STATUS_CODES.OK) {
-                    InfoWindow.make('No se pudo eliminar el producto del carrito');
-                    return;
-                }
-                $carritoItem.remove();
-                // Si se ha eliminado el último producto que había en el carrito, ocultar carrito y mostrar mensaje de añadir producto
-                if ($('.carrito__item').length === 0) {
-                    $carritoItems.addClass('hide');
-                    $detallesCarrito.addClass('hide');
-                    $noCart.removeClass('hide');
-                }
-                actualizarCarrito();
-            })*/
     }
 
+    /**
+     * Devuelve el DOM del artículo del carrito
+     * @returns {HTMLElement} DOM del artículo del carrito
+     */
     getItem() {
         return this.cartItem;
     }

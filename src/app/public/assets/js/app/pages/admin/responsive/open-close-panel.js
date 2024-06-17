@@ -2,6 +2,8 @@ const { body } = document;
 const $panelInfo = $('.panel--info');
 const $openClosePanel = $('.open-close-panel');
 
+// Este fichero tiene la lógica de apertura-cierre del panel de administrador
+
 $openClosePanel.on('click', () => {
     if ($panelInfo.hasClass('hide')) {
         $panelInfo.removeClass('hide');

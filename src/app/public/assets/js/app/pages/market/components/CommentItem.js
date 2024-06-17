@@ -1,6 +1,15 @@
 import {V_COMENTARIO_CLIENTE_PRODUCTO} from "../../../api/models.js";
 
+/**
+ * Crea un elemento DOM de un comentario en un producto
+ * @author josejulio1
+ * @version 1.0
+ */
 export class CommentItem {
+    /**
+     * Constructor de CommentItem.
+     * @param data {JSON} Datos necesarios para crear el comentario. Estos datos se recogen en el backend
+     */
     constructor(data) {
         this.commentItem = document.createElement('div');
         const comentarioItemEsencial = document.createElement('div');
@@ -27,10 +36,10 @@ export class CommentItem {
             imagenEstrella.alt = 'Estrella';
             imagenEstrella.loading = 'lazy';
             if (numValoracion-- > 0) {
-                imagenEstrella.src = '/assets/img/web/svg/star-filled.svg';
+                imagenEstrella.src = '/assets/img/web/market/comment/star-filled.svg';
             } else {
                 imagenEstrella.classList.add('invert-color');
-                imagenEstrella.src = '/assets/img/web/svg/star-no-filled.svg';
+                imagenEstrella.src = '/assets/img/web/market/comment/star-no-filled.svg';
             }
             contenedorEstrellas.appendChild(imagenEstrella);
         }
@@ -39,6 +48,10 @@ export class CommentItem {
         this.commentItem.appendChild(comentarioP);
     }
 
+    /**
+     * Obtiene el DOM del comentario
+     * @returns {HTMLDivElement} DOM del comentario
+     */
     getItem() {
         return this.commentItem;
     }

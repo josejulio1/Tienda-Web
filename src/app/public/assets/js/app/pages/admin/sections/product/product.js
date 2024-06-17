@@ -2,7 +2,7 @@ import {Field} from "../../components/form/models/Field.js";
 import {PRODUCTO} from "../../../../api/models.js";
 import {DataTypeField} from "../../components/form/enums/DataTypeField.js";
 import {TypeField} from "../../components/form/enums/TypeField.js";
-import {Form} from "../../components/form/Form.js";
+import {Table} from "../../components/form/Table.js";
 import {END_POINTS} from "../../../../api/end-points.js";
 import {ModalUpdate} from "../../components/form/ModalUpdate.js";
 import {ModalCreate} from "../../components/form/ModalCreate.js";
@@ -37,6 +37,7 @@ window.addEventListener('load', async () => {
     const modalCreate = new ModalCreate(modalCreateFields, (fields, data) => {
         const { entidades: entidad } = data;
         const brandSelectedOption = $(`#marca-producto-crear option[value=${fields[2].field.val()}]`);
+        const categorySelectedOption = $(`#categoria-producto-crear option[value=${fields[5].field.val()}]`);
         return {
             [PRODUCTO.ID]: entidad[PRODUCTO.ID],
             [PRODUCTO.NOMBRE]: fields[0].field.val(),
@@ -44,15 +45,14 @@ window.addEventListener('load', async () => {
             [PRODUCTO.MARCA_ID]: brandSelectedOption.text(),
             [PRODUCTO.STOCK]: fields[3].field.val(),
             [PRODUCTO.RUTA_IMAGEN]: entidad[PRODUCTO.RUTA_IMAGEN],
-            [PRODUCTO.CATEGORIA_ID]: fields[4].field.val()
+            [PRODUCTO.CATEGORIA_ID]: categorySelectedOption.text()
         }
     });
-    const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields) => {
-        const id = dataTable.row($('tr[selected]')).index();
-        dataTable.cell({row: id, column: 1}).data(fields[1].field.val()).draw();
-        dataTable.cell({row: id, column: 2}).data(fields[2].field.val()).draw();
+    const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields, numRow) => {
+        dataTable.cell({row: numRow, column: 1}).data(fields[1].field.val());
+        dataTable.cell({row: numRow, column: 2}).data(fields[2].field.val());
     });
-    const form = await Form.initialize(
+    const form = await Table.initialize(
         END_POINTS.PRODUCTO.GET_ALL,
         PRODUCTO,
         ProductRow.prototype,
@@ -60,6 +60,6 @@ window.addEventListener('load', async () => {
         modalUpdate,
         openUpdateProductCb
     );
-    modalCreate.setForm(form);
-    modalUpdate.setForm(form);
+    modalCreate.setTable(form);
+    modalUpdate.setTable(form);
 })

@@ -1,6 +1,8 @@
 const $darkButton = $('#dark-button');
 const $lightButton = $('#light-button');
 
+// Fichero que se encarga de la lógica del modo claro-oscuro
+
 window.addEventListener('load', () => {
     const isDarkModeEnabled = window.sessionStorage.getItem('dark-mode');
     if (isDarkModeEnabled && isDarkModeEnabled === 'false') {

@@ -9,8 +9,8 @@ import {CARRITO_ITEM, V_CARRITO_CLIENTE} from "../../api/models.js";
 const $aniadirCarrito = $('#aniadir-carrito');
 let cart;
 
-window.addEventListener('load', () => {
-    cart = new Cart(
+window.addEventListener('load', async () => {
+    cart = await Cart.initialize(
         'img-carrito',
         'carrito__items',
         'detalles-carrito',
@@ -21,6 +21,9 @@ window.addEventListener('load', () => {
     aniadirCarrito();
 })
 
+/**
+ * Añade al carrito un producto nuevo al hacer click sobre el botón de Añadir al carrito
+ */
 function aniadirCarrito() {
     $aniadirCarrito.on('click', async () => {
         if (!(await cart.tieneSesion())) {
@@ -33,32 +36,29 @@ function aniadirCarrito() {
         let response;
         // Si existe el producto, añadir en cantidad +1
         if ($carritoItem.length) {
-            const Cantidad = {
-                [V_CARRITO_CLIENTE.PRODUCTO_ID]: productoId
-            }
-            response = await ajax(END_POINTS.CARRITO.INCREMENT_QUANTITY, 'POST', Cantidad);
+            const formData = new FormData();
+            formData.append(V_CARRITO_CLIENTE.PRODUCTO_ID, productoId);
+            response = await ajax(END_POINTS.CARRITO.INCREMENT_QUANTITY, 'POST', formData);
             if (response.status !== HTTP_STATUS_CODES.OK) {
                 InfoWindow.make(response.message);
                 return;
             }
+            const { data: { cantidad } } = response;
+            // Actualizar la cantidad de productos del CarritoItem en +1
             const $cantidadInput = $carritoItem.find('.cantidad');
-            $cantidadInput.val(parseInt($cantidadInput.val()) + 1);
+            $cantidadInput.val(cantidad);
         } else {
             // Añadir producto al carrito en caso de que no exista
-            const CarritoItem = {
-                [CARRITO_ITEM.PRODUCTO_ID]: productoId
-            }
-            response = await ajax(END_POINTS.CARRITO.ADD, 'POST', CarritoItem);
+            const formData = new FormData();
+            formData.append(CARRITO_ITEM.PRODUCTO_ID, productoId);
+            response = await ajax(END_POINTS.CARRITO.ADD, 'POST', formData);
             if (response.status !== HTTP_STATUS_CODES.OK) {
                 InfoWindow.make(response.message);
                 return;
             }
             const { data: { carritoItem } } = response;
             cart.$carritoItems.append(
-                new CartItem(
-                    cart,
-                    carritoItem
-                ).getItem()
+                new CartItem(cart, carritoItem).getItem()
             );
             cart.actualizarCarrito();
         }

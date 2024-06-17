@@ -9,6 +9,7 @@
 @media (max-width: 1024px) {
     .perfil {
         flex-direction: column;
+        height: 120svh;
     }
 }
 

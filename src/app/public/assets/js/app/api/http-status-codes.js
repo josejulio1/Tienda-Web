@@ -1,8 +1,7 @@
+/**
+ * Guarda los códigos de estado HTTP que se desean usar en la aplicación
+ * @type {{OK: number}} Código HTTP de Éxito
+ */
 export const HTTP_STATUS_CODES = {
-    OK: 200,
-    UNAUTHORIZED: 401,
-    METHOD_NOT_ALLOWED: 405,
-    NOT_FOUND: 404,
-    INCORRECT_DATA: 422,
-    SERVICE_UNAVAILABLE: 503
+    OK: 200
 }

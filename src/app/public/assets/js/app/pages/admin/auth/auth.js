@@ -3,7 +3,7 @@ import {LoadingButton} from "../../../components/LoadingButton.js";
 import {USUARIO} from "../../../api/models.js";
 import {END_POINTS} from "../../../api/end-points.js";
 import {InfoWindow} from "../../../components/InfoWindow.js";
-import {Validators} from "../../../controllers/services/Validators.js";
+import {Validators} from "../../../services/Validators.js";
 import {HTTP_STATUS_CODES} from "../../../api/http-status-codes.js";
 
 const $correo = $('#correo');
@@ -28,15 +28,14 @@ new LoadingButton('.btn-info', 'Iniciar Sesión', async ($buttonP, $buttonLoadin
         return;
     }
 
-    const Usuario = {
-        [USUARIO.CORREO]: correo,
-        [USUARIO.CONTRASENIA]: contrasenia,
-        'mantener-sesion': $mantenerSesion.prop('checked')
-    }
+    const formData = new FormData();
+    formData.append(USUARIO.CORREO, correo);
+    formData.append(USUARIO.CONTRASENIA, contrasenia);
+    formData.append('mantener-sesion', $mantenerSesion.prop('checked'));
 
     $buttonP.addClass('hide');
     $buttonLoading.removeClass('hide');
-    const response = await ajax(END_POINTS.USUARIO.LOGIN, 'POST', Usuario);
+    const response = await ajax(END_POINTS.USUARIO.LOGIN, 'POST', formData);
     $buttonP.removeClass('hide');
     $buttonLoading.addClass('hide');
     if (response.status !== HTTP_STATUS_CODES.OK) {

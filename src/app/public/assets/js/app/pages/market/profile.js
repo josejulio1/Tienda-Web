@@ -1,4 +1,4 @@
-import {Validators} from "../../controllers/services/Validators.js";
+import {Validators} from "../../services/Validators.js";
 import {CLIENTE} from "../../api/models.js";
 import {END_POINTS} from "../../api/end-points.js";
 import {InfoWindow} from "../../components/InfoWindow.js";
@@ -18,6 +18,8 @@ const $telefono = $('#telefono');
 const $contrasenia = $('#contrasenia');
 
 const $guardarCambios = $('#guardar-cambios');
+
+// Fichero que contiene la lógica para poder guardar los datos del perfil del usuario
 
 $imagen.on('change', () => {
     const reader = new FileReader();
@@ -81,7 +83,7 @@ $guardarCambios.on('click', async () => {
         profile.append(CLIENTE.CONTRASENIA, contrasenia);
     }
 
-    const response = await ajax(END_POINTS.MARKET.SAVE_PROFILE, 'POST', profile, true);
+    const response = await ajax(END_POINTS.MARKET.SAVE_PROFILE, 'POST', profile);
     if (response.status !== HTTP_STATUS_CODES.OK) {
         InfoWindow.make('No se pudieron cambiar los datos. Inténtelo más tarde.');
         return;

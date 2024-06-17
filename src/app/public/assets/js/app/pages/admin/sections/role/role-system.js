@@ -27,28 +27,6 @@ $('.permiso-crear').on('change', checkVer);
 $('.permiso-actualizar').on('change', checkVer);
 $('.permiso-eliminar').on('change', checkVer);
 
-export function validatePermissions($checkBoxCrear, $checkBoxActualizar, $checkBoxEliminar) {
-    let strActualizar;
-    const checkBoxCrearId = $checkBoxCrear.attr('id');
-    if (checkBoxCrearId.includes('-actualizar')) {
-        strActualizar = '-actualizar';
-    }
-    let $checkBoxVer;
-    if (strActualizar) {
-        $checkBoxVer = $(`#ver-permiso-${checkBoxCrearId.split('-')[2]}${strActualizar}`);
-    } else {
-        $checkBoxVer = $(`#ver-permiso-${checkBoxCrearId.split('-')[2]}`);
-    }
-    if ($checkBoxVer.prop('checked')) {
-        return true;
-    }
-
-    if (($checkBoxCrear.prop('checked') || $checkBoxActualizar.prop('checked') || $checkBoxEliminar.prop('checked')) && $checkBoxVer.prop('checked')) {
-        return true;
-    }
-    return false;
-}
-
 /**
  * Marca el CheckBox "Ver Permiso" en caso de que se marque "Crear, Actualizar o Eliminar"
  * @param {Event} e CheckBox que accionó el evento

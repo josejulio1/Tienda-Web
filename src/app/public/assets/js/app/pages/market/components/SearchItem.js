@@ -1,6 +1,15 @@
 import {V_PRODUCTO_VALORACION_PROMEDIO} from "../../../api/models.js";
 
+/**
+ * Crea un elemento DOM de un producto buscado desde la barra de búsqueda del nav
+ * @author josejulio1
+ * @version 1.0
+ */
 export class SearchItem {
+    /**
+     * Constructor de SearchItem.
+     * @param data {JSON} Datos necesarios para crear el producto. Estos datos se recogen en el backend
+     */
     constructor(data) {
         this.searchItem = document.createElement('div');
         const imagen = document.createElement('img');
@@ -30,9 +39,9 @@ export class SearchItem {
             imagenEstrella.alt = 'Estrella';
             imagenEstrella.loading = 'lazy';
             if (numValoracion-- > 0) {
-                imagenEstrella.src = '/assets/img/web/svg/star-filled.svg';
+                imagenEstrella.src = '/assets/img/web/market/comment/star-filled.svg';
             } else {
-                imagenEstrella.src = '/assets/img/web/svg/star-no-filled.svg';
+                imagenEstrella.src = '/assets/img/web/market/comment/star-no-filled.svg';
             }
             contenedorEstrellas.appendChild(imagenEstrella);
         }
@@ -43,6 +52,10 @@ export class SearchItem {
         })
     }
 
+    /**
+     * Devuelve el DOM del producto
+     * @returns {HTMLDivElement} DOM del producto
+     */
     getItem() {
         return this.searchItem;
     }

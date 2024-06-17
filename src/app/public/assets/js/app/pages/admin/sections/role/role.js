@@ -4,7 +4,7 @@ import {DataTypeField} from "../../components/form/enums/DataTypeField.js";
 import {TypeField} from "../../components/form/enums/TypeField.js";
 import {ModalCreate} from "../../components/form/ModalCreate.js";
 import {ModalUpdate} from "../../components/form/ModalUpdate.js";
-import {Form} from "../../components/form/Form.js";
+import {Table} from "../../components/form/Table.js";
 import {END_POINTS} from "../../../../api/end-points.js";
 import {RoleRow} from "../../components/row/rows/RoleRow.js";
 import {PermissionField} from "./models/PermissionField.js";
@@ -16,7 +16,7 @@ import {PERMISSIONS} from "../../permissions/permissions.js";
 window.addEventListener('load', async () => {
     const modalCreateFields = [
         new Field('nombre-rol-crear', ROL.NOMBRE, DataTypeField.TEXT, TypeField.REQUIRED),
-        new Field('color-rol-crear', ROL.COLOR, DataTypeField.SELECT, TypeField.REQUIRED),
+        new Field('color-rol-crear', ROL.COLOR, DataTypeField.COLOR, TypeField.REQUIRED),
         new PermissionCheckboxes(
             ROL.PERMISO_USUARIO,
             new PermissionField('ver-permiso-usuario', PERMISSIONS.READ),
@@ -63,7 +63,7 @@ window.addEventListener('load', async () => {
     const modalUpdateFields = [
         new Field('id-rol-actualizar', ROL.ID, DataTypeField.ID, TypeField.REQUIRED),
         new Field('nombre-rol-actualizar', ROL.NOMBRE, DataTypeField.TEXT, TypeField.REQUIRED),
-        new Field('color-rol-actualizar', ROL.COLOR, DataTypeField.SELECT, TypeField.REQUIRED),
+        new Field('color-rol-actualizar', ROL.COLOR, DataTypeField.COLOR, TypeField.REQUIRED),
         new PermissionCheckboxes(
             ROL.PERMISO_USUARIO,
             new PermissionField('ver-permiso-usuario-actualizar', PERMISSIONS.READ),
@@ -113,7 +113,7 @@ window.addEventListener('load', async () => {
         fields[2].field.val(`#${rgbToHex(tableColumns[2].children[0].style.backgroundColor)}`);
         const formData = new FormData();
         formData.append(ROL.ID, tableColumns[0].textContent);
-        const response = await ajax(END_POINTS.ROL.GET_PERMISSIONS, 'POST', formData, false);
+        const response = await ajax(END_POINTS.ROL.GET_PERMISSIONS, 'POST', formData);
         const { data: { permissions } } = response;
         // Convertir el permiso numérico a los CheckBoxes (check si tienen permisos)
         let i = 0;
@@ -129,71 +129,13 @@ window.addEventListener('load', async () => {
         [ROL.NOMBRE]: fields[0].field.val(),
         [ROL.COLOR]: fields[1].field.val()
     }));
-    const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields) => {
-        const id = dataTable.row($('tr[selected]')).index();
-        dataTable.cell({row: id, column: 1}).data(fields[1].field.val());
+    const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields, numRow) => {
+        dataTable.cell({row: numRow, column: 1}).data(fields[1].field.val());
         const spanColor = document.createElement('span');
         spanColor.style.backgroundColor = fields[2].field.val();
-        dataTable.cell({row: id, column: 2}).data(spanColor.outerHTML);
-        /*$campoNombreRolActualizar.val(children[1].textContent);
-        $campoColorActualizar.val(`#${rgbToHex(children[2].children[0].style.backgroundColor)}`);
-        const permissions = await select(ROL.TABLE_NAME, [
-            ROL.PERMISO_USUARIO,
-            ROL.PERMISO_PRODUCTO,
-            ROL.PERMISO_MARCA,
-            ROL.PERMISO_CATEGORIA,
-            ROL.PERMISO_CLIENTE,
-            ROL.PERMISO_ROL
-        ], {
-            [TYPE_FILTERS.EQUALS]: {
-                [ROL.ID]: $('tr[selected]').children()[0].textContent
-            }
-        });
-        clearCheckboxes(...allUpdateCheckBoxes);
-        permissionNumberToCheckBox(
-            permissions[0][ROL.PERMISO_USUARIO],
-            $permisoVerActualizarUsuario,
-            $permisoCrearActualizarUsuario,
-            $permisoActualizarActualizarUsuario,
-            $permisoEliminarActualizarUsuario
-        );
-        permissionNumberToCheckBox(
-            permissions[0][ROL.PERMISO_PRODUCTO],
-            $permisoVerActualizarProducto,
-            $permisoCrearActualizarProducto,
-            $permisoActualizarActualizarProducto,
-            $permisoEliminarActualizarProducto
-        );
-        permissionNumberToCheckBox(
-            permissions[0][ROL.PERMISO_MARCA],
-            $permisoVerActualizarMarca,
-            $permisoCrearActualizarMarca,
-            $permisoActualizarActualizarMarca,
-            $permisoEliminarActualizarMarca
-        );
-        permissionNumberToCheckBox(
-            permissions[0][ROL.PERMISO_CATEGORIA],
-            $permisoVerActualizarCategoria,
-            $permisoCrearActualizarCategoria,
-            $permisoActualizarActualizarCategoria,
-            $permisoEliminarActualizarCategoria
-        );
-        permissionNumberToCheckBox(
-            permissions[0][ROL.PERMISO_CLIENTE],
-            $permisoVerActualizarCliente,
-            $permisoCrearActualizarCliente,
-            $permisoActualizarActualizarCliente,
-            $permisoEliminarActualizarCliente
-        );
-        permissionNumberToCheckBox(
-            permissions[0][ROL.PERMISO_ROL],
-            $permisoVerActualizarRol,
-            $permisoCrearActualizarRol,
-            $permisoActualizarActualizarRol,
-            $permisoEliminarActualizarRol
-        );*/
+        dataTable.cell({row: numRow, column: 2}).data(spanColor.outerHTML);
     });
-    const form = await Form.initialize(
+    const form = await Table.initialize(
         END_POINTS.ROL.GET_ALL,
         ROL,
         RoleRow.prototype,
@@ -201,6 +143,6 @@ window.addEventListener('load', async () => {
         modalUpdate,
         openUpdateRoleCb
     )
-    modalCreate.setForm(form);
-    modalUpdate.setForm(form);
+    modalCreate.setTable(form);
+    modalUpdate.setTable(form);
 })

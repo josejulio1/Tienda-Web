@@ -6,6 +6,12 @@ header {
     z-index: 10;
 }
 
+@media (max-width: 1024px) {
+    body:has(.open-chat) header {
+        display: none;
+    }
+}
+
 header p {
     color: var(--primario);
     font-size: 1.2rem;
@@ -23,6 +29,7 @@ nav,
 nav {
     padding: 1rem;
     justify-content: space-around;
+    gap: 1rem;
 }
 
 nav > a {
@@ -133,6 +140,12 @@ nav > a {
     height: 30px;
 }
 
+.buscar__productos {
+    font-size: 1.5rem;
+    text-decoration: underline;
+    text-align: center;
+}
+
 .cuenta,
 .carrito {
     display: flex;
@@ -174,12 +187,7 @@ nav > a {
     left: 0;
     position: absolute;
     width: 100%;
-}
-
-@media (max-width: 1024px) {
-    .cuenta-opciones {
-        display: none !important;
-    }
+    z-index: 100;
 }
 
 .cuenta:hover .cuenta-opciones,
@@ -245,6 +253,12 @@ nav > a {
     right: 0;
     width: 550%;
     padding: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .carrito__items--container {
+        transform: translateX(40%);
+    }
 }
 
 #carrito__items {
@@ -473,6 +487,11 @@ main {
     user-select: none;
     flex-direction: column;
     justify-content: flex-end;
+    transition: .2s background-color;
+}
+
+.producto__item:hover {
+    background-color: var(--gris-claro);
 }
 
 .producto__item > img {

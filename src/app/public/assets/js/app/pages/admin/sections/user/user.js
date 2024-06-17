@@ -1,7 +1,7 @@
 import {USUARIO, V_USUARIO_ROL} from "../../../../api/models.js";
 import {UserRow} from "../../components/row/rows/UserRow.js";
 import {END_POINTS} from "../../../../api/end-points.js";
-import {Form} from "../../components/form/Form.js";
+import {Table} from "../../components/form/Table.js";
 import {Field} from "../../components/form/models/Field.js";
 import {DataTypeField} from "../../components/form/enums/DataTypeField.js";
 import {TypeField} from "../../components/form/enums/TypeField.js";
@@ -27,9 +27,9 @@ window.addEventListener('load', async () => {
         fields[1].field.val(tableColumns[1].textContent);
         fields[2].field.val(tableColumns[2].textContent);
         const $campoRol = tableColumns[3].textContent;
-        $('#rol-usuario-actualizar option').each(function() {
+        fields[3].field.find('option').each(function() {
             if ($(this).text() === $campoRol) {
-                $(this).attr('selected', '');
+                fields[3].field.val($(this).val());
                 return false;
             }
         })
@@ -49,16 +49,15 @@ window.addEventListener('load', async () => {
             [V_USUARIO_ROL.RUTA_IMAGEN_PERFIL]: entidad[V_USUARIO_ROL.RUTA_IMAGEN_PERFIL]
         }
     });
-    const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields) => {
-        const id = dataTable.row($('tr[selected]')).index();
-        dataTable.cell({row: id, column: 1}).data(fields[1].field.val()).draw();
-        const $selectedOption = $('#rol-usuario-actualizar option:selected');
-        dataTable.cell({row: id, column: 3}).data($selectedOption.text());
+    const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields, numRow) => {
+        dataTable.cell({row: numRow, column: 1}).data(fields[1].field.val());
+        const $selectedOption = fields[3].field.find('option:selected');
+        dataTable.cell({row: numRow, column: 3}).data($selectedOption.text());
         const spanColor = document.createElement('span');
         spanColor.style.backgroundColor = `#${$selectedOption.attr('color')}`;
-        dataTable.cell({row: id, column: 4}).data(spanColor.outerHTML).draw();
+        dataTable.cell({row: numRow, column: 4}).data(spanColor.outerHTML);
     }, openUpdateUserCb);
-    const form = await Form.initialize(
+    const form = await Table.initialize(
         END_POINTS.USUARIO.GET_ALL,
         USUARIO,
         UserRow.prototype,
@@ -66,6 +65,6 @@ window.addEventListener('load', async () => {
         modalUpdate,
         openUpdateUserCb
     );
-    modalCreate.setForm(form);
-    modalUpdate.setForm(form);
+    modalCreate.setTable(form);
+    modalUpdate.setTable(form);
 })

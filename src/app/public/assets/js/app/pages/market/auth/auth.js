@@ -4,12 +4,13 @@ import { LoadingButton } from "../../../components/LoadingButton.js";
 import { END_POINTS } from "../../../api/end-points.js";
 import { HTTP_STATUS_CODES } from "../../../api/http-status-codes.js";
 import { CLIENTE } from "../../../api/models.js";
-import {Validators} from "../../../controllers/services/Validators.js";
+import {Validators} from "../../../services/Validators.js";
 import {ajax} from "../../../api/ajax.js";
 
 // Campos Login
 const $correoLogin = $('#correo-login');
 const $contraseniaLogin = $('#contrasenia-login');
+const $mantenerSesion = $('#mantener-sesion');
 
 // Campos Register
 const $nombreRegister = $('#nombre-register');
@@ -41,13 +42,13 @@ new LoadingButton('#button-iniciar-sesion', 'Iniciar Sesión', async ($buttonP, 
         return;
     }
 
-    const Cliente = {
-        [CLIENTE.CORREO]: correo,
-        [CLIENTE.CONTRASENIA]: contrasenia
-    }
+    const formData = new FormData();
+    formData.append(CLIENTE.CORREO, correo);
+    formData.append(CLIENTE.CONTRASENIA, contrasenia);
+    formData.append('mantener-sesion', $mantenerSesion.prop('checked'));
     $buttonP.addClass('hide');
     $buttonLoading.removeClass('hide');
-    const response = await ajax(END_POINTS.CLIENTE.LOGIN, 'POST', Cliente);
+    const response = await ajax(END_POINTS.CLIENTE.LOGIN, 'POST', formData);
     $buttonP.removeClass('hide');
     $buttonLoading.addClass('hide');
     if (response.status !== HTTP_STATUS_CODES.OK) {
@@ -57,34 +58,34 @@ new LoadingButton('#button-iniciar-sesion', 'Iniciar Sesión', async ($buttonP, 
     window.location.href = '/';
 })
 
-new LoadingButton('#button-registrarse', 'Registrarse', ($buttonP, $buttonLoading) => {
+new LoadingButton('#button-registrarse', 'Registrarse',  async($buttonP, $buttonLoading) => {
     let hayErrores = false;
     const nombre = $nombreRegister.val();
-    if (!nombre || XSS_REGEX.test(nombre)) {
+    if (!nombre || !Validators.isNotXss(nombre)) {
         $nombreRegister.next().removeClass('hide');
         hayErrores = true;
     }
     
     const apellidos = $apellidosRegister.val();
-    if (!apellidos || XSS_REGEX.test(apellidos)) {
+    if (!apellidos || !Validators.isNotXss(apellidos)) {
         $apellidosRegister.next().removeClass('hide');
         hayErrores = true;
     }
 
     const telefono = $telefonoRegister.val();
-    if (!telefono || !PHONE_REGEX.test(telefono) || XSS_REGEX.test(telefono)) {
+    if (!telefono || !Validators.isPhone(telefono) || !Validators.isNotXss(telefono)) {
         $telefonoRegister.next().removeClass('hide');
         hayErrores = true;
     }
 
     const correo = $correoRegister.val();
-    if (!correo || !EMAIL_REGEX.test(correo) || XSS_REGEX.test(correo)) {
+    if (!correo || !Validators.isEmail(correo) || !Validators.isNotXss(correo)) {
         $correoRegister.next().removeClass('hide');
         hayErrores = true;
     }
 
     const contrasenia = $contraseniaRegister.val();
-    if (!contrasenia || XSS_REGEX.test(contrasenia)) {
+    if (!contrasenia || !Validators.isNotXss(contrasenia)) {
         $contraseniaRegister.next().removeClass('hide');
         hayErrores = true;
     }
@@ -93,37 +94,27 @@ new LoadingButton('#button-registrarse', 'Registrarse', ($buttonP, $buttonLoadin
         return;
     }
 
-    const fd = new FormData();
-    fd.append(CLIENTE.NOMBRE, nombre);
-    fd.append(CLIENTE.APELLIDOS, apellidos);
-    fd.append(CLIENTE.TELEFONO, telefono);
-    fd.append(CLIENTE.CORREO, correo);
-    fd.append(CLIENTE.CONTRASENIA, contrasenia);
+    const formData = new FormData();
+    formData.append(CLIENTE.NOMBRE, nombre);
+    formData.append(CLIENTE.APELLIDOS, apellidos);
+    formData.append(CLIENTE.TELEFONO, telefono);
+    formData.append(CLIENTE.CORREO, correo);
+    formData.append(CLIENTE.CONTRASENIA, contrasenia);
     // Si se ha adjuntado una imagen, no usar la imagen por defecto
     const $imagenRegister = $('#imagen-register');
     if ($imagenRegister.prop('files')) {
-        fd.append(CLIENTE.RUTA_IMAGEN_PERFIL, $imagenRegister.prop('files')[0]);
+        formData.append(CLIENTE.RUTA_IMAGEN_PERFIL, $imagenRegister.prop('files')[0]);
     }
     $buttonP.addClass('hide');
     $buttonLoading.removeClass('hide');
-    fetch(`${END_POINTS.CLIENTE.REGISTER}`, {
-        method: 'POST',
-        body: fd
-    })
-    .then(response => {
-        $buttonP.removeClass('hide');
-        $buttonLoading.addClass('hide');
-        const { status } = response;
-        if (status === HTTP_STATUS_CODES.SERVICE_UNAVAILABLE) {
-            InfoWindow.make(ERROR_MESSAGES[status]);
-            return;
-        }
-        if (status !== HTTP_STATUS_CODES.OK) {
-            InfoWindow.make('No se pudo registrar correctamente');
-            return;
-        }
-        window.location.href = '/';
-    })
+    const response = await ajax(END_POINTS.CLIENTE.REGISTER, 'POST', formData);
+    if (response.status !== HTTP_STATUS_CODES.OK) {
+        InfoWindow.make(response.message);
+        return;
+    }
+    $buttonP.removeClass('hide');
+    $buttonLoading.addClass('hide');
+    window.location.href = '/';
 })
 
 // Cambiar de formulario

@@ -13,10 +13,9 @@ const $buttonVerPedidos = $('#mostrar-pedidos-cliente');
 
 $buttonVerPedidos.on('click', async e => {
     e.preventDefault();
-    const Cliente = {
-        [V_PEDIDO.CLIENTE_ID]: $idClienteActualizar.val()
-    }
-    const response = await ajax(END_POINTS.PEDIDO.GET_ALL, 'POST', Cliente);
+    const formData = new FormData();
+    formData.append(V_PEDIDO.CLIENTE_ID, $idClienteActualizar.val());
+    const response = await ajax(END_POINTS.PEDIDO.GET_ALL, 'POST', formData);
     if (response.status !== HTTP_STATUS_CODES.OK) {
         InfoWindow.make(response.message);
         return;
@@ -39,11 +38,10 @@ $buttonVerPedidos.on('click', async e => {
         const $column = $(this);
         const id = $column.closest('tr').children()[0].textContent;
         const estadoPagoSeleccionado = $column.val();
-        const Pedido = {
-            [PEDIDO.ID]: id,
-            [PEDIDO.ESTADO_PAGO_ID]: estadoPagoSeleccionado
-        }
-        const response = await ajax(END_POINTS.PEDIDO.UPDATE, 'PUT', Pedido);
+        const formData = new FormData();
+        formData.append(PEDIDO.ID, id);
+        formData.append(PEDIDO.ESTADO_PAGO_ID, estadoPagoSeleccionado);
+        const response = await ajax(END_POINTS.PEDIDO.UPDATE, 'POST', formData);
         if (response.status !== HTTP_STATUS_CODES.OK) {
             InfoWindow.make(response.message);
             return;

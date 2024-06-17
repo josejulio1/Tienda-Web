@@ -4,8 +4,11 @@ import {END_POINTS} from "../../api/end-points.js";
 import {COMENTARIO} from "../../api/models.js";
 import {HTTP_STATUS_CODES} from "../../api/http-status-codes.js";
 import {CommentItem} from "./components/CommentItem.js";
+import {Validators} from "../../services/Validators.js";
 
-const $descripcionProducto = $('#descripcion-producto');
+// Fichero que contiene la lógica para realizar un comentario en un producto (también el funcionamiento de escoger valoración),
+// poder ver la descripción y comentarios de un producto
+
 const $comentarios = $('#comentarios');
 const $comentarioEstrellas = $('.aniadir-comentario__container .comentario__item--estrella');
 const $comentario = $('#comentario');
@@ -25,19 +28,18 @@ $comentarButton.on('click', async () => {
     }
 
     const comentario = $comentario.val();
-    if (!comentario) {
+    if (!comentario || !Validators.isNotXss(comentario)) {
         InfoWindow.make('Escriba una descripción');
         return;
     }
 
     const productoId = new URLSearchParams(window.location.search).get('id');
     const numEstrellas = estrellaSeleccionada + 1;
-    const Comentario = {
-        [COMENTARIO.PRODUCTO_ID]: productoId,
-        [COMENTARIO.COMENTARIO]: comentario,
-        [COMENTARIO.NUM_ESTRELLAS]: numEstrellas
-    }
-    const response = await ajax(END_POINTS.COMENTARIO, 'POST', Comentario);
+    const formData = new FormData();
+    formData.append(COMENTARIO.PRODUCTO_ID, productoId);
+    formData.append(COMENTARIO.COMENTARIO, comentario);
+    formData.append(COMENTARIO.NUM_ESTRELLAS, `${numEstrellas}`);
+    const response = await ajax(END_POINTS.COMENTARIO, 'POST', formData);
     if (response.status !== HTTP_STATUS_CODES.OK) {
         InfoWindow.make(response.message);
         return;
@@ -60,7 +62,7 @@ $comentarioEstrellas.on('mouseenter', function() {
     const $estrellasContainerChildren = $(this).closest('.comentario__item--estrellas').children();
     const $estrellaSeleccionadaIndex = $(this).index();
     $estrellasContainerChildren.each(function(i) {
-        $(this).attr('src', '/assets/img/web/svg/star-filled.svg');
+        $(this).attr('src', '/assets/img/web/market/comment/star-filled.svg');
         if (i === $estrellaSeleccionadaIndex) {
             return false;
         }
@@ -75,7 +77,7 @@ $comentarioEstrellas.on('mouseleave', function() {
 
     const $estrellasContainerChildren = $(this).closest('.comentario__item--estrellas').children();
     $estrellasContainerChildren.each(function() {
-        $(this).attr('src', '/assets/img/web/svg/star-no-filled.svg');
+        $(this).attr('src', '/assets/img/web/market/comment/star-no-filled.svg');
     })
 })
 
@@ -89,47 +91,13 @@ $comentarioEstrellas.on('click', function() {
     const $estrellasContainerChildren = $(this).closest('.comentario__item--estrellas').children();
     // Deseleccionar todas las estrellas
     $estrellasContainerChildren.each(function() {
-        $(this).attr('src', '/assets/img/web/svg/star-no-filled.svg');
+        $(this).attr('src', '/assets/img/web/market/comment/star-no-filled.svg');
     })
     // Realizar de nuevo la selección hasta la estrella seleccionada
     $estrellasContainerChildren.each(function() {
-        $(this).attr('src', '/assets/img/web/svg/star-filled.svg');
+        $(this).attr('src', '/assets/img/web/market/comment/star-filled.svg');
         if ($(this).attr('id') === 'spotted-star') {
             return false;
         }
     })
 })
-
-// Recoger descripción del producto y los comentarios acerca del producto
-/*
-window.addEventListener('load', async () => {
-    // Comentarios
-    const jsonComentarios = await select(V_COMENTARIO_CLIENTE_PRODUCTO.TABLE_NAME, [
-        V_COMENTARIO_CLIENTE_PRODUCTO.NOMBRE_CLIENTE,
-        V_COMENTARIO_CLIENTE_PRODUCTO.APELLIDOS_CLIENTE,
-        V_COMENTARIO_CLIENTE_PRODUCTO.RUTA_IMAGEN_PERFIL,
-        V_COMENTARIO_CLIENTE_PRODUCTO.COMENTARIO,
-        V_COMENTARIO_CLIENTE_PRODUCTO.NUM_ESTRELLAS,
-    ], {
-        [TYPE_FILTERS.EQUALS]: {
-            [V_COMENTARIO_CLIENTE_PRODUCTO.PRODUCTO_ID]: productoId
-        }
-    });
-    // En caso de no haber comentarios, no hacer nada
-    if (jsonComentarios.length === 0) {
-        return;
-    }
-    $noComentarios.addClass('hide');
-    $comentarios.removeClass('hide');
-    for (const comentario of jsonComentarios) {
-        $comentarios.append(
-            new CommentItem(
-                comentario[V_COMENTARIO_CLIENTE_PRODUCTO.RUTA_IMAGEN_PERFIL],
-                comentario[V_COMENTARIO_CLIENTE_PRODUCTO.NOMBRE_CLIENTE],
-                comentario[V_COMENTARIO_CLIENTE_PRODUCTO.APELLIDOS_CLIENTE],
-                comentario[V_COMENTARIO_CLIENTE_PRODUCTO.NUM_ESTRELLAS],
-                comentario[V_COMENTARIO_CLIENTE_PRODUCTO.COMENTARIO],
-            ).getItem()
-        );
-    }
-})*/

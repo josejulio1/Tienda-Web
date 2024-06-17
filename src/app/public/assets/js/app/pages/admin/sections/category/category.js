@@ -2,7 +2,7 @@ import {Field} from "../../components/form/models/Field.js";
 import {CATEGORIA} from "../../../../api/models.js";
 import {DataTypeField} from "../../components/form/enums/DataTypeField.js";
 import {TypeField} from "../../components/form/enums/TypeField.js";
-import {Form} from "../../components/form/Form.js";
+import {Table} from "../../components/form/Table.js";
 import {END_POINTS} from "../../../../api/end-points.js";
 import {ModalUpdate} from "../../components/form/ModalUpdate.js";
 import {ModalCreate} from "../../components/form/ModalCreate.js";
@@ -24,11 +24,10 @@ window.addEventListener('load', async () => {
         [CATEGORIA.ID]: data.entidades[CATEGORIA.ID],
         [CATEGORIA.NOMBRE]: fields[0].field.val()
     }));
-    const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields) => {
-        const id = dataTable.row($('tr[selected]')).index();
-        dataTable.cell({row: id, column: 1}).data(fields[1].field.val()).draw();
+    const modalUpdate = new ModalUpdate(modalUpdateFields, (dataTable, fields, numRow) => {
+        dataTable.cell({row: numRow, column: 1}).data(fields[1].field.val());
     });
-    const form = await Form.initialize(
+    const form = await Table.initialize(
         END_POINTS.CATEGORIA.GET_ALL,
         CATEGORIA,
         CategoryRow.prototype,
@@ -36,6 +35,6 @@ window.addEventListener('load', async () => {
         modalUpdate,
         openUpdateBrandCb
     );
-    modalCreate.setForm(form);
-    modalUpdate.setForm(form);
+    modalCreate.setTable(form);
+    modalUpdate.setTable(form);
 })

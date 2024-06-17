@@ -1,3 +1,5 @@
+// En este archivo se encuentran toda la información de esquema de cada tabla de la base de datos
+
 export const USUARIO = {
     TABLE_NAME: 'Usuario',
     ID: 'id',
@@ -76,7 +78,8 @@ export const COMENTARIO = {
     CLIENTE_ID: 'cliente_id',
     PRODUCTO_ID: 'producto_id',
     COMENTARIO: 'comentario',
-    NUM_ESTRELLAS: 'num_estrellas'
+    NUM_ESTRELLAS: 'num_estrellas',
+    FECHA_HORA_COMENTARIO: 'fecha_hora_comentario'
 }
 
 export const PEDIDO = {
@@ -86,6 +89,15 @@ export const PEDIDO = {
     METODO_PAGO_ID: 'metodo_pago_id',
     ESTADO_PAGO_ID: 'estado_pago_id',
     DIRECCION_ENVIO: 'direccion_envio'
+}
+
+export const CHAT = {
+    TABLE_NAME: 'Chat',
+    ID: 'id',
+    CLIENTE_ID: 'cliente_id',
+    MENSAJE: 'mensaje',
+    FECHA: 'fecha',
+    ES_CLIENTE: 'es_cliente'
 }
 
 export const V_CARRITO_CLIENTE = {
@@ -124,8 +136,13 @@ export const V_PRODUCTO_VALORACION_PROMEDIO = {
     TABLE_NAME: 'v_producto_valoracion_promedio',
     ID: 'id',
     NOMBRE: 'nombre',
+    DESCRIPCION: 'descripcion',
     RUTA_IMAGEN: 'ruta_imagen',
     PRECIO: 'precio',
+    MARCA_ID: 'marca_id',
+    MARCA: 'marca',
+    CATEGORIA_ID: 'categoria_id',
+    NOMBRE_CATEGORIA: 'nombre_categoria',
     VALORACION_PROMEDIO: 'valoracion_promedio'
 }
 
@@ -157,10 +174,11 @@ export const V_USUARIO_ROL = {
     PERMISO_ROL: 'permiso_rol'
 }
 
-export const V_CHAT_CLIENTE_IMAGEN = {
+export const V_CHAT_CLIENTE_INFO = {
     TABLE_NAME: 'v_chat_cliente_imagen',
     ID: 'id',
     CLIENTE_ID: 'cliente_id',
+    CORREO: 'correo',
     RUTA_IMAGEN_PERFIL: 'ruta_imagen_perfil',
     MENSAJE: 'mensaje',
     FECHA: 'fecha',

@@ -2,6 +2,8 @@ const $chatAbierto = $('#chat-abierto');
 const $chatCerrado = $('#chat-cerrado');
 const $chat = $('.chat');
 
+// Realiza el funcionamiento de la animación de apertura-cierre del chat
+
 $chatAbierto.on('click', () => {
     $chat.addClass('open-chat');
     $chatAbierto.addClass('hide');
